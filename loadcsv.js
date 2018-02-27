@@ -9,14 +9,10 @@ function selectDataTwice(csv_data, dataSelector, value, dataSelector2, value2){
                     .filter(function(d){ return d[dataSelector2] == value2});
   return filtered;
 }
-function selectDataAfter(alreadyFiltered, dataSelector, value){
-  var filtered = alreadyFiltered.filter(function(d){ return d[dataSelector] == value});
-  return filtered;
-}
+// for selecting all males or females or children of both sexes,
 function selectDataTwoValue(csv_data, dataSelector, value, value2){
   var filtered = csv_data.filter(function(d){
     if ( d[dataSelector] == value || d[dataSelector] == value2 ){
-
       return d[dataSelector];
       }
   });
@@ -49,8 +45,8 @@ var data = d3.csv("VDC_Syria_CASREP.csv", function(error, csv_data) {
 // "name","status","gender","province","birthPlace","deathDate","deathCause","actor"
   //var filter_data = selectData(csv_data, dataSelector, value);
   //var filter2 = selectDataTwice(csv_data, dataSelector, value, dataSelector2, value2);
-  //var filter3 = selectDataAfter(filter_data, dataSelector2, value2);
-  //var filter4 = selectDataAfter( selectData(csv_data, dataSelector, value), dataSelector2, value2);
+  //var filter3 = selectData(filter_data, dataSelector2, value2);
+  //var filter4 = selectData( selectData(csv_data, dataSelector, value), dataSelector2, value2);
   console.log("d3 function ran")
   //console.log(filter_data); // only child females
   //console.log(filter2); // child females in Daraa
@@ -58,16 +54,16 @@ var data = d3.csv("VDC_Syria_CASREP.csv", function(error, csv_data) {
   //console.log(filter4); // selectData function on child-females then select province Daraa
   //var filter5 = selectData(csv_data, dataSelector, value3);
   //console.log(filter5); // select all child-males
-  var filter6 = selectDataTwoValue(csv_data, dataSelector, value, value3);
-  console.log(filter6);  //select both Child Male and Female
+  //var filter6 = selectDataTwoValue(csv_data, dataSelector, value, value3);
+  //console.log(filter6);  //select both Child Male and Female
   //check working of function by then selecting Female only.
-  var filter7 = selectDataAfter(filter6, dataSelector, value);
-  console.log(filter7); // now is the same with filter_data
-  var filter8 = selectDataYear(filter7, dateYearSelection);
-  console.log(filter8);
-  var filter9 = selectDataMonth(filter8, dateMonthSelection);
-  //console.log(value4);
-  //var filter9 = selectDataYears(filter8, "January");
-  console.log(filter9);
+  //var filter7 = selectData(filter6, dataSelector, value);
+  //console.log(filter7); // now is the same with filter_data
+  //var filter8 = selectDataYear(filter7, dateYearSelection);
+  //console.log(filter8);
+  //var filter9 = selectDataMonth(filter8, dateMonthSelection);
+  //console.log(filter9);
+  var filter10 = selectDataMonth(selectDataYear(csv_data, dateYearSelection), dateMonthSelection);
+  console.log(filter10);
 
 });
