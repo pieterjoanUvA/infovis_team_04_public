@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+.states {
+	fill: #030116;
+	stroke: #fff;
+	stroke-width:2px;
+}
+.states :hover {
+  fill: red;
+}
+
+.state-borders {
+  fill: none;
+  stroke: rgb(8, 247, 187);
+  stroke-width: 0.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+</style>
+<svg width="960" height="600"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<body>
+    <script type="text/javascript">
+var svg = d3.select("svg");
+//(function(){
+  //var margin = { top: 50, left: 50, right: 50, bottom: 50},
+  //height = 400 - margin.top - margin.bottom;
+  //width = 800 - margin.left -margin.right;
+
+  //var svg = d3.select("#map")
+    //      .append("svg")
+      //    .attr("height", height+margin.top+margin.bottom)
+        //  .attr("width", width+margin.left+margin.right)
+          //.append("g")
+          //.attr("transform", "translate(" + margin.left + "," + margin.top+ ")");
+d3.queue()
+    .defer(d3.json, "SYR.json")
+    .await(ready)
+//projection
+var projection = d3.geoMercator()
+.translate([-2900, 3550])
+.scale(5000)
+// create a geopath to project
+var path = d3.geoPath()
+    .projection(projection)
+    
+
+function ready (error, data){
+    console.log(data)
+    var province_1 = topojson.feature(data, data.objects["SYR_adm0-1"]).features
+    var province_2 = topojson.feature(data, data.objects["SYR_adm1-1"]).features
+    var province_3 = topojson.feature(data, data.objects["SYR_adm2-1"]).features
+    var border = topojson.mesh(data, data.objects["SYR_adm2-1"], function(a, b) { return a !== b; })
+    console.log(province_3)
+    
+ 
+    svg.append("g")
+    .attr("class", "states")    
+    .selectAll(".province_3")
+    //.data(province_1)
+    //.enter().append("path")
+    //.data(province_2)
+    //.enter().append("path")
+    .data(province_3)
+    .enter().append("path")
+  
+  .attr("d", path)
+
+  svg.append("path")
+      .attr("class", "state-borders")
+      .attr("d", path(border));
+}
+ // svg.append("g")
+   // .attr("class", "states")
+   // .selectAll("path")
+   // .data(topojson.feature(us, us.objects.states).features)
+   // .enter().append("path")
+   //   .attr("d", path);
+
+
+   
+ 
+
+</script>
+    </body>
+    </html>

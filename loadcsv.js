@@ -65,5 +65,13 @@ var data = d3.csv("VDC_Syria_CASREP.csv", function(error, csv_data) {
   //console.log(filter9);
   var filter10 = selectDataMonth(selectDataYear(csv_data, dateYearSelection), dateMonthSelection);
   console.log(filter10);
+  var donutYear = 2017;
+  var donutMonth = 1;
 
+  var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
+  var donutdata = d3.nest()
+    .key(function(d) {return d.gender;})
+  .rollup(function (d) {return d.length;}).entries(donutYearMonth);
+  console.log(donutdata);
+  createDonut(donutdata);
 });
