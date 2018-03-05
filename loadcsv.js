@@ -43,28 +43,46 @@ var data = d3.csv("VDC_Syria_CASREP.csv", function(error, csv_data) {
   // Parse deathDate to date format for whole csv_data
     csv_data = csv_data.map(function (d) {d.deathDate = parseDate(d.deathDate);return d;});
 // "name","status","gender","province","birthPlace","deathDate","deathCause","actor"
-  //var filter_data = selectData(csv_data, dataSelector, value);
-  //var filter2 = selectDataTwice(csv_data, dataSelector, value, dataSelector2, value2);
-  //var filter3 = selectData(filter_data, dataSelector2, value2);
-  //var filter4 = selectData( selectData(csv_data, dataSelector, value), dataSelector2, value2);
+
   console.log("d3 function ran")
-  //console.log(filter_data); // only child females
-  //console.log(filter2); // child females in Daraa
-  //console.log(filter3); // second filtering on filter_data in province Daraa
-  //console.log(filter4); // selectData function on child-females then select province Daraa
-  //var filter5 = selectData(csv_data, dataSelector, value3);
-  //console.log(filter5); // select all child-males
-  //var filter6 = selectDataTwoValue(csv_data, dataSelector, value, value3);
-  //console.log(filter6);  //select both Child Male and Female
-  //check working of function by then selecting Female only.
-  //var filter7 = selectData(filter6, dataSelector, value);
-  //console.log(filter7); // now is the same with filter_data
-  //var filter8 = selectDataYear(filter7, dateYearSelection);
-  //console.log(filter8);
-  //var filter9 = selectDataMonth(filter8, dateMonthSelection);
-  //console.log(filter9);
-  var filter10 = selectDataMonth(selectDataYear(csv_data, dateYearSelection), dateMonthSelection);
-  console.log(filter10);
+
+
+  var year_min = d3.min(csv_data.map(function(d){
+    if(d.deathDate != null){
+      if(d.deathDate != "NA"){
+        return d.deathDate.getFullYear();
+      }
+    }
+  })) ;
+var year_max = d3.max(csv_data.map(function(d){
+  if(d.deathDate != null){
+    if(d.deathDate != "NA"){
+      return d.deathDate.getFullYear();
+    }
+  }
+})) ;
+//console.log(year_min+ " max year = "+year_max);
+
+var month_max = 11;
+var month_min = 0;
+
+function change(data){
+		// Allow the arrow keys to change the displayed year.
+    d3.select(window).on("keydown", function() {
+      switch (d3.event.keyCode) {
+        case 37: if(donutYear > year_min){donutYear = +donutYear -1}; break;
+        case 39: if(donutYear < year_max){donutYear = +donutYear +1}; break;
+        case 40: if(donutMonth > month_min){donutMonth = donutMonth -1}; break;
+        case 38: if(donutMonth < month_max){donutMonth = donutMonth +1}; break;
+      }
+      console.log("year"+donutYear +"month"+ donutMonth);
+	  //update(donutYear);
+      createDonut(donutdata);
+    });
+
+};
+change(data);
+
   var donutYear = 2017;
   var donutMonth = 1;
 
@@ -73,5 +91,5 @@ var data = d3.csv("VDC_Syria_CASREP.csv", function(error, csv_data) {
     .key(function(d) {return d.gender;})
   .rollup(function (d) {return d.length;}).entries(donutYearMonth);
   console.log(donutdata);
-  createDonut(donutdata);
+
 });
