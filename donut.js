@@ -97,3 +97,48 @@ function createDonut(dataset){(function(d3) {
 		.text(function(d) { return d; });
 
 })(window.d3);}
+
+function updateDonut(dataset){(function(d3) {
+	console.log(dataset)
+	
+	var width = 360;
+    var height = 360;
+    var radius = Math.min(width, height) / 2;
+
+    var color = d3.scaleOrdinal(d3.schemeCategory20c);
+
+    var donutWidth = 75
+
+	var pie = d3.pie()
+		.value(function(d) { return d.value; })
+		.sort(null);
+
+	var arc = d3.arc()
+		.innerRadius(radius - donutWidth)
+		.outerRadius(radius);
+
+	var svg = d3.selectAll('#chart')
+	
+	const paths = svg.selectAll('path')
+		.data(pie(dataset));
+
+
+	const paths2 = paths.enter()
+        .append('path')
+		.attr('d', arc)
+		.attr('fill', function(d, i) { 
+			return color(d.data.key);
+		})
+        .merge(paths);
+
+
+    paths2.data(pie(dataset))
+    	.append('path')
+    	.attr('d', arc)
+        .transition()
+        .duration(1000);
+    
+    paths.exit()
+        .remove();
+
+})(window.d3);}
