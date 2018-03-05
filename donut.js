@@ -48,7 +48,7 @@ function createDonut(dataset){(function(d3) {
 		.append('path')
 		.attr('d', arc)
 		.attr('fill', function(d, i) { 
-			return color(d.data.sala);
+			return color(d.data.key);
 		});
     
     path.on('mouseover', function(d) {
@@ -56,7 +56,7 @@ function createDonut(dataset){(function(d3) {
 			return d.value;
 		}));
 		var percent = Math.round(1000 * d.data.value / total) / 10;
-		tooltip.select('.label').html(d.data.sala);
+		tooltip.select('.label').html(d.data.key);
 		tooltip.select('.count').html(d.data.value);
 		tooltip.select('.percent').html(percent + '%');
 		tooltip.style('display', 'block');
