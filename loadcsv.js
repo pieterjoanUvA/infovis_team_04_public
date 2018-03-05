@@ -39,6 +39,8 @@ var dateMonthSelection = 0; // months start counting at 0, so december is 11
 var dataSelectorDeath = "deathDate";
 // Parse the date format of csv_data
 var parseDate = d3.timeParse("%Y-%m-%d");
+
+// BEGIN HUGE D3 CSV function!!!!
 var data = d3.csv("VDC_Syria_CASREP.csv", function(error, csv_data) {
   // Parse deathDate to date format for whole csv_data
     csv_data = csv_data.map(function (d) {d.deathDate = parseDate(d.deathDate);return d;});
@@ -68,12 +70,14 @@ var month_min = 0;
 var donutYear = 2017;
 var donutMonth = 1;
 var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
-  var donutdata = d3.nest()
-    .key(function(d) {return d.gender;})
+// initial donut data with important sortKeys for constant Gender position in legend.
+
+var donutdata = d3.nest()
+    .key(function(d) {return d.gender;}).sortKeys(d3.ascending)
     .rollup(function (d) {return d.length;}).entries(donutYearMonth);
-
+// initial call to createDonut svg
 createDonut(donutdata)
-
+// the keyboard change functions.
 function change(data, donutYear, donutMonth){
 		// Allow the arrow keys to change the displayed year.
     d3.select(window).on("keydown", function() {
@@ -88,39 +92,36 @@ function change(data, donutYear, donutMonth){
       if(donutYear == 2018){donutMonth = 0};
       updateDonutData(data, donutYear, donutMonth);
     });
-
 };
+// change() is called to get key listeners working. could be cleaner see
+// https://github.com/marc1404/uva-information-visualisation/blob/master/weather-assignment/index.html
 change(data, donutYear, donutMonth);
 function updateMapData(data, donutYear, donutMonth){
     var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
     var mapdataprovince = d3.nest().key( d => d.province )
         .rollup( d => d.length)
         .entries(donutYearMonth);
-    var finalarr ;
-    //var mapdataprovincegender = d3.nest().key( d => d.values.gender ).entries(mapdataprovince);
-    console.log(mapdataprovince);
-  //  console.log(mapdataprovincegender);
+//    console.log(mapdataprovince); // to see the created array for data selecting within svg elements.
 }
+// map data grouped first per province, then in province per gender, in nested array.
+// with count_lines(rollup)
 function updateMapData2(data, donutYear, donutMonth){
     var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
     var mapdataprovince = d3.nest().key( d => d.province ).key( g => g.gender )
         .rollup( d => d.length)
         .entries(donutYearMonth);
-    var finalarr ;
-    //var mapdataprovincegender = d3.nest().key( d => d.values.gender ).entries(mapdataprovince);
-    console.log(mapdataprovince);
+//    console.log(mapdataprovince);
     return mapdataprovince;
-  //  console.log(mapdataprovincegender);
 }
-updateMapData(data, donutYear, donutMonth);
-updateMapData2(data, donutYear, donutMonth);
-//var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
+// this function is called when a key is pressed and reselects a new subset of data of year/month
+// then calls the updateDonut function to update the values in the svg logic.
+// for map data a new call to updateMap(mapdataprovincegender) should be added.
 function updateDonutData(data, donutYear, donutMonth){
   var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
   var donutdata = d3.nest()
-    .key(function(d) {return d.gender;})
+    .key(function(d) {return d.gender;}).sortKeys(d3.ascending)
     .rollup(function (d) {return d.length;}).entries(donutYearMonth);
-  //console.log(donutdata)
   updateDonut(donutdata);
 }
+// END HUGE D3 CSV function.
 });
