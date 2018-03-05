@@ -91,14 +91,36 @@ function change(data, donutYear, donutMonth){
 
 };
 change(data, donutYear, donutMonth);
-
+function updateMapData(data, donutYear, donutMonth){
+    var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
+    var mapdataprovince = d3.nest().key( d => d.province )
+        .rollup( d => d.length)
+        .entries(donutYearMonth);
+    var finalarr ;
+    //var mapdataprovincegender = d3.nest().key( d => d.values.gender ).entries(mapdataprovince);
+    console.log(mapdataprovince);
+  //  console.log(mapdataprovincegender);
+}
+function updateMapData2(data, donutYear, donutMonth){
+    var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
+    var mapdataprovince = d3.nest().key( d => d.province )
+        //.rollup( d => d.length)
+        .entries(donutYearMonth);
+    var finalarr ;
+    //var mapdataprovincegender = d3.nest().key( d => d.values.gender ).entries(mapdataprovince);
+    console.log(mapdataprovince);
+    return mapdataprovince;
+  //  console.log(mapdataprovincegender);
+}
+updateMapData(data, donutYear, donutMonth);
+updateMapData2(data, donutYear, donutMonth);
 //var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
 function updateDonutData(data, donutYear, donutMonth){
   var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
   var donutdata = d3.nest()
     .key(function(d) {return d.gender;})
     .rollup(function (d) {return d.length;}).entries(donutYearMonth);
-  console.log(donutdata)
+  //console.log(donutdata)
   updateDonut(donutdata);
 }
 });
