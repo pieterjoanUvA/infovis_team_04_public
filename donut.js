@@ -60,8 +60,14 @@ function createDonut(dataset){(function(d3) {
 		tooltip.select('.count').html(d.data.value);
 		tooltip.select('.percent').html(percent + '%');
 		tooltip.style('display', 'block');
+		
     });
-    
+
+    path.on('mousemove', function() {
+		tooltip.style("top", d3.event.clientY+2)
+		tooltip.style("left", d3.event.clientX +2) 
+    });
+ 
     path.on('mouseout', function() {
 		tooltip.style('display', 'none');
     });
