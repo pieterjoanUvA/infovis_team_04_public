@@ -65,31 +65,34 @@ var year_max = d3.max(csv_data.map(function(d){
 
 var month_max = 11;
 var month_min = 0;
-
-function change(data){
+var donutYear = 2017;
+var donutMonth = 1;
+function change(data, donutYear, donutMonth){
 		// Allow the arrow keys to change the displayed year.
     d3.select(window).on("keydown", function() {
       switch (d3.event.keyCode) {
         case 37: if(donutYear > year_min){donutYear = +donutYear -1}; break;
         case 39: if(donutYear < year_max){donutYear = +donutYear +1}; break;
+
         case 40: if(donutMonth > month_min){donutMonth = donutMonth -1}; break;
         case 38: if(donutMonth < month_max){donutMonth = donutMonth +1}; break;
       }
       console.log("year"+donutYear +"month"+ donutMonth);
 	  //update(donutYear);
-      createDonut(donutdata);
+      if(donutYear == 2018){donutMonth = 0};
+      updateDonutData(data, donutYear, donutMonth);
     });
 
 };
-change(data);
+change(data, donutYear, donutMonth);
 
-  var donutYear = 2017;
-  var donutMonth = 1;
-
+//var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
+function updateDonutData(data, donutYear, donutMonth){
   var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
   var donutdata = d3.nest()
     .key(function(d) {return d.gender;})
   .rollup(function (d) {return d.length;}).entries(donutYearMonth);
   console.log(donutdata);
-
+  createDonut(donutdata);
+}
 });
