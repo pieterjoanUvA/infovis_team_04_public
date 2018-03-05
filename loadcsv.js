@@ -103,8 +103,8 @@ function updateMapData(data, donutYear, donutMonth){
 }
 function updateMapData2(data, donutYear, donutMonth){
     var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
-    var mapdataprovince = d3.nest().key( d => d.province )
-        //.rollup( d => d.length)
+    var mapdataprovince = d3.nest().key( d => d.province ).key( g => g.gender )
+        .rollup( d => d.length)
         .entries(donutYearMonth);
     var finalarr ;
     //var mapdataprovincegender = d3.nest().key( d => d.values.gender ).entries(mapdataprovince);
