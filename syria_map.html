@@ -1,88 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
+<style>   
+ h1 {
+  font-family:arial;
+  font-size:2em;
+  color:rgb(250, 10, 10);
+}
+.info {
+    font-family:arial;
+    font-size:    14px;
+    font-weight:  bold;
+    }
+#title {
+  position:absolute;
+  top: 10px;
+  left: 10px;
+}
+.tooltip {
+			box-shadow: 0 0 5px #999999;
+			display: none;
+			font-size: 12px;
+			padding: 10px;
+			position: fixed;
+			text-align: center;
+			pointer-events: none;
+			width: 80px;
+			z-index: 10;
+			line-height: 140%; /*Interlineado*/
+			font-family: "Open Sans", sans-serif;
+			font-weight: 300;
+			background: rgba(0, 0, 0, 0.8);
+			color: #fff;
+			border-radius: 2px;
+		}
 .states {
-	fill: #030116;
+	fill: #119bc5;
 	stroke: #fff;
 	stroke-width:2px;
 }
 .states :hover {
-  fill: red;
+  fill: rgb(72, 192, 240);
 }
 
 .state-borders {
   fill: none;
-  stroke: rgb(8, 247, 187);
-  stroke-width: 0.5px;
+  stroke: rgb(25, 193, 235);
+  stroke-width: 0.1px;
   stroke-linejoin: round;
   stroke-linecap: round;
   pointer-events: none;
 }
 
 </style>
-<svg width="960" height="600"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
 <body>
     <script type="text/javascript">
-var svg = d3.select("svg");
+//var width = 1100,
+ //   height = 900;
+//var svg = d3.select("body").append("svg")
+  //  .attr("width", width)
+   // .attr("height", height);
 //(function(){
-  //var margin = { top: 50, left: 50, right: 50, bottom: 50},
-  //height = 400 - margin.top - margin.bottom;
-  //width = 800 - margin.left -margin.right;
+  var margin = { top: 50, left: 50, right: 50, bottom: 50},
+  height = 800 - margin.top - margin.bottom;
+  width = 1500 - margin.left -margin.right;
 
-  //var svg = d3.select("#map")
-    //      .append("svg")
-      //    .attr("height", height+margin.top+margin.bottom)
-        //  .attr("width", width+margin.left+margin.right)
-          //.append("g")
-          //.attr("transform", "translate(" + margin.left + "," + margin.top+ ")");
+ var svg = d3.select("body")
+          .append("svg")
+         .attr("height", height+margin.top+margin.bottom)
+          .attr("width", width+margin.left+margin.right)
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top+ ")");
 d3.queue()
-    .defer(d3.json, "SYR.json")
+    .defer(d3.json, "SYR_adm1.json")
     .await(ready)
 //projection
 var projection = d3.geoMercator()
-.translate([-2900, 3550])
-.scale(5000)
-// create a geopath to project
+.translate([-3000, 3450])
+  .scale(5000)
+ //create a geopath to project
 var path = d3.geoPath()
     .projection(projection)
     
 
 function ready (error, data){
     console.log(data)
-    var province_1 = topojson.feature(data, data.objects["SYR_adm0-1"]).features
-    var province_2 = topojson.feature(data, data.objects["SYR_adm1-1"]).features
-    var province_3 = topojson.feature(data, data.objects["SYR_adm2-1"]).features
-    var border = topojson.mesh(data, data.objects["SYR_adm2-1"], function(a, b) { return a !== b; })
-    console.log(province_3)
+    var province = topojson.feature(data, data.objects["SYR_adm1-1"]).features
+    var border = topojson.mesh(data, data.objects["SYR_adm1-1"], function(a, b) { return a !== b; })
+    console.log(province)
     
  
     svg.append("g")
     .attr("class", "states")    
-    .selectAll(".province_3")
-    //.data(province_1)
-    //.enter().append("path")
-    //.data(province_2)
-    //.enter().append("path")
-    .data(province_3)
+    .selectAll(".province")
+    .data(province)
     .enter().append("path")
-  
-  .attr("d", path)
+    .attr("d", path) 
+   // .attr("title", function(d) { return d.properties.NAME_1; })
+   // Create tooltip when mouseover
+    .on("mouseover", function(d) {
+            var xPosition = d3.mouse(this)[0]-10;
+            var yPosition = d3.mouse(this)[1]-10;
+            svg.append("text")
+                .attr("class", "info")
+                .attr("id", "tooltip")
+                .attr("x", xPosition)
+                .attr("y", yPosition)
+                .text(d.properties.NAME_1);
+            d3.select(this)
+                .attr("class", "selected");
+        })
+        .on("mouseout", function(d) {
+            d3.select("#tooltip").remove();
+            d3.select(this)
+            .transition()
+            .attr("class", "states")
+            .duration(250)
+        });
 
+
+
+   // .on('mouseover', function(d){
+   //     var name = d.properties.NAME_1;
+   //     d3.select(this)
+   //     .append("text")
+   //     .text(name)
+     //   .attr("class", "h1")
+	//	});
   svg.append("path")
       .attr("class", "state-borders")
       .attr("d", path(border));
 }
- // svg.append("g")
-   // .attr("class", "states")
-   // .selectAll("path")
-   // .data(topojson.feature(us, us.objects.states).features)
-   // .enter().append("path")
-   //   .attr("d", path);
 
-
-   
  
 
 </script>
