@@ -27,6 +27,7 @@ function selectDataMonth(alreadyFiltered,  dateMonthSelection){var filtered = al
         //console.log(d.deathDate.getDate()); //shows single dates in console of selected in month
         return d;} }
     }); return filtered;}
+
 // test variables for testing the selection functions
 var value = "Child - Female";
 var dataSelector = 'gender';
@@ -71,7 +72,21 @@ var donutYear = 2017;
 var donutMonth = 1;
 var donutYearMonth = selectDataMonth(selectDataYear(csv_data, donutYear), donutMonth);
 // initial donut data with important sortKeys for constant Gender position in legend.
+// Source: http://bl.ocks.org/phoebebright/raw/3176159/
+// Sorting Nest in custom order:
+/* Status, fortuitously, can be sorted in straing ascending order, but Priority requires a custom order. Create an list in the order you want and use indexOf to create the order comparaitor function.
 
+var priority_order = ['MUST', "SHOULD", 'COULD', 'WISH'];
+var nested_data = d3.nest()
+.key(function(d) { return d.status; }).sortKeys(d3.ascending)
+.key(function(d) { return d.priority; }).sortKeys(function(a,b) { return priority_order.indexOf(a) - priority_order.indexOf(b); })
+.rollup(function(leaves) { return leaves.length; })
+.entries(csv_data);
+*/ // end code example, useable for Gender Sorting, if wishable to do so.
+// another clear site, usefull for tooltips complete in an array to print:
+// http://learnjsdata.com/group_data.html
+// and there is an output difference between .map(data) and .entries(data)
+// see : http://bl.ocks.org/shancarter/raw/4748131/ for testing purposes.
 var donutdata = d3.nest()
     .key(function(d) {return d.gender;}).sortKeys(d3.ascending)
     .rollup(function (d) {return d.length;}).entries(donutYearMonth);
