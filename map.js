@@ -4,9 +4,19 @@
   //  .attr("mapwidth", mapwidth)
    // .attr("mapheight", mapheight);
 //(function(){
+// createMap function to draw initial tooltip data....
 function createMap(dataset){
-  return dataset;
+  const paths = svg.selectAll('path')
+    .data(dataset);
+        paths.on('mouseover', function(d) {
+                maptooltip.select('.count').html(d.value)//(d.data.value);
+                maptooltip.select('.province').html(d.key)
+                maptooltip.style('display', 'block');
+        })
+    paths.exit()
+        .remove();
 }
+//var dataset = createMap(mapdatapremissing)
 var maptooltip = d3.select('#map')
   .append('div')
   .attr('class', 'tooltip');
