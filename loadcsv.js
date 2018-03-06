@@ -33,6 +33,37 @@ function removeProvince(alreadyFiltered){var filtered = alreadyFiltered.filter(f
           //return d;
         }else{return d;}
       }); return filtered;}
+
+function provinceSortMissing(donutYearMonth){
+      // MISSING PROVINCE FIXES for map total death.
+      // Defines the fixed needed order, then searches for the missing provinces
+      // then adds one element to the array, which does result in a count of one,
+      // but then the order can be fixed, so a little untrueness exists.
+      // Too bad in my opinion (PieterJoan)
+      var  province = ["Hasakeh", "Aleppo", "Raqqa", "Sweida", "Damascus", "Daraa", "Deir Ezzor", "Hama", "Homs", "Idlib", "Lattakia", "Quneitra", "Damascus Suburbs", "Tartous"]
+      var priority_order = province;
+      var mapdatapremissing = donutYearMonth;
+      var existingProvince = [];
+      for(var i=0;i<mapdatapremissing.length;i++){
+          existingProvince[i] = mapdatapremissing[i]['province'];
+      }
+      // check which day's data is missing; then create a dummy object and push it to the dummyData object
+      for(var i=0;i<province.length;i++){
+      //  console.log(province[i])
+         if(existingProvince.indexOf(province[i]) < 0){
+             var dummyObject = {
+              "province": province[i],
+              "value": 0
+             };
+             mapdatapremissing.push(dummyObject);
+         }
+      }
+      // SORT in predefined order, after dirty fix of missing province.
+      mapdatapremissing = d3.nest().key( d => d.province )
+            .sortKeys(function(a,b) { return priority_order.indexOf(a) - priority_order.indexOf(b); })
+            .rollup(d=>d.length).entries(mapdatapremissing);
+      return mapdatapremissing;
+}
 // test variables for testing the selection functions
 var value = "Child - Female";
 var dataSelector = 'gender';
@@ -45,7 +76,7 @@ var dateMonthSelection = 0; // months start counting at 0, so december is 11
 var dataSelectorDeath = "deathDate";
 // Parse the date format of csv_data
 var parseDate = d3.timeParse("%Y-%m-%d");
-
+var mapdatapremissing ;
 // BEGIN HUGE D3 CSV function!!!!
 var data = d3.csv("VDC_Syria_CASREP.csv", function(error, csv_data) {
   // Parse deathDate to date format for whole csv_data
@@ -98,6 +129,8 @@ var donutdata = d3.nest()
     .rollup(function (d) {return d.length;}).entries(donutYearMonth);
 // initial call to createDonut svg
 createDonut(donutdata)
+var mapdatapremissing =  provinceSortMissing(donutYearMonth);
+createMap(mapdatapremissing);
 // the keyboard change functions.
 function change(data, donutYear, donutMonth){
 		// Allow the arrow keys to change the displayed year.
@@ -142,34 +175,7 @@ function updateDonutData(data, donutYear, donutMonth){
   var donutdata = d3.nest()
     .key(function(d) {return d.gender;}).sortKeys(d3.ascending)
     .rollup(function (d) {return d.length;}).entries(donutYearMonth);
-// MISSING PROVINCE FIXES for map total death.
-// Defines the fixed needed order, then searches for the missing provinces
-// then adds one element to the array, which does result in a count of one,
-// but then the order can be fixed, so a little untrueness exists.
-// Too bad in my opinion (PieterJoan)
-var  province = ["Hasakeh", "Aleppo", "Raqqa", "Sweida", "Damascus", "Daraa", "Deir Ezzor", "Hama", "Homs", "Idlib", "Lattakia", "Quneitra", "Damascus Suburbs", "Tartous"]
-var priority_order = province;
-var mapdatapremissing = donutYearMonth;
-var existingProvince = [];
-for(var i=0;i<mapdatapremissing.length;i++){
-    existingProvince[i] = mapdatapremissing[i]['province'];
-}
-// check which day's data is missing; then create a dummy object and push it to the dummyData object
-for(var i=0;i<province.length;i++){
-//  console.log(province[i])
-   if(existingProvince.indexOf(province[i]) < 0){
-       var dummyObject = {
-        "province": province[i],
-        "value": 0
-       };
-       mapdatapremissing.push(dummyObject);
-   }
-}
-// SORT in predefined order, after dirty fix of missing province.
-mapdatapremissing = d3.nest().key( d => d.province )
-      .sortKeys(function(a,b) { return priority_order.indexOf(a) - priority_order.indexOf(b); })
-      .rollup(d=>d.length).entries(mapdatapremissing);
-
+mapdatapremissing = provinceSortMissing(donutYearMonth);
 // fix missing province and add Value 0 to selection with missing province
 //console.log(mapdatapremissing)
 // END MISSING AND Sorting

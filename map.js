@@ -4,6 +4,9 @@
   //  .attr("mapwidth", mapwidth)
    // .attr("mapheight", mapheight);
 //(function(){
+function createMap(dataset){
+  return dataset;
+}
 var maptooltip = d3.select('#map')
   .append('div')
   .attr('class', 'tooltip');
