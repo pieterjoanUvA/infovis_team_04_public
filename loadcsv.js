@@ -35,6 +35,7 @@ function removeProvince(alreadyFiltered){var filtered = alreadyFiltered.filter(f
       }); return filtered;}
 
 function provinceSortMissing(donutYearMonth){
+      // source: https://stackoverflow.com/questions/28958249/how-to-add-missing-items-into-javascript-array
       // MISSING PROVINCE FIXES for map total death.
       // Defines the fixed needed order, then searches for the missing provinces
       // then adds one element to the array, which does result in a count of one,
