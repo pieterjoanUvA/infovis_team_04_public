@@ -1,0 +1,96 @@
+html, body {
+  height: 100%;
+}
+
+h1 {
+  font-size: 15px;
+  text-align: center;
+}
+
+rect {
+  stroke-width: 2;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 25%;
+  background-color: #f5f5f5;
+}
+
+.jumbotron {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+}
+
+
+.legend {
+  font-size: 13px;
+}
+
+.customtooltip {
+  box-shadow: 0 0 5px #999999;
+  display: none;
+  font-size: 12px;
+  padding: 10px;
+  position: fixed;
+  text-align: center;
+  pointer-events: none;
+  width: 80px;
+  z-index: 10;
+  line-height: 140%; /*Interlineado*/
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.gender {
+  font-weight: 400;
+}
+.province {
+  font-weight: 600;
+}
+
+.states {
+  fill: #119bc5;
+  stroke: #fff;
+  stroke-width:0.5px;
+}
+
+.state-borders {
+  fill: none;
+  stroke: rgb(25, 193, 235);
+  stroke-width: 0.1px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+#toprow {
+  height: calc(75% - 56px);
+  width: 100%;
+  margin: 0;
+}
+
+#ex1Slider .slider-selection {
+	background: #97caf6;
+}
+
+#botrow {
+  background-color: rgb(33, 37, 41);
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+#year {
+  position: absolute;
+}
