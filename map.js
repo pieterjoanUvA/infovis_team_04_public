@@ -138,7 +138,6 @@ maptooltip.style('display', 'none');
 function updateMap(datasetIN){
 //console.log(dataset);
 //console.log(dataset);
-var dataload = d3.json("SYR_adm1.json", function(data){
   var  province = ["Hasakeh", "Aleppo", "Raqqa", "Sweida", "Damascus", "Daraa", "Deir Ezzor", "Hama", "Homs", "Idlib", "Lattakia", "Quneitra", "Damascus Suburbs", "Tartous"]
 
 var priority_order = province;
@@ -186,7 +185,6 @@ var dataset = datasetIN;
           paths.exit()
               .remove();
         //einde json load functie...blergh
-        });
 
 
 //  maptooltip.exit().remove();
