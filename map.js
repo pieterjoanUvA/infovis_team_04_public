@@ -7,6 +7,7 @@
 // createMap function to draw initial tooltip data....
 function createMap(dataset){
   const paths = svg.selectAll('path')
+
     .data(dataset);
         paths.on('mouseover', function(d) {
                 maptooltip.select('.count').html(d.value)//(d.data.value);
@@ -15,6 +16,7 @@ function createMap(dataset){
         })
     paths.exit()
         .remove();
+        //console.log(dataset)
 }
 //var dataset = createMap(mapdatapremissing)
 var maptooltip = d3.select('#map')
