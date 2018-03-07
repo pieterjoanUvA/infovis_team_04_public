@@ -1,23 +1,25 @@
-var parseDate = d3.timeParse("%Y-%m-%d");
-
 Date.prototype.getWeek = function()
 {
+  //Add functionality to the already build in Date object (new method to get the Week)
   var onejan = new Date(this.getFullYear(),0,1);
   return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
 }
 
 function timerefresh(timevalue)
 {
-  //update the global timevalue and maptext
+  //This is the main event handler for sliding the slider and updating the global time variables.
   date.setTime(timevalue);
   lowerdate.setTime(parseInt(timevalue)-timespan);
   upperdate.setTime(parseInt(timevalue)+timespan);
-  //update the text
+  //Set the text of the timerange.
   date_label.text(lowerdate.toDateString()+" - "+upperdate.toDateString());
 }
 
 function datarefresh(timevalue)
 {
+  //This is the main event handler for releasing the slider thus changing the time.
+
+  //UPDATING MAP DATA
   d3.csv("mapdata.csv", function(error, csv_data)
   {
     //Parse the DataTime
@@ -32,10 +34,14 @@ function datarefresh(timevalue)
     data.shift();
     updateMap(data);
   });
+  //UPDATING DONUT CHART DATA
+  //bla
 }
 
 function staticrefresh()
 {
+  //Non relevant function
+
   //Load the data aggregated by week
   // d3.csv("VDC_byweek.csv", function(error, csv_data)
   // {
