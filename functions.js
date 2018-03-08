@@ -16,7 +16,7 @@ function timerefresh(timevalue)
 }
 // I heard there is a js.window variable storage option, might be better.
 var don1svgRanOnce = 0;
-
+var barRanOnce = 0 ;
 function datarefresh(timevalue)
 {
   //This is the main event handler for releasing the slider thus changing the time.
@@ -64,6 +64,30 @@ function datarefresh(timevalue)
   });
   //UPDATING BAR CHART DATA
   //bla
+
+  d3.csv("deathcausedata.csv", function(error, csv_data)
+  {
+    //Parse the DataTime
+    bardata = csv_data.filter(function (d) {
+      if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
+      {
+        return d;
+      }
+    })[0];
+    bardata = Object.entries(bardata);
+    //data.shift(); to remove Year and Week Columns from array to get only province data selected.
+    bardata.shift();
+    bardata.shift();
+    //console.log(don1svgdata)
+    // RunOnce function for initial draw of donut with data.
+    if (barRanOnce == 0)
+    {
+      barRanOnce = 1;
+      createBar(bardata)
+    };
+
+    updateBar(bardata);
+  });
 }
 
 function staticrefresh()

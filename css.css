@@ -94,3 +94,24 @@ rect {
 #year {
   position: absolute;
 }
+/*BarChartDeathCause Variables*/
+.bar {
+  fill: steelblue;
+}
+.bar:hover {
+  fill: brown;
+}
+.bar_text {
+  fill: white;
+  font: 8px sans-serif;
+}
+.axis--y path {
+  }
+.axis--x path {
+}
+.axis line {
+  fill: black;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+  /*END BarChartDeathCause Variables*/

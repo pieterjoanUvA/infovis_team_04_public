@@ -3,7 +3,7 @@
 //Code that runs on initialization
 var statsvg = leftpanel.append("svg")
                 .attr("width","100%")
-                .attr("height","100%")
+                .attr("height","40%")
                 .style("border","1px solid black");
 //Raw dump of previous version
 
@@ -101,7 +101,6 @@ function createDonut(data){(function(d3) {
 			var legend_offset =  legend_height * color.domain().length / 2;
 			var horz = -2 * legendRectSize;
 			var vert = i * legend_height - legend_offset;
-      console.log(horz)
       return 'translate(' + horz + ',' + vert + ')';
 		});
 
@@ -169,3 +168,162 @@ function updateDonut(dataset){(function(d3) {
         .remove();
       //  paths2.exit().remove();
 })(window.d3);}
+///////////// BAR CHART //////////////
+
+var bardiv = leftpanel.append('div')
+    .attr('id', 'bar').append("svg")
+                .attr("width","100%")
+                .attr("height","40%")
+                .style("border","1px solid black");
+
+var barmargin = {top: 5, right: 5, bottom: 80, left: 40};
+var barsvgwidth = 250;
+var barsvgheight = 250;
+
+//new method
+var barsvg = leftpanel.select('#bar')
+  .select('svg')
+  .attr("width", barsvgwidth)
+  .attr("height", barsvgheight);
+
+var barwidth = +barsvg.attr("width") - barmargin.left - barmargin.right;
+var barheight = +barsvg.attr("height") - barmargin.top - barmargin.bottom;
+
+var gbar = barsvg.append("g")
+             .attr("transform", "translate(" + barmargin.left + "," + barmargin.top + ")");
+
+/////////////// new stuff ///////////////
+///////// in bar.js ?? //////////////////
+/////////////////////////////////////////
+
+
+function createBar(bardata){
+  var bar_rect =  gbar.selectAll(".bar")
+  var bar_text =  gbar.selectAll(".bar_text")
+
+  ////////// barx and bary domain set functions for auto scaling.
+  var barx = d3.scaleBand().rangeRound([0, barwidth]).padding(0.1),
+    bary = d3.scaleLinear().rangeRound([barheight, 0]);
+  barx.domain(bardata.map(function(d) { return d[0]; }));
+  bary.domain([d3.min(bardata, function(v) { return v[1]; }),d3.max(bardata, function(v) { return v[1]; })]);
+/*      if (v[1] >= 0){
+        return - .7; }else{
+           v[1] = v[1] -.7; return v[1] -.7;
+         }
+       }),       */
+
+
+  bar_rect.data(bardata).enter().append("rect")
+  .attr("class", "bar")
+    .attr("x", function(d) { return barx(d[0]); })
+    .attr("height", function(v) { return barheight - bary(v[1]); })
+   .attr("y", function(d) { return bary(d[1]); })
+   .attr("width", barx.bandwidth());
+  bar_text.data(bardata).enter().append("text")
+    .attr("class", "bar_text")
+    .attr("text-anchor", "middle")
+    .attr("font-size", "14px")
+    .attr("fill", "white")
+      .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
+      .attr("y", function(d) { return bary(d[1]) + 20; })
+     .text(function(d) { return d[1]; });
+
+  gbar.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + barheight + ")")
+      .call(d3.axisBottom(barx))
+          .selectAll("text")
+          .style("text-anchor", "end")
+          .attr("dx", "-0.6em")
+          .attr("dy", "0.7em")
+          .attr("y", "0em")
+          .attr("transform", "rotate(-65)");;
+
+  gbar.append("g")
+      .attr("class", "axis axis--y")
+   .call(d3.axisLeft(bary).ticks(10, " "))
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", "0.71em")
+      .attr("text-anchor", "end")
+    .attr("fill", "black")
+      .text("# Casualties");
+console.log('createBar has run')
+}
+
+function updateBar(bardata){
+// PERFORM SOME DATA stuff
+//  bardata = bardata.map(function(d){
+//    d.value = Math.round(d.value *10)/10;
+//
+//    return d ;
+//  }
+
+////////// barx and bary domain set functions for auto scaling.
+var barx = d3.scaleBand().rangeRound([0, barwidth]).padding(0.1),
+  bary = d3.scaleLinear().rangeRound([barheight, 0]);
+  barx.domain(bardata.map(function(d) { return d[0]; }));
+  bary.domain([d3.min(bardata, function(v) { return v[1]; }),d3.max(bardata, function(v) { return v[1]; })]);
+
+//select all bars on the graph, take them out, and exit the previous data set.
+//then you can add/enter the new data set
+
+
+//Join
+var bar_rect =  d3.selectAll(".bar").data(bardata);
+var bar_text = gbar.selectAll(".bar_text").data(bardata);
+var xbalk = gbar.selectAll(".axis--x").data(bardata);
+var ybalk = gbar.selectAll(".axis--y").data(bardata);
+
+bar_rect.exit().remove();
+bar_text.exit().remove();
+xbalk.exit().remove();
+ybalk.exit().remove();
+
+//UPDATE attributes + do transition
+bar_rect.transition().duration(400)
+.attr("x", function(d) { return barx(d[0]); })
+.attr("y", function(d) { return bary(d[1]); })
+.attr("width", barx.bandwidth())
+.attr("height", function(v) { return barheight - bary(v[1]); })
+
+bar_text.transition().duration(400)
+.attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
+.attr("y", function(d) { return bary(d[1]) + 20; })
+.text(function(d) { return d[1]; });
+
+
+
+ybalk.transition().duration(400)
+.call(d3.axisLeft(bary).ticks(10, " "))
+
+//ENTER
+bar_rect.enter().selectAll(".bar")
+.attr("x", function(d) { return barx(d[0]); })
+.attr("y", function(d) { return bary(d[1]); })
+.attr("width", barx.bandwidth())
+.attr("height", function(v) { return barheight - bary(v[1]); })
+
+bar_text.enter().append("text")
+.attr("class", "bar_text")
+.attr("text-anchor", "middle")
+.attr("font-size", "14px")
+  .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
+  .attr("y", function(d) { return bary(d[1]) + 20; })
+.attr("fill", "white")
+.text(function(d) { return d[0]; });
+
+gbar.enter().append("g")
+     .attr("class", "axis axis--y")
+   .call(d3.axisLeft(bary).ticks(10, " "))
+   .append("text")
+     .attr("transform", "rotate(-90)")
+     .attr("y", 6)
+     .attr("dy", "0.71em")
+     .attr("text-anchor", "end")
+   .attr("fill", "black")
+     .text("# Casualties");
+
+
+}
