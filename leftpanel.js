@@ -165,8 +165,8 @@ var bardiv = leftpanel.append('div')
                 .attr("height","60%")
                 .style("border","1px solid black");
 
-var barmargin = {top: 10, right: 10, bottom: 150, left: 60};
-var barsvgwidth = 250;
+var barmargin = {top: 10, right: 10, bottom: 150, left: 50};
+var barsvgwidth = 270;
 var barsvgheight = 280;
 
 //new method
@@ -201,7 +201,7 @@ function createBar(bardata){
   bar_rect.data(bardata).enter().append("rect")
   .attr("class", "bar")
     .attr("x", function(d) { return barx(d[0]); })
-    .attr("height", function(v) { return barheight - bary(v[1]); })
+    .attr("height", function(v) { return barheight - bary(+v[1]); })
    .attr("y", function(d) { return bary(+d[1]); })
    .attr("width", barx.bandwidth());
   bar_text.data(bardata).enter().append("text")
@@ -210,7 +210,7 @@ function createBar(bardata){
     .attr("font-size", "8px")
     .attr("fill", "black")
       .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
-      .attr("y", function(d) { return bary(+d[1]) - 40; })
+      .attr("y", function(d) { return bary(+d[1]) - 2; })
      .text(function(d) { return d[1]; });
 
   gbar.append("g")
@@ -278,7 +278,7 @@ bar_rect.transition().duration(400)
 
 bar_text.transition().duration(400)
 .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
-.attr("y", function(d) { return bary(+d[1]) + 20; })
+.attr("y", function(d) { return bary(+d[1]) - 2; })
 .text(function(d) { return d[1]; });
 
 
@@ -298,9 +298,9 @@ bar_text.enter().append("text")
 .attr("text-anchor", "middle")
 .attr("font-size", "14px")
   .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
-  .attr("y", function(d) { return bary(+d[1]) - 40; })
+  .attr("y", function(d) { return bary(+d[1]) - 2; })
 .attr("fill", "white")
-.text(function(d) { return d[0]; });
+.text(function(d) { return d[1]; });
 
 gbar.enter().append("g")
      .attr("class", "axis axis--y")
