@@ -102,7 +102,7 @@ rect {
   fill: brown;
 }
 .bar_text {
-  fill: white;
+  fill: black;
   font: 8px sans-serif;
 }
 .axis--y path {
