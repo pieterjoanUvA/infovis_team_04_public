@@ -40,7 +40,7 @@ function datarefresh(timevalue)
       }
     })[0];
     data = parseArray(data,14);
-    updateMap(data);
+    //updateMap(data);
   });
 
   //UPDATING DONUT CHART DATA

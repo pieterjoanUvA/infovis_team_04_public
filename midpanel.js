@@ -23,7 +23,7 @@ var mapsvg = midpanel.append("svg")
    // .remove();
 //}
 
-//filter dataset by year week 
+//filter dataset by year week
 var year =2012
 var week = 3
 
@@ -48,13 +48,12 @@ function ready(error, data, dataset)
   var province = topojson.feature(data, data.objects["SYR_adm1-1"]).features
   var border = topojson.mesh(data, data.objects["SYR_adm1-1"], function(a, b) { return a !== b; })
   var dataset = dataset.filter(function(d)
-  { //filter by year and week  
+  { //filter by year and week
     if(d["year"] == year && d["week"] == week)  {return d}})
   //Get values from csv file
   for (i=0; i<province.length;i++) { // for each geometry object
   for (j=0; j<dataset.length; j++) { if ( province[i].properties.NAME_1 == dataset[j].province) {
     province[i].properties.count=dataset[j].count
-    console.log(province[i].properties.count)
   }}}
 
     // function loops through all the data values from the current data attribute
@@ -71,7 +70,7 @@ function ready(error, data, dataset)
     // create a linear scale
     var color =  d3.scaleLinear()
     .domain([valuesIn[0], valuesIn[1]])  // input uses min and max values
-      .range([.3, 1]);   // output for opacity between .3 and 1 
+      .range([.3, 1]);   // output for opacity between .3 and 1
     return color(valueIn);  // return that number to the caller
 }
 ///////////////////////////
@@ -117,5 +116,5 @@ function ready(error, data, dataset)
   mapsvg.append("path")
     .attr("class", "state-borders")
     .attr("d", path(border));
- 
+
  };
