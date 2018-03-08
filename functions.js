@@ -53,7 +53,7 @@ function datarefresh(timevalue)
         return d;
       }
     })[0];
-    don1svgdata = data = parseArray(don1svgdata,4);
+    don1svgdata = parseArray(don1svgdata,4);
     // RunOnce function for initial draw of donut with data.
     if (don1svgRanOnce == 0)
     {
@@ -74,18 +74,12 @@ function datarefresh(timevalue)
         return d;
       }
     })[0];
-    bardata = Object.entries(bardata);
-    //data.shift(); to remove Year and Week Columns from array to get only province data selected.
-    bardata.shift();
-    bardata.shift();
-    //console.log(don1svgdata)
-    // RunOnce function for initial draw of donut with data.
+    bardata = parseArray(bardata,10);
     if (barRanOnce == 0)
     {
       barRanOnce = 1;
-      createBar(bardata)
+      createBar(bardata);
     };
-
     updateBar(bardata);
   });
 }

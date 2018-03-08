@@ -195,7 +195,7 @@ function createBar(bardata){
   ////////// barx and bary domain set functions for auto scaling.
 
   barx.domain(bardata.map(function(d) { return d[0]; }));
-  bary.domain([d3.min(bardata, function(v) { return v[1]; }),d3.max(bardata, function(v) { return v[1]; })]);
+  bary.domain([d3.min(bardata, function(v) { return parseInt(v[1]); }),d3.max(bardata, function(v) { return parseInt(v[1]); })]);
 
 //console.log(d3.max(bardata, d => d[1]))
 
@@ -249,8 +249,8 @@ function updateBar(bardata){
 ////////// barx and bary domain set functions for auto scaling.
 
   barx.domain(bardata.map(function(d) { return d[0]; }));
-  bary.domain([d3.min(bardata, function(v) { return v[1]; }),
-                d3.max(bardata, function(v) { return v[1]; })]);
+  bary.domain([d3.min(bardata, function(v) { return parseInt(v[1]); }),
+                d3.max(bardata, function(v) { return parseInt(v[1]); })]);
 //console.log(bary.domain());
 //select all bars on the graph, take them out, and exit the previous data set.
 //then you can add/enter the new data set
