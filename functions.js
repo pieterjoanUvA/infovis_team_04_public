@@ -66,11 +66,15 @@ function datarefresh(timevalue)
   //bla
 }
 
-function staticrefresh()
+function initialrefresh()
 {
-  //Non relevant function
+  //Main event handler upon first time loading the page.
 
-  //Load the data aggregated by week
+  //INITIAL DATA REFRESH
+  timerefresh(unix);
+  datarefresh(unix);
+
+  //LOAD STATIC DATA
   // d3.csv("VDC_byweek.csv", function(error, csv_data)
   // {
   //   parseTime = d3.timeParse("%Y/%W")
