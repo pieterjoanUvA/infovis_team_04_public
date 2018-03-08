@@ -18,5 +18,8 @@ var date = new Date(unix);
 var lowerdate = new Date((unix-timespan));
 var upperdate = new Date((unix+timespan));
 
+var don1svgRanOnce = 0;
+var barRanOnce = 0 ;
+
 //Interchanged Elements (important for updating the data-view)
 var date_label = midpanel.select("#year");
