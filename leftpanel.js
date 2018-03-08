@@ -197,7 +197,7 @@ function createBar(bardata){
   barx.domain(bardata.map(function(d) { return d[0]; }));
   bary.domain([d3.min(bardata, function(v) { return v[1]; }),d3.max(bardata, function(v) { return v[1]; })]);
 
-console.log(d3.max(bardata, d => d[1]))
+//console.log(d3.max(bardata, d => d[1]))
 
   bar_rect.data(bardata).enter().append("rect")
   .attr("class", "bar")
@@ -251,10 +251,11 @@ function updateBar(bardata){
   barx.domain(bardata.map(function(d) { return d[0]; }));
   bary.domain([d3.min(bardata, function(v) { return v[1]; }),
                 d3.max(bardata, function(v) { return v[1]; })]);
-console.log(bary.domain());
+//console.log(bary.domain());
 //select all bars on the graph, take them out, and exit the previous data set.
 //then you can add/enter the new data set
-console.log(d3.max(bardata, d => d[1]))
+//console.log(bardata.map(function (d){return d[1]}))
+//console.log(d3.max(bardata, d => d[1]))
 
 //Join
 var bar_rect =  d3.selectAll(".bar").data(bardata);
