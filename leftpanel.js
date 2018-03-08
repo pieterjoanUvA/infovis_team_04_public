@@ -165,9 +165,9 @@ var bardiv = leftpanel.append('div')
                 .attr("height","60%")
                 .style("border","1px solid black");
 
-var barmargin = {top: 10, right: 10, bottom: 150, left: 50};
-var barsvgwidth = 270;
-var barsvgheight = 280;
+var barmargin = {top: 10, right: 10, bottom: 170, left: 50};
+var barsvgwidth = 340;
+var barsvgheight = 340;
 
 //new method
 var barsvg = leftpanel.select('#bar')
@@ -207,7 +207,7 @@ function createBar(bardata){
   bar_text.data(bardata).enter().append("text")
     .attr("class", "bar_text")
     .attr("text-anchor", "middle")
-    .attr("font-size", "8px")
+    .attr("font-size", "11px")
     .attr("fill", "black")
       .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
       .attr("y", function(d) { return bary(+d[1]) - 2; })
@@ -222,19 +222,22 @@ function createBar(bardata){
           .attr("dx", "-0.6em")
           .attr("dy", "0.7em")
           .attr("y", "0em")
+          .attr("font-size", "12px")
           .attr("transform", "rotate(-65)");;
 
   gbar.append("g")
       .attr("class", "axis axis--y")
-   .call(d3.axisLeft(bary).ticks(10, ",.0f"))
+   .call(d3.axisLeft(bary).ticks(4, ",.0f"))
+      .attr("font-size", "12px")
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -30)
+      .attr("y", -25)
       .attr("dy", "-0.71em")
       .attr("dx", "-0.71em")
       .attr("x", 0)
+      .attr("font-size", "14px")
       .attr("text-anchor", "end")
-    .attr("fill", "black")
+      .attr("fill", "black")
       .text("# Casualties");
 
 }
@@ -284,7 +287,8 @@ bar_text.transition().duration(400)
 
 
 ybalk.transition().duration(400)
-.call(d3.axisLeft(bary).ticks(10, ".0f"))
+.call(d3.axisLeft(bary).ticks(4, ".0f"))
+.attr("font-size", "12px")
 
 //ENTER
 bar_rect.enter().selectAll(".bar")
@@ -296,7 +300,7 @@ bar_rect.enter().selectAll(".bar")
 bar_text.enter().append("text")
 .attr("class", "bar_text")
 .attr("text-anchor", "middle")
-.attr("font-size", "14px")
+//.attr("font-size", "14px")
   .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
   .attr("y", function(d) { return bary(+d[1]) - 2; })
 .attr("fill", "white")
@@ -304,10 +308,11 @@ bar_text.enter().append("text")
 
 gbar.enter().append("g")
      .attr("class", "axis axis--y")
-   .call(d3.axisLeft(bary).ticks(10, ",.0f"))
+   .call(d3.axisLeft(bary).ticks(4, ",.0f"))
+   .attr("font-size", "12px")
    .append("text")
      .attr("transform", "rotate(-90)")
-     .attr("y", -6)
+     .attr("y", -25)
      .attr("dy", "-0.71em")
      .attr("dx", "-0.71em")
      .attr("x", 4)
