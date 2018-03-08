@@ -14,6 +14,8 @@ function timerefresh(timevalue)
   //Set the text of the timerange.
   date_label.text(lowerdate.toDateString()+" - "+upperdate.toDateString());
 }
+// I heard there is a js.window variable storage option, might be better.
+var don1svgRanOnce = 0;
 
 function datarefresh(timevalue)
 {
@@ -30,11 +32,37 @@ function datarefresh(timevalue)
       }
     })[0];
     data = Object.entries(data);
+    //data.shift(); to remove Year and Week Columns from array to get only province data selected.
     data.shift();
     data.shift();
     updateMap(data);
   });
   //UPDATING DONUT CHART DATA
+  //bla
+  d3.csv("genderdata.csv", function(error, csv_data)
+  {
+    //Parse the DataTime
+    don1svgdata = csv_data.filter(function (d) {
+      if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
+      {
+        return d;
+      }
+    })[0];
+    don1svgdata = Object.entries(don1svgdata);
+    //data.shift(); to remove Year and Week Columns from array to get only province data selected.
+    don1svgdata.shift();
+    don1svgdata.shift();
+    //console.log(don1svgdata)
+    // RunOnce function for initial draw of donut with data.
+    if (don1svgRanOnce == 0)
+    {
+      don1svgRanOnce = 1;
+      createDonut(don1svgdata)
+    };
+
+    updateDonut(don1svgdata);
+  });
+  //UPDATING BAR CHART DATA
   //bla
 }
 
