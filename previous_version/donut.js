@@ -27,8 +27,6 @@ var tooltip = d3.select('#chart')
 function createDonut(dataset){(function(d3) {
     'use strict';
 
-
-
 	tooltip.append('div')
 		.attr('class', 'label');
 
@@ -117,8 +115,6 @@ function createDonut(dataset){(function(d3) {
 })(window.d3);}
 
 function updateDonut(dataset){(function(d3) {
-	//console.log(dataset)
-
     var color = d3.scaleOrdinal(d3.schemeCategory20c);
 
 
