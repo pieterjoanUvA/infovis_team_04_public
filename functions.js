@@ -5,7 +5,7 @@ Date.prototype.getWeek = function()
   return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
 }
 
-function parseArray(obj,length)
+function parse2Array(obj,length)
 {
   //Takes an object (retrieved row) as input and transforms it to an array of key-value pairs.
   //Also filters empty data to return an empty array instead
@@ -39,7 +39,7 @@ function datarefresh(timevalue)
         return d;
       }
     })[0];
-    data = parseArray(data,14);
+    data = parse2Array(data,14);
     //updateMap(data);
   });
 
@@ -53,7 +53,13 @@ function datarefresh(timevalue)
         return d;
       }
     })[0];
-    don1svgdata = parseArray(don1svgdata,4);
+  //  console.log(don1svgdata)
+  //  don1svgdata = parse2Array(don1svgdata,4);
+  don1svgdata = Object.entries(don1svgdata);
+  don1svgdata.shift();
+  don1svgdata.shift();
+  don1svgdata.shift();
+//        console.log(don1svgdata)
     // RunOnce function for initial draw of donut with data.
     if (don1svgRanOnce == 0)
     {
@@ -74,7 +80,11 @@ function datarefresh(timevalue)
         return d;
       }
     })[0];
-    bardata = parseArray(bardata,10);
+    bardata = Object.entries(bardata);
+    bardata.shift();
+    bardata.shift();
+    bardata.shift();
+    
     if (barRanOnce == 0)
     {
       barRanOnce = 1;
