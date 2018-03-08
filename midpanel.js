@@ -56,6 +56,25 @@ function ready(error, data, dataset)
     province[i].properties.count=dataset[j].count
     console.log(province[i].properties.count)
   }}}
+
+    // function loops through all the data values from the current data attribute
+    // and returns the min and max values
+  function getDataRange() {
+    var min = Infinity, max = -Infinity;
+    for (i=0; i<province.length;i++) {if (min>province[i].properties.count){min = province[i].properties.count}
+  if (max<province[i].properties.count){max = province[i].properties.count} }
+    return [min, max];
+}
+  var dataRange = getDataRange(); // get the min/max values from the range of count
+  /////////////////////
+  function getColor(valueIn, valuesIn) {
+    // create a linear scale
+    var color =  d3.scaleLinear()
+    .domain([valuesIn[0], valuesIn[1]])  // input uses min and max values
+      .range([.3, 1]);   // output for opacity between .3 and 1 
+    return color(valueIn);  // return that number to the caller
+}
+///////////////////////////
   maptooltip.append('div')
     .attr('class', 'province');
   maptooltip.append('div')
@@ -70,6 +89,9 @@ function ready(error, data, dataset)
     .data(province)
     .enter().append("path")
     .attr("d", path)
+    .attr('fill-opacity', function (d) {
+            return getColor(d.properties.count, dataRange);  // give them an opacity value based on their current value
+        })
     .on('mouseover', function(d)
     {
     //  updateMap(dataset)
