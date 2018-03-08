@@ -166,9 +166,9 @@ var bardiv = leftpanel.append('div')
                 .attr("height","40%")
                 .style("border","1px solid black");
 
-var barmargin = {top: 5, right: 5, bottom: 80, left: 40};
+var barmargin = {top: 10, right: 10, bottom: 150, left: 60};
 var barsvgwidth = 250;
-var barsvgheight = 250;
+var barsvgheight = 280;
 
 //new method
 var barsvg = leftpanel.select('#bar')
@@ -178,7 +178,8 @@ var barsvg = leftpanel.select('#bar')
 
 var barwidth = +barsvg.attr("width") - barmargin.left - barmargin.right;
 var barheight = +barsvg.attr("height") - barmargin.top - barmargin.bottom;
-
+var barx = d3.scaleBand().rangeRound([0, barwidth]).padding(0.1);
+var  bary = d3.scaleLinear().rangeRound([barheight, 0]);
 var gbar = barsvg.append("g")
              .attr("transform", "translate(" + barmargin.left + "," + barmargin.top + ")");
 
@@ -192,16 +193,11 @@ function createBar(bardata){
   var bar_text =  gbar.selectAll(".bar_text")
 
   ////////// barx and bary domain set functions for auto scaling.
-  var barx = d3.scaleBand().rangeRound([0, barwidth]).padding(0.1),
-    bary = d3.scaleLinear().rangeRound([barheight, 0]);
+
   barx.domain(bardata.map(function(d) { return d[0]; }));
   bary.domain([d3.min(bardata, function(v) { return v[1]; }),d3.max(bardata, function(v) { return v[1]; })]);
-/*      if (v[1] >= 0){
-        return - .7; }else{
-           v[1] = v[1] -.7; return v[1] -.7;
-         }
-       }),       */
 
+console.log(d3.max(bardata, d => d[1]))
 
   bar_rect.data(bardata).enter().append("rect")
   .attr("class", "bar")
@@ -212,10 +208,10 @@ function createBar(bardata){
   bar_text.data(bardata).enter().append("text")
     .attr("class", "bar_text")
     .attr("text-anchor", "middle")
-    .attr("font-size", "14px")
-    .attr("fill", "white")
+    .attr("font-size", "8px")
+    .attr("fill", "black")
       .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
-      .attr("y", function(d) { return bary(d[1]) + 20; })
+      .attr("y", function(d) { return bary(d[1]) - 40; })
      .text(function(d) { return d[1]; });
 
   gbar.append("g")
@@ -239,7 +235,7 @@ function createBar(bardata){
       .attr("text-anchor", "end")
     .attr("fill", "black")
       .text("# Casualties");
-console.log('createBar has run')
+
 }
 
 function updateBar(bardata){
@@ -251,14 +247,14 @@ function updateBar(bardata){
 //  }
 
 ////////// barx and bary domain set functions for auto scaling.
-var barx = d3.scaleBand().rangeRound([0, barwidth]).padding(0.1),
-  bary = d3.scaleLinear().rangeRound([barheight, 0]);
-  barx.domain(bardata.map(function(d) { return d[0]; }));
-  bary.domain([d3.min(bardata, function(v) { return v[1]; }),d3.max(bardata, function(v) { return v[1]; })]);
 
+  barx.domain(bardata.map(function(d) { return d[0]; }));
+  bary.domain([d3.min(bardata, function(v) { return v[1]; }),
+                d3.max(bardata, function(v) { return v[1]; })]);
+console.log(bary.domain());
 //select all bars on the graph, take them out, and exit the previous data set.
 //then you can add/enter the new data set
-
+console.log(d3.max(bardata, d => d[1]))
 
 //Join
 var bar_rect =  d3.selectAll(".bar").data(bardata);
@@ -300,7 +296,7 @@ bar_text.enter().append("text")
 .attr("text-anchor", "middle")
 .attr("font-size", "14px")
   .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
-  .attr("y", function(d) { return bary(d[1]) + 20; })
+  .attr("y", function(d) { return bary(d[1]) - 40; })
 .attr("fill", "white")
 .text(function(d) { return d[0]; });
 
