@@ -94,7 +94,6 @@ function createDonut(data)
 			var legend_offset =  legend_height * color.domain().length / 2;
 			var horz = -2 * legendRectSize;
 			var vert = i * legend_height - legend_offset;
-      console.log(horz)
       return 'translate(' + horz + ',' + vert + ')';
 		});
 
@@ -163,12 +162,12 @@ function updateDonut(dataset)
 var bardiv = leftpanel.append('div')
     .attr('id', 'bar').append("svg")
                 .attr("width","100%")
-                .attr("height","40%")
+                .attr("height","60%")
                 .style("border","1px solid black");
 
-var barmargin = {top: 10, right: 10, bottom: 150, left: 60};
-var barsvgwidth = 250;
-var barsvgheight = 280;
+var barmargin = {top: 10, right: 10, bottom: 170, left: 50};
+var barsvgwidth = 340;
+var barsvgheight = 340;
 
 //new method
 var barsvg = leftpanel.select('#bar')
@@ -195,23 +194,23 @@ function createBar(bardata){
   ////////// barx and bary domain set functions for auto scaling.
 
   barx.domain(bardata.map(function(d) { return d[0]; }));
-  bary.domain([d3.min(bardata, function(v) { return v[1]; }),d3.max(bardata, function(v) { return v[1]; })]);
+  bary.domain([d3.min(bardata, function(v) { return +v[1]; }),d3.max(bardata, function(v) { return +v[1]; })]);
 
 //console.log(d3.max(bardata, d => d[1]))
 
   bar_rect.data(bardata).enter().append("rect")
   .attr("class", "bar")
     .attr("x", function(d) { return barx(d[0]); })
-    .attr("height", function(v) { return barheight - bary(v[1]); })
-   .attr("y", function(d) { return bary(d[1]); })
+    .attr("height", function(v) { return barheight - bary(+v[1]); })
+   .attr("y", function(d) { return bary(+d[1]); })
    .attr("width", barx.bandwidth());
   bar_text.data(bardata).enter().append("text")
     .attr("class", "bar_text")
     .attr("text-anchor", "middle")
-    .attr("font-size", "8px")
+    .attr("font-size", "11px")
     .attr("fill", "black")
       .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
-      .attr("y", function(d) { return bary(d[1]) - 40; })
+      .attr("y", function(d) { return bary(+d[1]) - 2; })
      .text(function(d) { return d[1]; });
 
   gbar.append("g")
@@ -223,17 +222,22 @@ function createBar(bardata){
           .attr("dx", "-0.6em")
           .attr("dy", "0.7em")
           .attr("y", "0em")
+          .attr("font-size", "12px")
           .attr("transform", "rotate(-65)");;
 
   gbar.append("g")
       .attr("class", "axis axis--y")
-   .call(d3.axisLeft(bary).ticks(10, " "))
+   .call(d3.axisLeft(bary).ticks(4, ",.0f"))
+      .attr("font-size", "12px")
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", "0.71em")
+      .attr("y", -25)
+      .attr("dy", "-0.71em")
+      .attr("dx", "-0.71em")
+      .attr("x", 0)
+      .attr("font-size", "14px")
       .attr("text-anchor", "end")
-    .attr("fill", "black")
+      .attr("fill", "black")
       .text("# Casualties");
 
 }
@@ -249,14 +253,14 @@ function updateBar(bardata){
 ////////// barx and bary domain set functions for auto scaling.
 
   barx.domain(bardata.map(function(d) { return d[0]; }));
-  bary.domain([d3.min(bardata, function(v) { return v[1]; }),
-                d3.max(bardata, function(v) { return v[1]; })]);
+  bary.domain([d3.min(bardata, function(v) { return +v[1]; }),
+                d3.max(bardata, function(v) { return +v[1]; })]);
 //console.log(bary.domain());
 //select all bars on the graph, take them out, and exit the previous data set.
 //then you can add/enter the new data set
 //console.log(bardata.map(function (d){return d[1]}))
 //console.log(d3.max(bardata, d => d[1]))
-
+//console.log(bardata)
 //Join
 var bar_rect =  d3.selectAll(".bar").data(bardata);
 var bar_text = gbar.selectAll(".bar_text").data(bardata);
@@ -271,43 +275,47 @@ ybalk.exit().remove();
 //UPDATE attributes + do transition
 bar_rect.transition().duration(400)
 .attr("x", function(d) { return barx(d[0]); })
-.attr("y", function(d) { return bary(d[1]); })
+.attr("y", function(d) { return bary(+d[1]); })
 .attr("width", barx.bandwidth())
-.attr("height", function(v) { return barheight - bary(v[1]); })
+.attr("height", function(v) { return barheight - bary(+v[1]); })
 
 bar_text.transition().duration(400)
 .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
-.attr("y", function(d) { return bary(d[1]) + 20; })
+.attr("y", function(d) { return bary(+d[1]) - 2; })
 .text(function(d) { return d[1]; });
 
 
 
 ybalk.transition().duration(400)
-.call(d3.axisLeft(bary).ticks(10, " "))
+.call(d3.axisLeft(bary).ticks(4, ".0f"))
+.attr("font-size", "12px")
 
 //ENTER
 bar_rect.enter().selectAll(".bar")
 .attr("x", function(d) { return barx(d[0]); })
-.attr("y", function(d) { return bary(d[1]); })
+.attr("y", function(d) { return bary(+d[1]); })
 .attr("width", barx.bandwidth())
 .attr("height", function(v) { return barheight - bary(v[1]); })
 
 bar_text.enter().append("text")
 .attr("class", "bar_text")
 .attr("text-anchor", "middle")
-.attr("font-size", "14px")
+//.attr("font-size", "14px")
   .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
-  .attr("y", function(d) { return bary(d[1]) - 40; })
+  .attr("y", function(d) { return bary(+d[1]) - 2; })
 .attr("fill", "white")
-.text(function(d) { return d[0]; });
+.text(function(d) { return d[1]; });
 
 gbar.enter().append("g")
      .attr("class", "axis axis--y")
-   .call(d3.axisLeft(bary).ticks(10, " "))
+   .call(d3.axisLeft(bary).ticks(4, ",.0f"))
+   .attr("font-size", "12px")
    .append("text")
      .attr("transform", "rotate(-90)")
-     .attr("y", 6)
-     .attr("dy", "0.71em")
+     .attr("y", -25)
+     .attr("dy", "-0.71em")
+     .attr("dx", "-0.71em")
+     .attr("x", 4)
      .attr("text-anchor", "end")
    .attr("fill", "black")
      .text("# Casualties");
