@@ -70,7 +70,7 @@ function datarefresh(timevalue)
     updateDonut(don1svgdata);
   });
 
-  //UPDATING BAR CHART DATA
+  //UPDATING (Death) BAR CHART DATA
   d3.csv("deathcausedata.csv", function(error, csv_data)
   {
     //Parse the DataTime
@@ -80,6 +80,8 @@ function datarefresh(timevalue)
         return d;
       }
     })[0];
+	//console.log(bardata)
+
     bardata = Object.entries(bardata);
     bardata.shift();
     bardata.shift();
@@ -91,6 +93,33 @@ function datarefresh(timevalue)
       createBar(bardata);
     };
     updateBar(bardata);
+  });
+  
+  
+  //UPDATING News BAR CHART DATA
+  d3.csv("eventCounts_byType.csv", function(error, csv_data)
+  {
+    //Parse the DataTime
+    news_bardata = csv_data.filter(function (d) {
+      if ((+d.year == date.getFullYear()) && (+d.week == date.getWeek()))
+
+      {
+        return d;
+      }
+    })[0];
+
+
+    news_bardata = Object.entries(news_bardata);
+    news_bardata.shift();
+    news_bardata.shift();
+    news_bardata.shift();
+    
+    if (news_barRanOnce == 0)
+    {
+      news_barRanOnce = 1;
+      news_createBar(news_bardata);
+    };
+    news_updateBar(news_bardata);
   });
 }
 
