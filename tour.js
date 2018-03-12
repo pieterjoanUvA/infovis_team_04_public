@@ -22,14 +22,21 @@ var tour = new Tour({
     content: "Casualties per province in tooltips + color banding for global view."
   }
 ]});
-
+// Initialize button for nav-menu.
+$('#tour').click(function(e){
+    // console.log("Been Clicked.")
+    tour.restart();
+    // it's also good practice to preventDefault on the click event
+    // to avoid the click triggering whatever is within href:
+    e.preventDefault();
+});
 // Initialize the tour
 tour.init();
 
 // Start the tour
-//tour.start();
+tour.start();
 // Restart the tour
-tour.restart();
+//tour.restart();
 console.log('tourjs has been Executed')
 
 var tour_adv = new Tour({
