@@ -5,33 +5,72 @@ var mapsvg = midpanel.append("svg")
               .attr("height","100%");
 
 //Define UpdateMap Function
-function updateMap(dataset)
-{ var paths = mapsvg.selectAll(".province")
-    .data(dataset);
+function updateMap()
+{
+d3.queue()
+.defer(d3.json, "SYR_adm1.json")
+.defer(d3.csv, "map.csv")
+.await(ready)
+function ready(error, data, dataset)
+{ if (error) throw error;
+  var province_update = topojson.feature(data, data.objects["SYR_adm1-1"]).features
+  var dataset = dataset.filter(function(d)
+  { //filter by year and week  
+    if(d["year"] == date.getFullYear() && d["week"] == date.getWeek())  {
+      return d}})
+ for (i=0; i<province_update.length;i++) { // for each geometry object
+
+  for (j=0; j<dataset.length; j++) { if ( province_update[i].properties.NAME_1 ==  dataset[j].province
+  ) {
+    province_update[i].properties.count=dataset[j].count
+  }}}
+  function getDataRange() {
+    var min = Infinity, max = -Infinity;
+    for (i=0; i<province_update.length;i++) {if (min>province_update[i].properties.count){min = province_update[i].properties.count}
+  if (max<province_update[i].properties.count){max =province_update[i].properties.count} }
+    return [min, max];
+}
+  var dataRange = getDataRange(); // get the min/max values from the range of count
+  
+  /////////////////////
+  function getColor(valueIn, valuesIn) {
+    // create a linear scale
+    var color =  d3.scaleLinear()
+    .domain([valuesIn[0], valuesIn[1]])  // input uses min and max values
+      .range([.3, 1]);   // output for opacity between .3 and 1 
+    return color(valueIn);  // return that number to the caller
+}
+///////////////////////////
+  var paths = mapsvg.selectAll("path")  
+          .data(province_update)    
+          .attr('fill-opacity', function (d) {
+  return getColor(d.properties.count, dataRange);  // give them an opacity value based on their current value
+})
+paths.on('mouseover', function(d)
+{
+ var province_name= d.properties.NAME_1
+ var count = d.properties.count
+  maptooltip.select('.province').html(province_name);
+  maptooltip.select('.count').html(count);
+  maptooltip.style('display', 'block');
+});
+paths.exit()
+  .remove();
+}
+}
 
   //var priority_order = ["Hasakeh", "Aleppo", "Raqqa", "Sweida", "Damascus", "Daraa", "Deir Ezzor", "Hama", "Homs", "Idlib", "Lattakia", "Quneitra", "Damascus Suburbs", "Tartous"];
   //var paths = mapsvg.selectAll('path')
     //.data(dataset);
-  paths.on('mouseover', function(d)
-  {
-   maptooltip.select('.count').html(count);
-   maptooltip.select('.province').html(province_name);
-    maptooltip.style('display', 'block');
-  });
-  paths.exit()
-    .remove();
-}
 
-//filter dataset by year week 
+//};
 
-var year = date.getFullYear();
-var week = date.getWeek();
 var maptooltip = midpanel.append('div')
   .attr('class', 'customtooltip');
 
 d3.queue()
   .defer(d3.json, "SYR_adm1.json")
-  .defer(data)
+  .defer(d3.csv, "map.csv")
   .await(ready)
 
 //projection
@@ -48,11 +87,12 @@ function ready(error, data, dataset)
   var border = topojson.mesh(data, data.objects["SYR_adm1-1"], function(a, b) { return a !== b; })
   var dataset = dataset.filter(function(d)
   { //filter by year and week  
-    if(d["year"] == year && d["week"] == week)  {return d}})
+    if(d["year"] == date.getFullYear() && d["week"] == date.getWeek())  {
+      return d}})
   //Get values from csv file
   for (i=0; i<province.length;i++) { // for each geometry object
 
-  for (j=0; j<dataset.length; j++) { if ( province[i].properties.NAME_1 ==  dataset[j].province
+  for (j=0; j<13; j++) { if ( province[i].properties.NAME_1 ==  dataset[j].province
   ) {
     province[i].properties.count=dataset[j].count
   }}}
