@@ -1,12 +1,16 @@
 //The rightpanel SVG element code
 
 //Code that runs on initialization
-var civilsvg = rightpanel.append("svg")  //civilsvg stands for civilian or not.
+var civildiv = rightpanel.append('div')
+    .attr('id', 'don2').append("svg")  //civilsvg stands for civilian or not.
                 .attr("width","100%")
-                .attr("height","40%")
+                .attr("height","50%")
                 .style("border","1px solid black");
 //Raw dump of previous version
 
+//Raw dump of previous version
+var civilsvg = rightpanel.select('#don2')
+  .select('svg')
 //source: https://bl.ocks.org/tezzutezzu/c2653d42ffb4ecc01ffe2d6c97b2ee5e
 function arcTweenCivil(d)
 {
@@ -18,13 +22,15 @@ function arcTweenCivil(d)
   }
 }
 //general variables
-var don2svgmargin = {top: 10, right: 10, bottom: 170, left: 10};
-var don2svgwidth = 240;
-var don2svgheight = 240;
+var don2svgmargin = {top: 5, right: 10, bottom: 5, left: 10};
+//var don2svgwidth = 241;
+//var don2svgheight = 241;
+var	don2svgwidth = civilsvg.node().getBoundingClientRect().width,
+    don2svgheight = civilsvg.node().getBoundingClientRect().height ;
 var don2svgradius = Math.min(don2svgwidth, don2svgheight) / 2;
 var don2svgdonutWidth = 42;
 var colorCivil = d3.scaleOrdinal(d3.schemeCategory20c);
-var arc = d3.arc()
+var r_arc = d3.arc()
   .innerRadius(don2svgradius - don2svgdonutWidth)
   .outerRadius(don2svgradius);
 var don2svgtooltip = rightpanel.append('div')
@@ -44,7 +50,7 @@ function createCivilDonut(data)
 	    .append('g')
 	    .attr('transform', 'translate(' + ( (don2svgwidth / 2)+don2svgmargin.left ) + ',' + ((don2svgheight / 2)+don2svgmargin.top) + ')');
 
-    var pie = d3.pie()
+    var rpie = d3.pie()
 	    .value(function(d)
       {
         return d[1];
@@ -55,10 +61,10 @@ function createCivilDonut(data)
 	  var legendCivilSpacing = 2;
 
     var don2svgpath = don2svg.selectAll('path') //.selectAll('path')//statsvg.selectAll('path')
-		  .data(pie(data))
+		  .data(rpie(data))
 		    .enter()
 		    .append('path')
-		    .attr('d', arc)
+		    .attr('d', r_arc)
 		    .attr('fill', function(d, i)
         {
 		        return colorCivil(d.data[0]);
@@ -93,9 +99,9 @@ function createCivilDonut(data)
     {
 			var legendCivil_height = legendCivilRectSize + legendCivilSpacing;
 			var legendCivil_offset =  legendCivil_height * colorCivil.domain().length / 2;
-			var horz = -2 * legendCivilRectSize;
-			var vert = i * legendCivil_height - legendCivil_offset;
-      return 'translate(' + horz + ',' + vert + ')';
+			var r_horz = -2 * legendCivilRectSize;
+			var r_vert = i * legendCivil_height - legendCivil_offset;
+      return 'translate(' + r_horz + ',' + r_vert + ')';
 		});
 
     legendCivil.append('rect')
@@ -117,14 +123,14 @@ function updateCivilDonut(dataset)
   (function(d3)
   {
     var colorCivil = d3.scaleOrdinal(d3.schemeCategory20c);
-    var pie = d3.pie()
+    var rpie = d3.pie()
       .value(function(d) { return d[1]; })
   	  .sort(null);
-    var arc = d3.arc()
+    var r_arc = d3.arc()
       .innerRadius(don2svgradius - don2svgdonutWidth)
   	  .outerRadius(don2svgradius);
     const don2svgpaths = civilsvg.selectAll('path')
-  	  .data(pie(dataset));
+  	  .data(rpie(dataset));
 
     don2svgpaths.on('mouseover', function(d)
     {
@@ -135,7 +141,7 @@ function updateCivilDonut(dataset)
 
     const don2svgpaths2 = don2svgpaths.enter()
       .append('path')
-  	   .attr('d', arc)
+  	   .attr('d', r_arc)
   	   .attr('fill', function(d, i)
        {
   		     return colorCivil(d.data[0]);
@@ -145,10 +151,10 @@ function updateCivilDonut(dataset)
     don2svgpaths.transition()
       .duration(1000)
       .attrTween("d", arcTweenCivil);
-    don2svgpaths2.data(pie(dataset))
+    don2svgpaths2.data(rpie(dataset))
       .enter()
     	.append('path')
-        .attr('d', arc)
+        .attr('d', r_arc)
         .transition()
         .duration(1000);
 
@@ -165,7 +171,7 @@ function updateCivilDonut(dataset)
 var news_bardiv = rightpanel.append('div')
     .attr('id', 'news_bar').append("svg")
                 .attr("width","100%")
-                .attr("height","100%")
+                .attr("height","50%")
                 .style("border","1px solid black");
 
 var news_barmargin = {top: 10, right: 10, bottom: 170, left: 50};
