@@ -48,7 +48,7 @@ function datarefresh(timevalue)
   //This is the main event handler for releasing the slider thus changing the time.
 
   //UPDATING MAP DATA
-  
+
    updateMap();
 
 
