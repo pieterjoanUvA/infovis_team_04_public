@@ -1,15 +1,10 @@
 //The Leftpanel SVG element code
 
 //Code that runs on initialization
-var statdiv = leftpanel.append('div')
-    .attr('id', 'don1')
-    .append("svg")
+var statsvg = leftpanel.append("svg")
                 .attr("width","100%")
                 .attr("height","50%")
                 .style("border","1px solid black");
-//Raw dump of previous version
-var statsvg = leftpanel.select('#don1')
-  .select('svg')
 
 //source: https://bl.ocks.org/tezzutezzu/c2653d42ffb4ecc01ffe2d6c97b2ee5e
 function arcTween(d)
@@ -27,8 +22,10 @@ var don1svgmargin = {top: 10, right: 10, bottom: 10, left: 10};
 //var don1svgwidth = 240;
 //var don1svgheight = 240;
 //Draw the static-static parts of the lineChart
-var	don1svgwidth = statdiv.node().getBoundingClientRect().width ,
-    don1svgheight = statdiv.node().getBoundingClientRect().height -25;
+var	don1svgwidth = Math.min(statsvg.node().getBoundingClientRect().width - don1svgmargin.left - don1svgmargin.right,
+          statsvg.node().getBoundingClientRect().height - don1svgmargin.top - don1svgmargin.bottom);
+var don1svgheight = don1svgwidth;
+
 console.log(don1svgwidth, don1svgheight);
 var don1svgradius = Math.min(don1svgwidth, don1svgheight) / 2 ;
 var don1svgdonutWidth = 42;

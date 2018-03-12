@@ -1,16 +1,11 @@
 //The rightpanel SVG element code
 
 //Code that runs on initialization
-var civildiv = rightpanel.append('div')
-    .attr('id', 'don2').append("svg")  //civilsvg stands for civilian or not.
+var civilsvg = rightpanel.append('svg')
                 .attr("width","100%")
                 .attr("height","50%")
                 .style("border","1px solid black");
-//Raw dump of previous version
 
-//Raw dump of previous version
-var civilsvg = rightpanel.select('#don2')
-  .select('svg')
 //source: https://bl.ocks.org/tezzutezzu/c2653d42ffb4ecc01ffe2d6c97b2ee5e
 function arcTweenCivil(d)
 {
@@ -22,11 +17,13 @@ function arcTweenCivil(d)
   }
 }
 //general variables
-var don2svgmargin = {top: 5, right: 10, bottom: 5, left: 10};
+var don2svgmargin = {top: 10, right: 10, bottom: 10, left: 10};
 //var don2svgwidth = 241;
 //var don2svgheight = 241;
-var	don2svgwidth = civilsvg.node().getBoundingClientRect().width,
-    don2svgheight = civilsvg.node().getBoundingClientRect().height ;
+var	don2svgwidth = Math.min(civilsvg.node().getBoundingClientRect().width - don1svgmargin.left - don1svgmargin.right,
+          civilsvg.node().getBoundingClientRect().height - don1svgmargin.top - don1svgmargin.bottom);
+var don2svgheight = don2svgwidth;
+
 var don2svgradius = Math.min(don2svgwidth, don2svgheight) / 2;
 var don2svgdonutWidth = 42;
 var colorCivil = d3.scaleOrdinal(d3.schemeCategory20c);
