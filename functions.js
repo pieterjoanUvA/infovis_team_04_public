@@ -163,31 +163,31 @@ function initialrefresh()
   datarefresh(unix);
 
   //LOAD STATIC DATA
-  // d3.csv("VDC_byweek.csv", function(error, csv_data)
-  // {
-  //   parseTime = d3.timeParse("%Y/%W")
-  //   data = csv_data.map(function(d)
-  //   {
-  //     d.time = d.year+"/"+d.week;
-  //     d.time = parseTime(d.time);
-  //     d.deaths = +d.deaths;
-  //     return d;
-  //   });
-  //   console.log(d3.max(data, function(d) { return d.deaths; }));
-  //   line_x.domain(d3.extent(data, function(d) { return d.time; }))
-  //   line_y.domain([0, d3.max(data, function(d) { return d.deaths; })]);
-  //
-  //   linegraph.append("path")
-  //     .data([data])
-  //     .attr("class", "line")
-  //     .attr("d", line);
-  //
-  //     // Add the X Axis
-  //   linegraph.append("g")
-  //       .attr("transform", "translate(0," + line_height + ")")
-  //       .call(d3.axisBottom(line_x));
-  //
-  //   linegraph.append("g")
-  //       .call(d3.axisLeft(line_y));
-  //});
+  d3.csv("AggregatedInfVis.csv", function(error, csv_data)
+  {
+    parseTime = d3.timeParse("%Y/%W")
+    data = csv_data.map(function(d)
+    {
+      d.time = d.year+"/"+d.week;
+      d.time = parseTime(d.time);
+      d.deaths = +d.deaths;
+      return d;
+    });
+
+    line_x.domain(d3.extent(data, function(d) { return d.time; }))
+    line_y.domain([0, d3.max(data, function(d) { return d.deaths; })]);
+
+    linegraph.append("path")
+      .data([data])
+      .attr("class", "line")
+      .attr("d", line);
+
+      // Add the X Axis
+    linegraph.append("g")
+        .attr("transform", "translate(0," + line_height + ")")
+        .call(d3.axisBottom(line_x));
+
+    linegraph.append("g")
+        .call(d3.axisLeft(line_y));
+  });
 }
