@@ -13,7 +13,7 @@ var botpanel = botrow;
 
 //User setting variables
 var timespan = 302400000;
-var unix = 1300190400000;
+var unix = 1299585600000;
 var date = new Date(unix);
 var lowerdate = new Date((unix-timespan));
 var upperdate = new Date((unix+timespan));
@@ -23,5 +23,8 @@ var barRanOnce = 0 ;
 var news_barRanOnce = 0;
 var don2svgRanOnce = 0;
 
+parseTime = d3.timeParse("%Y/%W")
+
 //Interchanged Elements (important for updating the data-view)
 var date_label = midpanel.select("#year");
+var deaths_label = botpanel.select("#deaths")
