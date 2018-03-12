@@ -19,7 +19,6 @@ function arcTweenCivil(d)
 //general variables
 var don2svgmargin = {top: 10, right: 10, bottom: 10, left: 10};
 //var don2svgwidth = 241;
-//var don2svgheight = 241;
 var	don2svgwidth = Math.min(civilsvg.node().getBoundingClientRect().width - don1svgmargin.left - don1svgmargin.right,
           civilsvg.node().getBoundingClientRect().height - don1svgmargin.top - don1svgmargin.bottom);
 var don2svgheight = don2svgwidth;
@@ -247,25 +246,16 @@ function news_createBar(news_bardata){
 }
 
 function news_updateBar(news_bardata){
-// PERFORM SOME DATA stuff
-//  bardata = bardata.map(function(d){
-//    d.value = Math.round(d.value *10)/10;
-//
-//    return d ;
-//  }
 
 ////////// barx and bary domain set functions for auto scaling.
 
   news_barx.domain(news_bardata.map(function(d) { return d[0]; }));
   news_bary.domain([d3.min(news_bardata, function(v) { return +v[1]; }),
                 d3.max(news_bardata, function(v) { return +v[1]; })]);
-//console.log(news_bary.domain());
-//select all bars on the graph, take them out, and exit the previous data set.
-//then you can add/enter the new data set
-//console.log(news_bardata.map(function (d){return d[1]}))
-//console.log(d3.max(bardata, d => d[1]))
-//console.log(news_bardata)
-//Join
+
+//select all bars on the graph, take them out, and exit the previous data set; 
+//Thereafter, redreaw with new data
+
 var news_bar_rect =  d3.selectAll(".news_bar").data(news_bardata);
 var news_bar_text = news_gbar.selectAll(".news_bar_text").data(news_bardata);
 var news_xbalk = news_gbar.selectAll(".news_axis--x").data(news_bardata);
