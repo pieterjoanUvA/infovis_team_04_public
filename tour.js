@@ -41,6 +41,7 @@ $('#tour').click(function(e){
     // to avoid the click triggering whatever is within href:
     e.preventDefault();
 });
+// Auto-Tour button jquery in nav-menu
 $('#autotour').click(function(e){
     // console.log("Been Clicked.")
     autotour.restart();
@@ -50,7 +51,6 @@ $('#autotour').click(function(e){
 });
 // Initialize the tour
 tour.init();
-
 // Start the tour
 tour.start();
 // Restart the tour
@@ -91,36 +91,3 @@ var autotour = new Tour({
     content: "Casualties per province in tooltips + color banding for global view."
   }
 ]});
-
-
-var tour_adv = new Tour({
-  name: "tour",
-  steps: [],
-  container: "body",
-  smartPlacement: true,
-  keyboard: true,
-  storage: window.localStorage,
-  debug: false,
-  backdrop: true,
-  backdropContainer: 'body',
-  backdropPadding: 0,
-  redirect: true,
-  orphan: false,
-  duration: false,
-  delay: false,
-  basePath: "",
-  afterGetState: function (key, value) {},
-  afterSetState: function (key, value) {},
-  afterRemoveState: function (key, value) {},
-  onStart: function (tour) {},
-  onEnd: function (tour) {},
-  onShow: function (tour) {},
-  onShown: function (tour) {},
-  onHide: function (tour) {},
-  onHidden: function (tour) {},
-  onNext: function (tour) {},
-  onPrev: function (tour) {},
-  onPause: function (tour, duration) {},
-  onResume: function (tour, duration) {},
-  onRedirectError: function (tour) {}
-});

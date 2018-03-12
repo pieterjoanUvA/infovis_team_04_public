@@ -18,6 +18,7 @@ function arcTween(d)
   }
 }
 //general variables
+var don1svgmargin = {top: 10, right: 10, bottom: 170, left: 10};
 var don1svgwidth = 240;
 var don1svgheight = 240;
 var don1svgradius = Math.min(don1svgwidth, don1svgheight) / 2;
@@ -41,7 +42,7 @@ function createDonut(data)
       .attr('class', 'percent');
     var don1svg = statsvg
 	    .append('g')
-	    .attr('transform', 'translate(' + (don1svgwidth / 2) + ',' + (don1svgheight / 2) + ')');
+      .attr('transform', 'translate(' + ( (don2svgwidth / 2)+don2svgmargin.left ) + ',' + ((don2svgheight / 2)+don2svgmargin.top) + ')');
 
     var pie = d3.pie()
 	    .value(function(d)

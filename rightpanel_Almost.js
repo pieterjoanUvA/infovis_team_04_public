@@ -18,6 +18,7 @@ function arcTweenCivil(d)
   }
 }
 //general variables
+var don2svgmargin = {top: 10, right: 10, bottom: 170, left: 10};
 var don2svgwidth = 240;
 var don2svgheight = 240;
 var don2svgradius = Math.min(don2svgwidth, don2svgheight) / 2;
@@ -41,7 +42,7 @@ function createCivilDonut(data)
       .attr('class', 'percent');
     var don2svg = civilsvg
 	    .append('g')
-	    .attr('transform', 'translate(' + (don2svgwidth / 2) + ',' + (don2svgheight / 2) + ')');
+	    .attr('transform', 'translate(' + ( (don2svgwidth / 2)+don2svgmargin.left ) + ',' + ((don2svgheight / 2)+don2svgmargin.top) + ')');
 
     var pie = d3.pie()
 	    .value(function(d)
