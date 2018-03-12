@@ -26,7 +26,7 @@ function timerefresh(timevalue)
   //Set the text of the timerange.
   date_label.text(lowerdate.toDateString()+" - "+upperdate.toDateString());
   //Refresh the vertical line in the line chart which indicated the curren position
-  var percent = (timevalue-unix)/(1515672000000-unix);
+  var percent = (timevalue-unix)/(1515499200000-unix);
   d3.select(".mouse-line")
           .attr("d", "M" + line_width*percent + "," + 0 + " V " + line_height);
   //Set the deaths deaths_label
