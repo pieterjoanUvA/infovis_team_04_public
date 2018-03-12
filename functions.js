@@ -1,3 +1,5 @@
+// RunOnce variables are defined in 'skeleton.js' the general variables file.
+
 Date.prototype.getWeek = function()
 {
   //Add functionality to the already build in Date object (new method to get the Week)
@@ -96,6 +98,8 @@ function datarefresh(timevalue)
   });
 
 
+
+
   //UPDATING News BAR CHART DATA
   d3.csv("eventCounts_byType.csv", function(error, csv_data)
   {
@@ -121,6 +125,33 @@ function datarefresh(timevalue)
     };
     news_updateBar(news_bardata);
   });
+
+  //UPDATING RIGHT CIVIL DONUT CHART
+    d3.csv("statusdata.csv", function(error, csv_data)
+    {
+      //Parse the DataTime
+      don2svgdata = csv_data.filter(function (d) {
+        if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
+        {
+          return d;
+        }
+      })[0];
+    //  console.log(don1svgdata)
+    //  don1svgdata = parse2Array(don1svgdata,4);
+    don2svgdata = Object.entries(don2svgdata);
+    don2svgdata.shift();
+    don2svgdata.shift();
+    don2svgdata.shift();
+    //        console.log(don1svgdata)
+      // RunOnce function for initial draw of donut with data.
+      if (don2svgRanOnce == 0)
+      {
+        don2svgRanOnce = 1;
+        createCivilDonut(don2svgdata)
+      };
+
+      updateCivilDonut(don2svgdata);
+    });
 }
 
 function initialrefresh()
