@@ -166,26 +166,18 @@ function updateDonut(dataset)
 
 ///////////// BAR CHART //////////////
 
-var bardiv = leftpanel.append('div')
-    .attr('id', 'bar').append("svg")
+var barsvg = leftpanel.append("svg")
                 .attr("width","100%")
                 .attr("height","50%")
                 .style("border","1px solid black");
 
-var barmargin = {top: 10, right: 10, bottom: 170, left: 50};
-var barsvgwidth = 340;
-var barsvgheight = 340;
+var barmargin = {top: 10, right: 10, bottom: 175, left: 55};
+var barwidth = barsvg.node().getBoundingClientRect().width - barmargin.left - barmargin.right;
+var barheight = barsvg.node().getBoundingClientRect().height - barmargin.top - barmargin.bottom;
 
-//new method
-var barsvg = leftpanel.select('#bar')
-  .select('svg')
-  .attr("width", barsvgwidth)
-  .attr("height", barsvgheight);
 
-var barwidth = +barsvg.attr("width") - barmargin.left - barmargin.right;
-var barheight = +barsvg.attr("height") - barmargin.top - barmargin.bottom;
 var barx = d3.scaleBand().rangeRound([0, barwidth]).padding(0.1);
-var  bary = d3.scaleLinear().rangeRound([barheight, 0]);
+var bary = d3.scaleLinear().rangeRound([barheight, 0]);
 var gbar = barsvg.append("g")
              .attr("transform", "translate(" + barmargin.left + "," + barmargin.top + ")");
 
