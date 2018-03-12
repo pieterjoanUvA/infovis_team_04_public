@@ -29,6 +29,18 @@ function timerefresh(timevalue)
   var percent = (timevalue-unix)/(1515672000000-unix);
   d3.select(".mouse-line")
           .attr("d", "M" + line_width*percent + "," + 0 + " V " + line_height);
+  //Set the deaths deaths_label
+  d3.csv("AggregatedInfVis.csv", function(error, csv_data)
+  {
+    parseTime = d3.timeParse("%Y/%W")
+    data = csv_data.filter(function (d) {
+      if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
+      {
+        return d;
+      }
+    })[0];
+    deaths_label.text("Deaths: "+data.deaths);
+  });
 }
 
 function datarefresh(timevalue)
@@ -169,7 +181,6 @@ function initialrefresh()
   //LOAD STATIC DATA
   d3.csv("AggregatedInfVis.csv", function(error, csv_data)
   {
-    parseTime = d3.timeParse("%Y/%W")
     data = csv_data.map(function(d)
     {
       d.time = d.year+"/"+d.week;

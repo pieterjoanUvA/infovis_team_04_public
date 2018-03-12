@@ -23,5 +23,8 @@ var barRanOnce = 0 ;
 var news_barRanOnce = 0;
 var don2svgRanOnce = 0;
 
+parseTime = d3.timeParse("%Y/%W")
+
 //Interchanged Elements (important for updating the data-view)
 var date_label = midpanel.select("#year");
+var deaths_label = botpanel.select("#deaths")
