@@ -31,6 +31,13 @@
             <a class="nav-link" href="contact.html">Contact and Resources</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="contact.html">Tour</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="showModal">What is the Syrian Civil War?</a>
+          </li>
+
+          <li class="nav-item">
             <a class="nav-link" href="tour.html">Start Tour</a>
           </li>
         </ul>
@@ -53,6 +60,21 @@
             <input type="range" id="slider" min="1300190400000" max="1515672000000" value="1300190400000" step="604800000"/>
             <h3 id="deaths"></h3>
     </div>
+
+    <div id="myModal" class="modal">
+
+	  <!-- Modal content -->
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h2>The Syrian Civil War</h2>
+	      <span class="close">&times;</span>
+	    </div>
+	    <div class="modal-body">
+	      <p>This visualization shows the amount of victims during the Syrian civil war. This civil war started in 2011 with mass protests within major Syrian cities. Since then the situation quickly escaleted into a full-scale war. The war is fought by multiple factions, including the Syrian governments, the Islamic State, Salafi jihadist groups, sunni Arab rebel groups and the Kurdish Syrian Democratic Forces.</p>
+	      <p>During the war many people, including many children, have lost their lives. Moreover, many war crimes have been commited, such as torturing, poison attacks and the refusal of medical help for the wounded. This website allows users to see when all these horrific actions occured.    </p>
+	    </div>
+	  </div>
+
     <!--JAVASCRIPT FILES-->
     <script src="skeleton.js"></script>
     <script src="functions.js"></script>
@@ -61,6 +83,7 @@
     <script src="midpanel.js"></script>
     <script src="leftpanel.js"></script>
     <script src="rightpanel_almost.js"></script>
+    <script src="modal.js"></script>
    <!-- Uncomment to see older rightpanel.js <script src="rightpanel.js"></script> -->
 
 
