@@ -185,6 +185,7 @@ function initialrefresh()
       // Add the X Axis
     linegraph.append("g")
         .attr("transform", "translate(0," + line_height + ")")
+        .attr("class","xaxis")
         .call(d3.axisBottom(line_x));
 
     linegraph.append("g")
