@@ -48,18 +48,9 @@ function datarefresh(timevalue)
   //This is the main event handler for releasing the slider thus changing the time.
 
   //UPDATING MAP DATA
-  d3.csv("mapdata.csv", function(error, csv_data)
-  {
-    //Parse the DataTime
-    data = csv_data.filter(function (d) {
-      if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
-      {
-        return d;
-      }
-    })[0];
-    data = parse2Array(data,14);
-    //updateMap(data);
-  });
+  
+   updateMap();
+
 
   //UPDATING DONUT CHART DATA
   d3.csv("genderdata.csv", function(error, csv_data)
