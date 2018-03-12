@@ -31,3 +31,12 @@ var line_y = d3.scaleLinear().range([line_height,0]);
 var line = d3.line()
 						.x(function(d) { return line_x(d.time); })
 						.y(function(d) { return line_y(d.deaths); });
+
+//Line tooltip which has to sync with the sliderbar
+var mouseG = graphsvg.append("g")
+      .attr("class", "mouse-over-effects");
+
+mouseG.append("path") // this is the black vertical line to follow mouse
+      .attr("class", "mouse-line")
+      .style("stroke", "white")
+      .style("stroke-width", "1px");
