@@ -194,7 +194,7 @@ function initialrefresh()
         .attr("class","xaxis")
         .call(d3.axisBottom(line_x));
 
-    linegraph.append("g")
-        .call(d3.axisLeft(line_y));
+    // linegraph.append("g")
+    //     .call(d3.axisLeft(line_y));
   });
 }
