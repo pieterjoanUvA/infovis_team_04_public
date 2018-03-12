@@ -75,7 +75,7 @@ function news_createBar(news_bardata){
     .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", -25)
-      .attr("dy", "-0.71em")
+      .attr("dy", "-1em")
       .attr("dx", "-0.71em")
       .attr("x", 0)
       .attr("font-size", "14px")
