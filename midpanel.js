@@ -1,38 +1,37 @@
 //The Midpanel SVG element code
-
 //Code that runs on initialization
 var mapsvg = midpanel.append("svg")
               .attr("width","100%")
               .attr("height","100%");
 
 //Define UpdateMap Function
-//function updateMap(dataset)
-//{ var paths = mapsvg.selectAll('path')
-  //  .data(dataset);
+function updateMap(dataset)
+{ var paths = mapsvg.selectAll(".province")
+    .data(dataset);
 
   //var priority_order = ["Hasakeh", "Aleppo", "Raqqa", "Sweida", "Damascus", "Daraa", "Deir Ezzor", "Hama", "Homs", "Idlib", "Lattakia", "Quneitra", "Damascus Suburbs", "Tartous"];
   //var paths = mapsvg.selectAll('path')
     //.data(dataset);
-  //paths.on('mouseover', function(d)
- // {
-  // maptooltip.select('.count').html(d[1]);
-   // maptooltip.select('.province').html(d[0]);
-   // maptooltip.style('display', 'block');
-  //});
-  //paths.exit()
-   // .remove();
-//}
+  paths.on('mouseover', function(d)
+  {
+   maptooltip.select('.count').html(count);
+   maptooltip.select('.province').html(province_name);
+    maptooltip.style('display', 'block');
+  });
+  paths.exit()
+    .remove();
+}
 
-//filter dataset by year week
-var year =2012
-var week = 3
+//filter dataset by year week 
 
+var year = date.getFullYear();
+var week = date.getWeek();
 var maptooltip = midpanel.append('div')
   .attr('class', 'customtooltip');
 
 d3.queue()
   .defer(d3.json, "SYR_adm1.json")
-  .defer(d3.csv, "map.csv")
+  .defer(data)
   .await(ready)
 
 //projection
@@ -48,11 +47,13 @@ function ready(error, data, dataset)
   var province = topojson.feature(data, data.objects["SYR_adm1-1"]).features
   var border = topojson.mesh(data, data.objects["SYR_adm1-1"], function(a, b) { return a !== b; })
   var dataset = dataset.filter(function(d)
-  { //filter by year and week
+  { //filter by year and week  
     if(d["year"] == year && d["week"] == week)  {return d}})
   //Get values from csv file
   for (i=0; i<province.length;i++) { // for each geometry object
-  for (j=0; j<dataset.length; j++) { if ( province[i].properties.NAME_1 == dataset[j].province) {
+
+  for (j=0; j<dataset.length; j++) { if ( province[i].properties.NAME_1 ==  dataset[j].province
+  ) {
     province[i].properties.count=dataset[j].count
   }}}
 
@@ -70,7 +71,7 @@ function ready(error, data, dataset)
     // create a linear scale
     var color =  d3.scaleLinear()
     .domain([valuesIn[0], valuesIn[1]])  // input uses min and max values
-      .range([.3, 1]);   // output for opacity between .3 and 1
+      .range([.3, 1]);   // output for opacity between .3 and 1 
     return color(valueIn);  // return that number to the caller
 }
 ///////////////////////////
@@ -93,10 +94,8 @@ function ready(error, data, dataset)
         })
     .on('mouseover', function(d)
     {
-    //  updateMap(dataset)
      var province_name= d.properties.NAME_1
      var count = d.properties.count
-    // var text = f_province(province_name)
       maptooltip.select('.province').html(province_name);
       maptooltip.select('.count').html( count);
       maptooltip.style('display', 'block');
@@ -116,5 +115,5 @@ function ready(error, data, dataset)
   mapsvg.append("path")
     .attr("class", "state-borders")
     .attr("d", path(border));
-
+ 
  };

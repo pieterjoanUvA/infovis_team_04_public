@@ -42,6 +42,9 @@ rect {
   font-size: 10px;
 }
 
+.legendCivil {
+  font-size: 10px;
+}
 .customtooltip {
   box-shadow: 0 0 5px #999999;
   display: none;
@@ -121,9 +124,21 @@ rect {
 .axis--x path {
 }
 .axis line {
-  fill: black;
-  stroke: #000;
+  fill: blue;
+  stroke: blue;
   shape-rendering: crispEdges;
 }
 
+<<<<<<< HEAD
+=======
+.line {
+  fill: steelblue;
+  stroke: white;
+  stroke-width: 2px;
+}
+
+.xaxis text{
+  fill: white;
+}
+>>>>>>> 8af9493c9c1153773ebd6d9134f7642cba69c4f5
   /*END BarChartDeathCause Variables*/

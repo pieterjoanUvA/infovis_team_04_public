@@ -15,20 +15,19 @@ sliderbar.on("input", function()
 //Botpanel SVG Element
 var graphsvg = botpanel.append("svg")
 								.attr("width","100%")
-								.attr("height","75%")
-								.attr("position","absolute");
+								.attr("height","75%");
 
 //Draw the static-static parts of the lineChart
-// var	line_width = graphsvg.attr("width"),
-//     line_height = graphsvg.attr("width");
-//
-// var linegraph = graphsvg.append("g")
-// 									.attr("width",line_width)
-// 									.attr("height",line_height);
-//
-// var line_x = d3.scaleTime().range([0,line_width]);
-// var line_y = d3.scaleLinear().range([line_height,0]);
-//
-// var line = d3.line()
-// 						.x(function(d) { return line_x(d.time); })
-// 						.y(function(d) { return line_y(d.deaths); });
+var	line_width = graphsvg.node().getBoundingClientRect().width,
+    line_height = graphsvg.node().getBoundingClientRect().height-25;
+
+var linegraph = graphsvg.append("g")
+									.attr("width",line_width)
+									.attr("height",line_height);
+
+var line_x = d3.scaleTime().range([0,line_width]);
+var line_y = d3.scaleLinear().range([line_height,0]);
+
+var line = d3.line()
+						.x(function(d) { return line_x(d.time); })
+						.y(function(d) { return line_y(d.deaths); });
