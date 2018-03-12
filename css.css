@@ -129,6 +129,8 @@ rect {
   shape-rendering: crispEdges;
 }
 
+<<<<<<< HEAD
+=======
 .line {
   fill: steelblue;
   stroke: white;
@@ -138,4 +140,5 @@ rect {
 .xaxis text{
   fill: white;
 }
+>>>>>>> 8af9493c9c1153773ebd6d9134f7642cba69c4f5
   /*END BarChartDeathCause Variables*/
