@@ -2,9 +2,8 @@ html, body {
   height: 100%;
 }
 
-h1 {
+.headerContact {
   font-size: 15px;
-  text-align: center;
 }
 
 rect {
@@ -20,12 +19,24 @@ rect {
   background-color: #f5f5f5;
 }
 
+.footerContact {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 5%;
+  background-color: #f5f5f5;
+}
+
 .jumbotron {
   margin: 0px;
   padding: 0px;
   height: 100%;
 }
 
+.textContact {
+  padding: 25px 80px 25px 80px;
+}
 
 .legend {
   font-size: 10px;
@@ -114,4 +125,6 @@ rect {
   stroke: #000;
   shape-rendering: crispEdges;
 }
+
+.
   /*END BarChartDeathCause Variables*/
