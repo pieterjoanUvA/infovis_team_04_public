@@ -8,7 +8,7 @@ var civilsvg = rightpanel.append("svg")  //civilsvg stands for civilian or not.
 //Raw dump of previous version
 
 //source: https://bl.ocks.org/tezzutezzu/c2653d42ffb4ecc01ffe2d6c97b2ee5e
-function arcTween(d)
+function arcTweenCivil(d)
 {
   var i = d3.interpolate(this._current, d);
   this._current = i(0);
@@ -22,7 +22,7 @@ var don2svgwidth = 240;
 var don2svgheight = 240;
 var don2svgradius = Math.min(don2svgwidth, don2svgheight) / 2;
 var don2svgdonutWidth = 42;
-var color = d3.scaleOrdinal(d3.schemeCategory20c);
+var colorCivil = d3.scaleOrdinal(d3.schemeCategory20c);
 var arc = d3.arc()
   .innerRadius(don2svgradius - don2svgdonutWidth)
   .outerRadius(don2svgradius);
@@ -42,7 +42,7 @@ function createCivilDonut(data)
     var don2svg = civilsvg
 	    .append('g')
 	    .attr('transform', 'translate(' + (don2svgwidth / 2) + ',' + (don2svgheight / 2) + ')');
-console.log(data);
+
     var pie = d3.pie()
 	    .value(function(d)
       {
@@ -50,8 +50,8 @@ console.log(data);
       })
 	    .sort(null);
 
-    var legendRectSize = 18;
-	  var legendSpacing = 2;
+    var legendCivilRectSize = 18;
+	  var legendCivilSpacing = 2;
 
     var don2svgpath = don2svg.selectAll('path') //.selectAll('path')//statsvg.selectAll('path')
 		  .data(pie(data))
@@ -60,7 +60,7 @@ console.log(data);
 		    .attr('d', arc)
 		    .attr('fill', function(d, i)
         {
-		        return color(d.data[0]);
+		        return colorCivil(d.data[0]);
 	      });
 
     don2svgpath.on('mouseover', function(d)
@@ -83,29 +83,29 @@ console.log(data);
 		  don2svgtooltip.style('display', 'none');
     });
 
-    var legend = don2svg.selectAll('.legend')
-		.data(color.domain())
+    var legendCivil = don2svg.selectAll('.legendCivil')
+		.data(colorCivil.domain())
 		.enter()
 		.append('g')
-		.attr('class', 'legend')
+		.attr('class', 'legendCivil')
 		.attr('transform', function(d, i)
     {
-			var legend_height = legendRectSize + legendSpacing;
-			var legend_offset =  legend_height * color.domain().length / 2;
-			var horz = -2 * legendRectSize;
-			var vert = i * legend_height - legend_offset;
+			var legendCivil_height = legendCivilRectSize + legendCivilSpacing;
+			var legendCivil_offset =  legendCivil_height * colorCivil.domain().length / 2;
+			var horz = -2 * legendCivilRectSize;
+			var vert = i * legendCivil_height - legendCivil_offset;
       return 'translate(' + horz + ',' + vert + ')';
 		});
 
-    legend.append('rect')
-		  .attr('width', legendRectSize)
-		  .attr('height', legendRectSize)
-		  .style('fill', color)
-		  .style('stroke', color);
+    legendCivil.append('rect')
+		  .attr('width', legendCivilRectSize)
+		  .attr('height', legendCivilRectSize)
+		  .style('fill', colorCivil)
+		  .style('stroke', colorCivil);
 
-    legend.append('text')
-		  .attr('x', legendRectSize + legendSpacing)
-		  .attr('y', legendRectSize - legendSpacing)
+    legendCivil.append('text')
+		  .attr('x', legendCivilRectSize + legendCivilSpacing)
+		  .attr('y', legendCivilRectSize - legendCivilSpacing)
 		  .text( d => d );
   })
   (window.d3);
@@ -115,14 +115,14 @@ function updateCivilDonut(dataset)
 {
   (function(d3)
   {
-    var color = d3.scaleOrdinal(d3.schemeCategory20c);
+    var colorCivil = d3.scaleOrdinal(d3.schemeCategory20c);
     var pie = d3.pie()
       .value(function(d) { return d[1]; })
   	  .sort(null);
     var arc = d3.arc()
       .innerRadius(don2svgradius - don2svgdonutWidth)
   	  .outerRadius(don2svgradius);
-    const don2svgpaths = statsvg.selectAll('path')
+    const don2svgpaths = civilsvg.selectAll('path')
   	  .data(pie(dataset));
 
     don2svgpaths.on('mouseover', function(d)
@@ -137,13 +137,13 @@ function updateCivilDonut(dataset)
   	   .attr('d', arc)
   	   .attr('fill', function(d, i)
        {
-  		     return color(d.data[0]);
+  		     return colorCivil(d.data[0]);
   	   })
        .merge(don2svgpaths);
 
     don2svgpaths.transition()
       .duration(1000)
-      .attrTween("d", arcTween);
+      .attrTween("d", arcTweenCivil);
     don2svgpaths2.data(pie(dataset))
       .enter()
     	.append('path')
