@@ -1,24 +1,35 @@
 // Instance the tour
+
+// API reference http://bootstraptour.com/api/
+// for extra options.
 var tour = new Tour({
+  backdrop: true,
+  backdropContainer: 'body',
+  backdropPadding: 0,
   steps: [
   {
+    placement: "right",
     element: "#leftpanel",
     title: "Leftpanel description",
     content: "Here the donut chart shows differentiation between gender and age groups, below the deathcause is shown."
   },
   {
+    placement: "left",
     element: "#rightpanel",
     title: "Rightpanel description",
     content: "News and Civilian / non-Civilian differentiation Donut chart."
+
   },
   {
+    placement: "top",
     element: "#botrow",
     title: "Bottom panel description",
     content: "Linechart with totals."
   },
   {
+    placement: "right",
     element: "#midpanel",
-    title: "Cyria map/province description",
+    title: "Syria map/province description",
     content: "Casualties per province in tooltips + color banding for global view."
   }
 ]});
@@ -37,7 +48,7 @@ tour.init();
 tour.start();
 // Restart the tour
 //tour.restart();
-console.log('tourjs has been Executed')
+//console.log('tourjs has been Executed')
 
 var tour_adv = new Tour({
   name: "tour",
