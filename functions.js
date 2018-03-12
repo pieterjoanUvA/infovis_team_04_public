@@ -26,7 +26,7 @@ function timerefresh(timevalue)
   //Set the text of the timerange.
   date_label.text(lowerdate.toDateString()+" - "+upperdate.toDateString());
   //Refresh the vertical line in the line chart which indicated the curren position
-  var percent = (timevalue-unix)/(1515672000000-unix);
+  var percent = (timevalue-unix)/(1515499200000-unix);
   d3.select(".mouse-line")
           .attr("d", "M" + line_width*percent + "," + 0 + " V " + line_height);
   //Set the deaths deaths_label
@@ -48,7 +48,7 @@ function datarefresh(timevalue)
   //This is the main event handler for releasing the slider thus changing the time.
 
   //UPDATING MAP DATA
-  
+
    updateMap();
 
 
@@ -194,7 +194,7 @@ function initialrefresh()
         .attr("class","xaxis")
         .call(d3.axisBottom(line_x));
 
-    linegraph.append("g")
-        .call(d3.axisLeft(line_y));
+    // linegraph.append("g")
+    //     .call(d3.axisLeft(line_y));
   });
 }

@@ -13,7 +13,7 @@ var botpanel = botrow;
 
 //User setting variables
 var timespan = 302400000;
-var unix = 1300190400000;
+var unix = 1299585600000;
 var date = new Date(unix);
 var lowerdate = new Date((unix-timespan));
 var upperdate = new Date((unix+timespan));
