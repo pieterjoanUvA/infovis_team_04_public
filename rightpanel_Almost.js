@@ -164,24 +164,16 @@ function updateCivilDonut(dataset)
 
 ///////////// BAR CHART //////////////
 
-var news_bardiv = rightpanel.append('div')
-    .attr('id', 'news_bar').append("svg")
+var news_barsvg = rightpanel.append('svg')
                 .attr("width","100%")
                 .attr("height","50%")
                 .style("border","1px solid black");
 
-var news_barmargin = {top: 10, right: 10, bottom: 170, left: 50};
-var news_barsvgwidth = 340;
-var news_barsvgheight = 340;
+var news_barmargin = {top: 10, right: 10, bottom: 130, left: 50};
+var news_barwidth = news_barsvg.node().getBoundingClientRect().width - news_barmargin.left - news_barmargin.right;
+var news_barheight = news_barsvg.node().getBoundingClientRect().height - news_barmargin.top - news_barmargin.bottom;
 
-//new method
-var news_barsvg = rightpanel.select('#news_bar')
-  .select('svg')
-  .attr("width", news_barsvgwidth)
-  .attr("height", news_barsvgheight);
 
-var news_barwidth = +news_barsvg.attr("width") - news_barmargin.left - news_barmargin.right;
-var news_barheight = +news_barsvg.attr("height") - news_barmargin.top - news_barmargin.bottom;
 var news_barx = d3.scaleBand().rangeRound([0, news_barwidth]).padding(0.1);
 var news_bary = d3.scaleLinear().rangeRound([news_barheight, 0]);
 var news_gbar = news_barsvg.append("g")
