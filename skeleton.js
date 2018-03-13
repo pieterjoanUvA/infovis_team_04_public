@@ -9,7 +9,7 @@ var botrow = body.select("#botrow");
 var leftpanel = toprow.select("#leftpanel").select("div");
 var midpanel = toprow.select("#midpanel");
 var rightpanel = toprow.select("#rightpanel").select("div");
-var botpanel = botrow;
+var botpanel = botrow; 	
 
 //User setting variables
 var timespan = 302400000;
@@ -27,4 +27,5 @@ parseTime = d3.timeParse("%Y/%W")
 
 //Interchanged Elements (important for updating the data-view)
 var date_label = midpanel.select("#year");
-var deaths_label = botpanel.select("#deaths")
+var deaths_label = botpanel.select("#deaths");
+var news_label = botpanel.select("#newsSources");

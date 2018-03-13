@@ -25,7 +25,7 @@ function timerefresh(timevalue)
   upperdate.setTime(parseInt(timevalue)+timespan);
   //Set the text of the timerange.
   date_label.text(lowerdate.toDateString()+" - "+upperdate.toDateString());
-  //Refresh the vertical line in the line chart which indicated the curren position
+  //Refresh the vertical line in the line chart which indicated the current position
   var percent = (timevalue-unix)/(1515499200000-unix);
   d3.select(".mouse-line")
           .attr("d", "M" + line_width*percent + "," + 0 + " V " + line_height);
@@ -40,6 +40,23 @@ function timerefresh(timevalue)
       }
     })[0];
     deaths_label.text("Deaths: "+data.deaths);
+  });
+  
+  
+
+  /////////////Weekly news coverage:
+    d3.select(".mouse-line2")
+          .attr("d", "M" + line_width*percent + "," + 0 + " V " + news_line_height);
+    d3.csv("News_magnitude.csv", function(error, csv_data)
+  {
+    parseTime = d3.timeParse("%Y/%W")
+    data = csv_data.filter(function (d) {
+      if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
+      {
+        return d;
+      }
+    })[0];
+    news_label.text("Number of News sources: "+data.NumSources);
   });
 }
 
@@ -170,6 +187,7 @@ function initialrefresh()
   datarefresh(unix);
 
   //LOAD STATIC DATA
+  //Load Data on Total Weekly Deaths
   d3.csv("AggregatedInfVis.csv", function(error, csv_data)
   {
     data = csv_data.map(function(d)
@@ -177,6 +195,7 @@ function initialrefresh()
       d.time = d.year+"/"+d.week;
       d.time = parseTime(d.time);
       d.deaths = +d.deaths;
+
       return d;
     });
 
@@ -196,5 +215,33 @@ function initialrefresh()
 
     // linegraph.append("g")
     //     .call(d3.axisLeft(line_y));
+  });
+  
+  ///////////////Loading News Coverage Data
+  
+  d3.csv("News_magnitude.csv", function(error, csv_data)
+  {
+    data = csv_data.map(function(d)
+    {
+      d.time = d.year+"/"+d.week;
+      d.time = parseTime(d.time);
+      d.NumSources = +d.NumSources;
+      return d;
+    });
+
+    news_line_x.domain(d3.extent(data, function(d) { return d.time; }))
+    news_line_y.domain([0, d3.max(data, function(d) { return d.NumSources; })]);
+	
+    news_linegraph.append("path")
+      .data([data])
+      .attr("class", "news_line")
+      .attr("d", news_line);
+
+      // Add the X Axis
+    news_linegraph.append("g")
+        .attr("transform", "translate(0," + news_line_height + ")")
+        .attr("class","xaxis")
+        .call(d3.axisBottom(news_line_x));
+
   });
 }

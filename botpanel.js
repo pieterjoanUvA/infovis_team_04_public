@@ -15,7 +15,7 @@ sliderbar.on("input", function()
 //Botpanel SVG Element
 var graphsvg = botpanel.append("svg")
 								.attr("width","100%")
-								.attr("height","75%");
+								.attr("height","37%");
 
 //Draw the static-static parts of the lineChart
 var	line_width = graphsvg.node().getBoundingClientRect().width,
@@ -31,12 +31,44 @@ var line_y = d3.scaleLinear().range([line_height,0]);
 var line = d3.line()
 						.x(function(d) { return line_x(d.time); })
 						.y(function(d) { return line_y(d.deaths); });
-
+				
 //Line tooltip which has to sync with the sliderbar
 var mouseG = graphsvg.append("g")
       .attr("class", "mouse-over-effects");
 
-mouseG.append("path") // this is the black vertical line to follow mouse
+mouseG.append("path") // this is the white vertical line to follow mouse
       .attr("class", "mouse-line")
       .style("stroke", "white")
       .style("stroke-width", "1px");
+  
+
+///////////News Line Chart
+
+var news_graphsvg = botpanel.append("svg")
+								.attr("width","100%")
+								.attr("height","37%");
+
+//Draw the static-static parts of the lineChart
+var	news_line_width = news_graphsvg.node().getBoundingClientRect().width,
+    news_line_height = news_graphsvg.node().getBoundingClientRect().height-25;
+
+var news_linegraph = news_graphsvg.append("g")
+									.attr("width",news_line_width)
+									.attr("height",news_line_height);
+
+var news_line_x = d3.scaleTime().range([0,news_line_width]);
+var news_line_y = d3.scaleLinear().range([news_line_height,0]);
+
+var news_line = d3.line()
+						.x(function(d) { return news_line_x(d.time); })
+						.y(function(d) { return news_line_y(d.NumSources); });
+
+//Line tooltip which has to sync with the sliderbar
+var mouseG2 = news_graphsvg.append("g")
+      .attr("class", "mouse-over-effects2");
+
+mouseG2.append("path") // this is the black vertical line to follow mouse
+      .attr("class", "mouse-line2")
+      .style("stroke", "white")
+      .style("stroke-width", "1px");
+   

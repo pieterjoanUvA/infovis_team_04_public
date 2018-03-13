@@ -201,7 +201,7 @@ function news_createBar(news_bardata){
 
   news_bar_rect.data(news_bardata).enter().append("rect")
   .attr("class", "news_bar")
-  .attr("fill", "teal")
+  //.attr("fill", "teal")
     .attr("x", function(d) { return news_barx(d[0]); })
     .attr("height", function(v) {return news_barheight - news_bary(+v[1]); })
    .attr("y", function(d) { return news_bary(+d[1]); })

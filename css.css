@@ -112,6 +112,15 @@ rect {
   position: absolute;
 }
 
+#newsSources {
+	color: white;
+	position: absolute;
+}
+
+p.ex2 {
+	padding-top: 2em;
+}
+
 /*BarChartDeathCause Variables*/
 .bar {
   fill: steelblue;
@@ -123,6 +132,8 @@ rect {
   fill: black;
   font: 9px sans-serif;
 }
+
+
 .axis--y path {
   }
 .axis--x path {
@@ -144,6 +155,20 @@ rect {
 }
   /*END BarChartDeathCause Variables*/
 
+  
+ /*For Event Bar chart */
+.news_bar {
+	fill: steelblue;
+}
+
+.news_line {
+	stroke:white;
+	fill:steelblue;
+	stroke-width:1px;
+	
+	
+}
+ 
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
