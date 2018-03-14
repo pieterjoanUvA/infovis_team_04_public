@@ -26,7 +26,7 @@ var	don1svgwidth = Math.min(statsvg.node().getBoundingClientRect().width - don1s
           statsvg.node().getBoundingClientRect().height - don1svgmargin.top - don1svgmargin.bottom);
 var don1svgheight = don1svgwidth;
 
-console.log(don1svgwidth, don1svgheight);
+//console.log(don1svgwidth, don1svgheight);
 var don1svgradius = Math.min(don1svgwidth, don1svgheight) / 2 ;
 var don1svgdonutWidth = 42;
 var color = d3.scaleOrdinal(d3.schemeCategory20c);
