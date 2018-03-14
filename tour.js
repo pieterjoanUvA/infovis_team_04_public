@@ -1,11 +1,5 @@
 // Instance the tour
-//"#slider" // Setter
-//var value = mySlider.bootstrapSlider('getValue');
-//mysetter =
-// For non-getter methods, you can chain together commands
-	//mySlider
-	//	.bootstrapSlider('setValue', 5)
-//$( "#slider" ).slider( {min: 1299585600000, max: 1515499200000, step: 604800000});
+
 // API reference http://bootstraptour.com/api/
 // for extra options.
 var tour = new Tour({
@@ -14,16 +8,19 @@ var tour = new Tour({
   backdropPadding: 0,
   steps: [
   {
-// tried to move the slider, but this calls the slider before initialization ????
-//    onShown: function (tour) {$("input#slider").bootstrapSlider('setValue',1299585600000)},
-    onShown: function (tour) {},
+// this is the date of the largest Chemical and Toxic gasses count, probably.
+onShow: function (tour) {$( "#slider" ).attr("value", 1377000000000 )
+datarefresh(1377000000000) ;
+timerefresh(1377000000000) ;
+},
+//    onShown: function (tour) {},
     placement: "right",
     element: "svg:first",
     title: "Gender Distribution",
     content: "Here the donut chart shows differentiation between gender and age groups"
   },
   {
-    onShown: function (tour) {},
+    onShow: function (tour) {},
     placement: "right",
     element: "svg:eq(1)",
     title: "BarChart Casualties",
@@ -31,7 +28,7 @@ var tour = new Tour({
 
   },
   {
-    onShown: function (tour) {},
+    onShow: function (tour) {},
     placement: "right",
     element: "svg:eq(2)",
     title: "The Map Panel",
@@ -39,7 +36,7 @@ var tour = new Tour({
 
   },
   {
-    onShown: function (tour) {},
+    onShow: function (tour) {},
     placement: "left",
     element: "svg:eq(3)",
     title: "Civilian/Non-Civilian Distribution",
@@ -47,7 +44,7 @@ var tour = new Tour({
 
   },
   {
-    onShown: function (tour) {},
+    onShow: function (tour) {},
     placement: "left",
     element: "svg:eq(4)",
     title: "News Distribution",
@@ -55,21 +52,21 @@ var tour = new Tour({
 
   },
   {
-    onShown: function (tour) {},
+    onShow: function (tour) {},
     placement: "top",
     element: "input#slider",
     title: "The Time Slider Selector",
     content: "Select a week in the timeline."
   },
   {
-    onShown: function (tour) {},
+    onShow: function (tour) {},
     placement: "top",
     element: "svg:eq(5)",
     title: "Total Casualties Line Graph",
     content: "."
   },
   {
-    onShown: function (tour) {},
+    onShow: function (tour) {},
     placement: "top",
     element: "svg:last",
     title: "Extra news data on projected on timeline",
