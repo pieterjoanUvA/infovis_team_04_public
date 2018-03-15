@@ -16,7 +16,7 @@ var SubSet = function(sourceObject, keys)
 
 function updatelabel()
 {
-  date_label.text(lowerdate.toDateString()+" - "+upperdate.toDateString()+" - Filter: "+filter+"("+filtervalue+")");
+  date_label.text("Y:"+date.getFullYear()+" W:"+date.getWeek()+" Filter: "+filter+"("+filtervalue+")");
 }
 
 function timerefresh(timevalue)
