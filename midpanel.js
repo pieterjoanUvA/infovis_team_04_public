@@ -12,18 +12,26 @@ function updateMap()
   .defer(d3.csv, "map.csv")
   .await(ready)
   function ready(error, data, dataset)
-  { if (error) throw error;
+  {
+    if (error) throw error;
     var province_update = topojson.feature(data, data.objects["SYR_adm1-1"]).features
     var dataset = dataset.filter(function(d)
     { //filter by year and week
-      if(d["year"] == date.getFullYear() && d["week"] == date.getWeek())  {
-        return d}})
-   for (i=0; i<province_update.length;i++) { // for each geometry object
-
-    for (j=0; j<dataset.length; j++) { if ( province_update[i].properties.NAME_1 ==  dataset[j].province
-    ) {
-      province_update[i].properties.count=dataset[j].count
-    }}}
+      if(d["year"] == date.getFullYear() && d["week"] == date.getWeek())
+      {
+        return d;
+      }
+    })
+    for (i=0; i<province_update.length;i++)
+    { // for each geometry object
+      for (j=0; j<dataset.length; j++)
+      {
+        if ( province_update[i].properties.NAME_1 ==  dataset[j].province)
+        {
+          province_update[i].properties.count=dataset[j].count;
+        }
+      }
+    }
     function getDataRange() {
       var min = Infinity, max = -Infinity;
       for (i=0; i<province_update.length;i++) {if (min>province_update[i].properties.count){min = province_update[i].properties.count}
