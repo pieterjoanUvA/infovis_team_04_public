@@ -24,7 +24,7 @@ function timerefresh(timevalue)
   lowerdate.setTime(parseInt(timevalue)-timespan);
   upperdate.setTime(parseInt(timevalue)+timespan);
   //Set the text of the timerange.
-  date_label.text(lowerdate.toDateString()+" - "+upperdate.toDateString());
+  date_label.text(lowerdate.toDateString()+" - "+upperdate.toDateString()+" - Filter: "+filter+"("+filtervalue+")");
   //Refresh the vertical line in the line chart which indicated the current position
   var percent = (timevalue-unix)/(1515499200000-unix);
   d3.select(".mouse-line")
@@ -41,8 +41,6 @@ function timerefresh(timevalue)
     })[0];
     deaths_label.text("Deaths: "+data.deaths);
   });
-  
-  
 
   /////////////Weekly news coverage:
     d3.select(".mouse-line2")
@@ -60,14 +58,21 @@ function timerefresh(timevalue)
   });
 }
 
+function filterrefresh(filter,value)
+{
+  //Call this function when you want to apply any additional filter
+  filter = filter;
+  filtervalue = value;
+  //Set the text of the timerange.
+  date_label.text(lowerdate.toDateString()+" - "+upperdate.toDateString()+" - Filter: "+filter+"("+filtervalue+")");
+}
+
 function datarefresh(timevalue)
 {
   //This is the main event handler for releasing the slider thus changing the time.
 
   //UPDATING MAP DATA
-
    updateMap();
-
 
   //UPDATING DONUT CHART DATA
   d3.csv("genderdata.csv", function(error, csv_data)
@@ -216,9 +221,9 @@ function initialrefresh()
     // linegraph.append("g")
     //     .call(d3.axisLeft(line_y));
   });
-  
+
   ///////////////Loading News Coverage Data
-  
+
   d3.csv("News_magnitude.csv", function(error, csv_data)
   {
     data = csv_data.map(function(d)
@@ -231,7 +236,7 @@ function initialrefresh()
 
     news_line_x.domain(d3.extent(data, function(d) { return d.time; }))
     news_line_y.domain([0, d3.max(data, function(d) { return d.NumSources; })]);
-	
+
     news_linegraph.append("path")
       .data([data])
       .attr("class", "news_line")

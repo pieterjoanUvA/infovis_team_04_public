@@ -9,7 +9,7 @@ var botrow = body.select("#botrow");
 var leftpanel = toprow.select("#leftpanel").select("div");
 var midpanel = toprow.select("#midpanel");
 var rightpanel = toprow.select("#rightpanel").select("div");
-var botpanel = botrow; 	
+var botpanel = botrow;
 
 //User setting variables
 var timespan = 302400000;
@@ -17,6 +17,9 @@ var unix = 1299585600000;
 var date = new Date(unix);
 var lowerdate = new Date((unix-timespan));
 var upperdate = new Date((unix+timespan));
+
+var filter = "";
+var filtervalue = "";
 
 var don1svgRanOnce = 0;
 var barRanOnce = 0 ;
