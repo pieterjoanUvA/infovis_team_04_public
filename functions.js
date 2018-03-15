@@ -7,14 +7,16 @@ Date.prototype.getWeek = function()
   return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
 }
 
-function parse2Array(obj,length)
+var SubSet = function(sourceObject, keys)
 {
-  //Takes an object (retrieved row) as input and transforms it to an array of key-value pairs.
-  //Also filters empty data to return an empty array instead
-  data = Object.entries(obj);
-  data.shift();
-  data.shift();
-  return data;
+    var newObject = {};
+    keys.forEach(function(key) { newObject[key] = sourceObject[key]; });
+    return Object.entries(newObject);
+};
+
+function updatelabel()
+{
+  date_label.text("Y:"+date.getFullYear()+" W:"+date.getWeek()+" Filter: "+filter+"("+filtervalue+")");
 }
 
 function timerefresh(timevalue)
@@ -24,7 +26,7 @@ function timerefresh(timevalue)
   lowerdate.setTime(parseInt(timevalue)-timespan);
   upperdate.setTime(parseInt(timevalue)+timespan);
   //Set the text of the timerange.
-  date_label.text(lowerdate.toDateString()+" - "+upperdate.toDateString());
+  updatelabel();
   //Refresh the vertical line in the line chart which indicated the current position
   var percent = (timevalue-unix)/(1515499200000-unix);
   d3.select(".mouse-line")
@@ -41,9 +43,6 @@ function timerefresh(timevalue)
     })[0];
     deaths_label.text("Deaths: "+data.deaths);
   });
-  
-  
-
   /////////////Weekly news coverage:
     d3.select(".mouse-line2")
           .attr("d", "M" + line_width*percent + "," + 0 + " V " + news_line_height);
@@ -60,88 +59,73 @@ function timerefresh(timevalue)
   });
 }
 
-function datarefresh(timevalue)
+function datarefresh()
 {
   //This is the main event handler for releasing the slider thus changing the time.
 
   //UPDATING MAP DATA
+  updateMap();
 
-   updateMap();
-
-
-  //UPDATING DONUT CHART DATA
-  d3.csv("genderdata.csv", function(error, csv_data)
+  //UPDATING ALL PANELS WHICH COULD CONTAIN 3 FILTERS
+  d3.csv("key_"+filter+".csv", function(error, csv_data)
   {
-    //Parse the DataTime
-    don1svgdata = csv_data.filter(function (d) {
-      if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
+    //FILTER THE DATA
+    data = csv_data.filter(function (d)
+    {
+      if ((d.year == date.getFullYear()) && (d.week == date.getWeek()) && (d[filter] == filtervalue))
       {
         return d;
       }
     })[0];
-  //  console.log(don1svgdata)
-  //  don1svgdata = parse2Array(don1svgdata,4);
-  don1svgdata = Object.entries(don1svgdata);
-  don1svgdata.shift();
-  don1svgdata.shift();
-  don1svgdata.shift();
-//        console.log(don1svgdata)
+
+    //UPDATING DONUT CHART DATA
+    don1svgdata = SubSet(data,keys_gender);
     // RunOnce function for initial draw of donut with data.
     if (don1svgRanOnce == 0)
     {
       don1svgRanOnce = 1;
       createDonut(don1svgdata)
     };
-
     updateDonut(don1svgdata);
-  });
 
-  //UPDATING (Death) BAR CHART DATA
-  d3.csv("deathcausedata.csv", function(error, csv_data)
-  {
-    //Parse the DataTime
-    bardata = csv_data.filter(function (d) {
-      if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
-      {
-        return d;
-      }
-    })[0];
-	//console.log(bardata)
-
-    bardata = Object.entries(bardata);
-    bardata.shift();
-    bardata.shift();
-    bardata.shift();
-
+    //UPDATING (Death) BAR CHART DATA
+    bardata = SubSet(data,keys_deathcause);
+    // RunOnce function for initial draw of donut with data.
     if (barRanOnce == 0)
     {
       barRanOnce = 1;
       createBar(bardata);
     };
     updateBar(bardata);
+
+    //UPDATING RIGHT CIVIL DONUT CHART
+    don2svgdata = SubSet(data,keys_status);
+    // RunOnce function for initial draw of donut with data.
+    if (don2svgRanOnce == 0)
+    {
+      don2svgRanOnce = 1;
+      createCivilDonut(don2svgdata)
+    };
+    updateCivilDonut(don2svgdata);
+
   });
 
-
-
-
-  //UPDATING News BAR CHART DATA
+  //UPDATING NEWS BAR CHART DATA
   d3.csv("eventCounts_byType.csv", function(error, csv_data)
   {
     //Parse the DataTime
-    news_bardata = csv_data.filter(function (d) {
+    news_bardata = csv_data.filter(function (d)
+    {
       if ((+d.year == date.getFullYear()) && (+d.week == date.getWeek()))
 
       {
         return d;
       }
     })[0];
-
-
     news_bardata = Object.entries(news_bardata);
     news_bardata.shift();
     news_bardata.shift();
     news_bardata.shift();
-
     if (news_barRanOnce == 0)
     {
       news_barRanOnce = 1;
@@ -149,33 +133,6 @@ function datarefresh(timevalue)
     };
     news_updateBar(news_bardata);
   });
-
-  //UPDATING RIGHT CIVIL DONUT CHART
-    d3.csv("statusdata.csv", function(error, csv_data)
-    {
-      //Parse the DataTime
-      don2svgdata = csv_data.filter(function (d) {
-        if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
-        {
-          return d;
-        }
-      })[0];
-    //  console.log(don1svgdata)
-    //  don1svgdata = parse2Array(don1svgdata,4);
-    don2svgdata = Object.entries(don2svgdata);
-    don2svgdata.shift();
-    don2svgdata.shift();
-    don2svgdata.shift();
-    //        console.log(don1svgdata)
-      // RunOnce function for initial draw of donut with data.
-      if (don2svgRanOnce == 0)
-      {
-        don2svgRanOnce = 1;
-        createCivilDonut(don2svgdata)
-      };
-
-      updateCivilDonut(don2svgdata);
-    });
 }
 
 function initialrefresh()
@@ -184,7 +141,7 @@ function initialrefresh()
 
   //INITIAL DATA REFRESH
   timerefresh(unix);
-  datarefresh(unix);
+  datarefresh();
 
   //LOAD STATIC DATA
   //Load Data on Total Weekly Deaths
@@ -216,9 +173,9 @@ function initialrefresh()
     // linegraph.append("g")
     //     .call(d3.axisLeft(line_y));
   });
-  
+
   ///////////////Loading News Coverage Data
-  
+
   d3.csv("News_magnitude.csv", function(error, csv_data)
   {
     data = csv_data.map(function(d)
@@ -231,7 +188,7 @@ function initialrefresh()
 
     news_line_x.domain(d3.extent(data, function(d) { return d.time; }))
     news_line_y.domain([0, d3.max(data, function(d) { return d.NumSources; })]);
-	
+
     news_linegraph.append("path")
       .data([data])
       .attr("class", "news_line")
