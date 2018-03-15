@@ -18,7 +18,7 @@ var date = new Date(unix);
 var lowerdate = new Date((unix-timespan));
 var upperdate = new Date((unix+timespan));
 
-var filter = "";
+var filter = "none";
 var filtervalue = "";
 
 var don1svgRanOnce = 0;
@@ -32,3 +32,8 @@ parseTime = d3.timeParse("%Y/%W")
 var date_label = midpanel.select("#year");
 var deaths_label = botpanel.select("#deaths");
 var news_label = botpanel.select("#newsSources");
+
+//Key values for different visualisation elements:
+var keys_gender = ['Adult - Female','Adult - Male','Child - Female','Child - Male'];
+var keys_deathcause = ['Chemical and toxic gases','Detention - Execution','Detention - Torture','Detention - Torture - Execution','Explosion','Field Execution','Kidnapping - Execution','Kidnapping - Torture','Kidnapping - Torture - Execution','Other','Shelling','Shooting','Siege','Un-allowed to seek Medical help','Unknown','Warplane shelling'];
+var keys_status = ['Civilian','Non-Civilian'];

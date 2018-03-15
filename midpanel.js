@@ -142,7 +142,10 @@ function ready(error, data, dataset)
     })
     .on('click', function(d)
     {
-      filterrefresh("map",d.properties.NAME_1);
+      filter = "province";
+      filtervalue = d.properties.NAME_1;
+      updatelabel();
+      datarefresh();
     });
   mapsvg.on('mousemove', function()
   {

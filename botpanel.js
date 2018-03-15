@@ -5,7 +5,6 @@ var sliderbar = botpanel.select("#slider").style("width","100%");
 sliderbar.on("mouseup", function()
 {
 	datarefresh(this.value);
-	console.log(this.value);
 });
 
 sliderbar.on("input", function()
