@@ -179,18 +179,23 @@ var news_bary = d3.scaleLinear().rangeRound([news_barheight, 0]);
 var news_gbar = news_barsvg.append("g")
              .attr("transform", "translate(" + news_barmargin.left + "," + news_barmargin.top + ")");
 
-
+var news_tooltip = news_barsvg.append('div')
+  .attr('class', 'customtooltip');
+  
+  
 function news_createBar(news_bardata){
   var news_bar_rect =  news_gbar.selectAll(".news_bar")
   var news_bar_text =  news_gbar.selectAll(".news_bar_text")
+  
 
   ////////// barx and bary domain set functions for auto scaling.
 
   news_barx.domain(news_bardata.map(function(d) { return d[0]; }));
   news_bary.domain([d3.min(news_bardata, function(v) {return +v[1]; }),d3.max(news_bardata, function(v) { return +v[1]; })]);
 
-//console.log(d3.max(bardata, d => d[1]))
 
+  
+  
   news_bar_rect.data(news_bardata).enter().append("rect")
   .attr("class", "news_bar")
   //.attr("fill", "teal")
@@ -199,6 +204,8 @@ function news_createBar(news_bardata){
    .attr("y", function(d) { return news_bary(+d[1]); })
    .attr("width", news_barx.bandwidth());
 
+   
+   
   news_bar_text.data(news_bardata).enter().append("text")
     .attr("class", "news_bar_text")
     .attr("text-anchor", "middle")
@@ -208,7 +215,8 @@ function news_createBar(news_bardata){
       .attr("y", function(d) { return news_bary(+d[1]) - 2; })
      .text(function(d) { return d[1]; });
 
-  news_gbar.append("g")
+	 
+ var naxis = news_gbar.append("g")
       .attr("class", "axis news_axis--x")
       .attr("transform", "translate(0," + news_barheight + ")")
       .call(d3.axisBottom(news_barx))
@@ -218,7 +226,7 @@ function news_createBar(news_bardata){
           .attr("dy", "0.7em")
           .attr("y", "0em")
           .attr("font-size", "12px")
-          .attr("transform", "rotate(-65)");;
+          .attr("transform", "rotate(-65)");
 
   news_gbar.append("g")
       .attr("class", "axis news_axis--y")
@@ -234,7 +242,31 @@ function news_createBar(news_bardata){
       .attr("text-anchor", "end")
       .attr("fill", "black")
       .text("Event Counts");
+	  
+  var div = news_barsvg.append("div")	
+    .attr("class", "custom_tooltip")				
+    //.style("opacity", 0);
+	  
+naxis.selectAll(".tick")[0].forEach(function(d1){
+	var data1 = d3.select(d1).data();		
+    d3.select(d1).on("mouseover", function(d) {
+      //on mouse hover show the tooltip
+            div.transition()		
+                .duration(200)		
+                .style("opacity", .9);		
+            div.html(data1)	
+                .style("left", (d3.event.pageX) + "px")		
+                .style("top", (d3.event.pageY - 28) + "px");	
+            })					
+        .on("mouseout", function(d) {	
+          //on mouse out hide the tooltip
+            div.transition()		
+                .duration(500)		
+                .style("opacity", 0);	
+        });
 
+  })
+	
 }
 
 function news_updateBar(news_bardata){
@@ -311,3 +343,4 @@ news_gbar.enter().append("g")
 
 
 }
+
