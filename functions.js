@@ -89,7 +89,23 @@ function datarefresh()
     updateDonut(don1svgdata);
 
     //UPDATING (Death) BAR CHART DATA
+
     bardata = SubSet(data,keys_deathcause);
+
+    //// fix for empty data when deathcause is selected.
+    if ( filter  == 'deathCause'){
+          for ( i=0 ; i < bardata.length ; i++){
+            if (bardata[i][0] == filtervalue)
+            {
+              bardata[i][1] = "|F|";
+            }
+            else
+            {
+              bardata[i][1] = 0;
+            }
+          }
+        };
+
     // RunOnce function for initial draw of donut with data.
     if (barRanOnce == 0)
     {

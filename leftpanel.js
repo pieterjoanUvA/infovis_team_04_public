@@ -203,13 +203,21 @@ function createBar(bardata){
   bary.domain([d3.min(bardata, function(v) { return +v[1]; }),d3.max(bardata, function(v) { return +v[1]; })]);
 
 //console.log(d3.max(bardata, d => d[1]))
-
+/// Bar rectangles creation.
   bar_rect.data(bardata).enter().append("rect")
   .attr("class", "bar")
     .attr("x", function(d) { return barx(d[0]); })
     .attr("height", function(v) { return barheight - bary(+v[1]); })
    .attr("y", function(d) { return bary(+d[1]); })
-   .attr("width", barx.bandwidth());
+   .attr("width", barx.bandwidth())
+   .on('click', function(d)
+   {
+     filter = "deathCause";
+     filtervalue = d[0];
+     updatelabel();
+     datarefresh();
+   });
+   /// text above bars with Counts
   bar_text.data(bardata).enter().append("text")
     .attr("class", "bar_text")
     .attr("text-anchor", "middle")
@@ -218,7 +226,8 @@ function createBar(bardata){
       .attr("x", function(d) { return barx(d[0]) + barx.bandwidth()/2; })
       .attr("y", function(d) { return bary(+d[1]) - 2; })
      .text(function(d) { return d[1]; });
-
+/// x-axis creation plus setting the labels in 65-degrees angle.
+/// plus the labels from the data in variable 'barx'
   gbar.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + barheight + ")")
@@ -229,8 +238,9 @@ function createBar(bardata){
           .attr("dy", "0.7em")
           .attr("y", "0em")
           .attr("font-size", "12px")
-          .attr("transform", "rotate(-65)");;
+          .attr("transform", "rotate(-65)");
 
+/// y-axis create + 90degrees text.
   gbar.append("g")
       .attr("class", "axis axis--y")
    .call(d3.axisLeft(bary).ticks(4, ",.0f"))
@@ -302,6 +312,14 @@ bar_rect.enter().selectAll(".bar")
 .attr("y", function(d) { return bary(+d[1]); })
 .attr("width", barx.bandwidth())
 .attr("height", function(v) { return barheight - bary(v[1]); })
+.on('click', function(d)
+{
+  filter = "deathCause";
+  console.log(d[0]);
+  filtervalue = d[0];
+  updatelabel();
+  datarefresh();
+})
 
 bar_text.enter().append("text")
 .attr("class", "bar_text")
