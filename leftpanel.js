@@ -202,7 +202,7 @@ function createBar(bardata){
 
   ////////// barx and bary domain set functions for auto scaling.
 
-  var keys_death_short = ['Chemical','Det-Exec','Det-Tort','Det-Tort-Ex','Explosion','Field Exec','Kidn-Exec','Kidn-Tort','Kidn-Tor-Ex','Other','Shelling','Shooting','Siege','No Medical','Unknown','Warplane']
+  var keys_death_short = ['Chemical','Det-Exec','Det-Torture','Det-Tort-Ex','Explosion','Field Exec','Kidn-Exec','Kidn-Torture','Kidn-Tor-Ex','Other','Shelling','Shooting','Siege','No Medical','Unknown','Warplane']
   barx.domain(bardata.map(function(d) { return d[0]; }));
   barxNames.domain(keys_death_short.map(function (d){return [d]}));
   bary.domain([d3.min(bardata, function(v) { return +v[1]; }),d3.max(bardata, function(v) { return +v[1]; })]);
