@@ -178,12 +178,15 @@ var barsvg = leftpanel.append("svg")
                 .attr("height","50%")
                 .style("border","1px solid black");
 
-var barmargin = {top: 10, right: 10, bottom: 175, left: 55};
+var barmargin = {top: 10, right: 10, bottom: 80, left: 55};
 var barwidth = barsvg.node().getBoundingClientRect().width - barmargin.left - barmargin.right;
 var barheight = barsvg.node().getBoundingClientRect().height - barmargin.top - barmargin.bottom;
 
 
 var barx = d3.scaleBand().rangeRound([0, barwidth]).padding(0.1);
+// a bit ugly solution for the Short Naming and keeping filter click working
+var barxNames = d3.scaleBand().rangeRound([0, barwidth]).padding(0.1);
+// end of extra X-axis creation.
 var bary = d3.scaleLinear().rangeRound([barheight, 0]);
 var gbar = barsvg.append("g")
              .attr("transform", "translate(" + barmargin.left + "," + barmargin.top + ")");
@@ -199,7 +202,9 @@ function createBar(bardata){
 
   ////////// barx and bary domain set functions for auto scaling.
 
+  var keys_death_short = ['Chemical','Det-Exec','Det-Tort','Det-Tort-Ex','Explosion','Field Exec','Kidn-Exec','Kidn-Tort','Kidn-Tor-Ex','Other','Shelling','Shooting','Siege','No Medical','Unknown','Warplane']
   barx.domain(bardata.map(function(d) { return d[0]; }));
+  barxNames.domain(keys_death_short.map(function (d){return [d]}));
   bary.domain([d3.min(bardata, function(v) { return +v[1]; }),d3.max(bardata, function(v) { return +v[1]; })]);
 
 //console.log(d3.max(bardata, d => d[1]))
@@ -231,7 +236,7 @@ function createBar(bardata){
   gbar.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + barheight + ")")
-      .call(d3.axisBottom(barx))
+      .call(d3.axisBottom(barxNames)) // barxNames if for the shortnames solution instead of normal barx
           .selectAll("text")
           .style("text-anchor", "end")
           .attr("dx", "-0.6em")
@@ -247,7 +252,7 @@ function createBar(bardata){
       .attr("font-size", "12px")
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -25)
+      .attr("y", -27)
       .attr("dy", "-0.71em")
       .attr("dx", "-0.71em")
       .attr("x", 0)
