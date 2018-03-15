@@ -64,7 +64,14 @@ function createCivilDonut(data)
 		    .attr('fill', function(d, i)
         {
 		        return colorCivil(d.data[0]);
-	      });
+	      })
+        .on('click', function(d)
+        {
+          filter = "status";
+          filtervalue = d.data[0];
+          updatelabel();
+          datarefresh();
+        });
 
     don2svgpath.on('mouseover', function(d)
     {
@@ -245,7 +252,7 @@ function news_updateBar(news_bardata){
   news_bary.domain([d3.min(news_bardata, function(v) { return +v[1]; }),
                 d3.max(news_bardata, function(v) { return +v[1]; })]);
 
-//select all bars on the graph, take them out, and exit the previous data set; 
+//select all bars on the graph, take them out, and exit the previous data set;
 //Thereafter, redreaw with new data
 
 var news_bar_rect =  d3.selectAll(".news_bar").data(news_bardata);

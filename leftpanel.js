@@ -68,7 +68,14 @@ function createDonut(data)
 		    .attr('fill', function(d, i)
         {
 		        return color(d.data[0]);
-	      });
+	      })
+        .on('click', function(d)
+        {
+          filter = "gender";
+          filtervalue = d.data[0];
+          updatelabel();
+          datarefresh();
+        });
 
     don1svgpath.on('mouseover', function(d)
     {
