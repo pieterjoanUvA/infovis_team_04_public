@@ -1,3 +1,5 @@
+//Add a selecting window to filter different data
+var choice = "total"
 //The Midpanel SVG element code
 //Code that runs on initialization
 var mapsvg = midpanel.append("svg")
@@ -7,70 +9,65 @@ var mapsvg = midpanel.append("svg")
 //Define UpdateMap Function
 function updateMap()
 {
-  d3.queue()
-  .defer(d3.json, "SYR_adm1.json")
-  .defer(d3.csv, "map.csv")
-  .await(ready)
-  function ready(error, data, dataset)
-  { if (error) throw error;
-    var province_update = topojson.feature(data, data.objects["SYR_adm1-1"]).features
-    var dataset = dataset.filter(function(d)
-    { //filter by year and week
-      if(d["year"] == date.getFullYear() && d["week"] == date.getWeek())  {
-        return d}})
-   for (i=0; i<province_update.length;i++) { // for each geometry object
+d3.queue()
+.defer(d3.json, "SYR_adm1.json")
+.defer(d3.csv, "key_province.csv", )
+.await(ready)
+function ready(error, data, dataset)
+{ if (error) throw error;
+  var province_update = topojson.feature(data, data.objects["SYR_adm1-1"]).features
+  var dataset = dataset.filter(function(d)
+  { //filter by year and week  
+    if(d["year"] == date.getFullYear() && d["week"] == date.getWeek())  {
+      return d}})
+ for (i=0; i<province_update.length;i++) { // for each geometry object
 
-    for (j=0; j<dataset.length; j++) { if ( province_update[i].properties.NAME_1 ==  dataset[j].province
-    ) {
-      province_update[i].properties.count=dataset[j].count
-    }}}
-    function getDataRange() {
-      var min = Infinity, max = -Infinity;
-      for (i=0; i<province_update.length;i++) {if (min>province_update[i].properties.count){min = province_update[i].properties.count}
-    if (max<province_update[i].properties.count){max =province_update[i].properties.count} }
-      return [min, max];
-  }
-    var dataRange = getDataRange(); // get the min/max values from the range of count
+  for (j=0; j<dataset.length; j++) { if ( province_update[i].properties.NAME_1 ==  dataset[j].province
+  ) {
+    province_update[i].properties.count=dataset[j][choice]
+  }}}
+  function getDataRange() {
+    var min = Infinity, max = -Infinity;
+    for (i=0; i<province_update.length;i++) {if (min>province_update[i].properties.count){min = province_update[i].properties.count}
+  if (max<province_update[i].properties.count){max =province_update[i].properties.count} }
+    return [min, max];
+}
+  var dataRange = getDataRange(); // get the min/max values from the range of count
 
-    /////////////////////
-    function getColor(valueIn, valuesIn) {
-      // create a linear scale
-      var color =  d3.scaleLinear()
-      .domain([valuesIn[0], valuesIn[1]])  // input uses min and max values
-        .range([.3, 1]);   // output for opacity between .3 and 1
-      return color(valueIn);  // return that number to the caller
-  }
-  ///////////////////////////
-    var paths = mapsvg.selectAll("path")
-            .data(province_update)
-            .attr('fill-opacity', function (d) {
-    return getColor(d.properties.count, dataRange);  // give them an opacity value based on their current value
-  })
-  paths.on('mouseover', function(d)
-  {
-   var province_name= d.properties.NAME_1
-   var count = d.properties.count
-    maptooltip.select('.province').html(province_name);
-    maptooltip.select('.count').html(count);
-    maptooltip.style('display', 'block');
-  });
-  paths.exit()
-    .remove();
-  }
+  /////////////////////
+  function getColor(valueIn, valuesIn) {
+    // create a linear scale
+    var color =  d3.scaleLinear()
+    .domain([valuesIn[0], valuesIn[1]])  // input uses min and max values
+      .range(d3.schemeBlues[9]);   // output for opacity between .3 and 1 
+    return color(valueIn);  // return that number to the caller
+}
+///////////////////////////
+  var paths = mapsvg.selectAll("path")  
+          .data(province_update)    
+          .attr('fill', function (d) {
+  return getColor(d.properties.count, dataRange);  // give them an opacity value based on their current value
+})
+paths.on('mouseover', function(d)
+{
+ var province_name= d.properties.NAME_1
+ var count = d.properties.count
+  maptooltip.select('.province').html(province_name);
+  maptooltip.select('.count').html(count);
+  maptooltip.style('display', 'block');
+});
+paths.exit()
+  .remove();
+}
 }
 
-  //var priority_order = ["Hasakeh", "Aleppo", "Raqqa", "Sweida", "Damascus", "Daraa", "Deir Ezzor", "Hama", "Homs", "Idlib", "Lattakia", "Quneitra", "Damascus Suburbs", "Tartous"];
-  //var paths = mapsvg.selectAll('path')
-    //.data(dataset);
-
-//};
 
 var maptooltip = midpanel.append('div')
   .attr('class', 'customtooltip');
 
 d3.queue()
   .defer(d3.json, "SYR_adm1.json")
-  .defer(d3.csv, "map.csv")
+  .defer(d3.csv, "key_province.csv")
   .await(ready)
 
 //projection
@@ -86,7 +83,7 @@ function ready(error, data, dataset)
   var province = topojson.feature(data, data.objects["SYR_adm1-1"]).features
   var border = topojson.mesh(data, data.objects["SYR_adm1-1"], function(a, b) { return a !== b; })
   var dataset = dataset.filter(function(d)
-  { //filter by year and week
+  { //filter by year and week  
     if(d["year"] == date.getFullYear() && d["week"] == date.getWeek())  {
       return d}})
   //Get values from csv file
@@ -94,7 +91,7 @@ function ready(error, data, dataset)
 
   for (j=0; j<13; j++) { if ( province[i].properties.NAME_1 ==  dataset[j].province
   ) {
-    province[i].properties.count=dataset[j].count
+    province[i].properties.count=dataset[j][choice]
   }}}
 
     // function loops through all the data values from the current data attribute
@@ -111,9 +108,22 @@ function ready(error, data, dataset)
     // create a linear scale
     var color =  d3.scaleLinear()
     .domain([valuesIn[0], valuesIn[1]])  // input uses min and max values
-      .range([.3, 1]);   // output for opacity between .3 and 1
+      .range(d3.schemeBlues[9]);   
     return color(valueIn);  // return that number to the caller
 }
+
+//var g = mapsvg.append("g")
+  //  .attr("class", "key")
+  //  .attr("transform", "translate(0,40)");
+
+//g.selectAll("rect")
+ // .data(color.range().map(function(d) {
+   //   d = color.invertExtent(d);
+     // if (d[0] == null) d[0] = x.domain()[0];
+     // if (d[1] == null) d[1] = x.domain()[1];
+     // return d;
+   // }))
+
 ///////////////////////////
   maptooltip.append('div')
     .attr('class', 'province');
@@ -129,7 +139,7 @@ function ready(error, data, dataset)
     .data(province)
     .enter().append("path")
     .attr("d", path)
-    .attr('fill-opacity', function (d) {
+    .attr("fill", function (d) {
             return getColor(d.properties.count, dataRange);  // give them an opacity value based on their current value
         })
     .on('mouseover', function(d)
@@ -139,13 +149,6 @@ function ready(error, data, dataset)
       maptooltip.select('.province').html(province_name);
       maptooltip.select('.count').html( count);
       maptooltip.style('display', 'block');
-    })
-    .on('click', function(d)
-    {
-      filter = "province";
-      filtervalue = d.properties.NAME_1;
-      updatelabel();
-      datarefresh();
     });
   mapsvg.on('mousemove', function()
   {
@@ -162,5 +165,5 @@ function ready(error, data, dataset)
   mapsvg.append("path")
     .attr("class", "state-borders")
     .attr("d", path(border));
-
+ 
  };
