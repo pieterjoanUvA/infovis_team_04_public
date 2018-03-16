@@ -186,14 +186,19 @@ var news_bary = d3.scaleLinear().rangeRound([news_barheight, 0]);
 var news_gbar = news_barsvg.append("g")
              .attr("transform", "translate(" + news_barmargin.left + "," + news_barmargin.top + ")");
 
-var news_tooltip = news_barsvg.append('div')
-  .attr('class', 'customtooltip');
+var news_tooltip = rightpanel.append('div')
+					.attr('class', 'customtooltip')
+					//.style("opacity", 0);
+
   
   
 function news_createBar(news_bardata){
   var news_bar_rect =  news_gbar.selectAll(".news_bar")
   var news_bar_text =  news_gbar.selectAll(".news_bar_text")
   
+  // tooltip functions
+  news_tooltip.append('div').attr('class','label');
+
 
   ////////// barx and bary domain set functions for auto scaling.
 
@@ -201,8 +206,6 @@ function news_createBar(news_bardata){
   news_bary.domain([d3.min(news_bardata, function(v) {return +v[1]; }),d3.max(news_bardata, function(v) { return +v[1]; })]);
 
 
-  
-  
   news_bar_rect.data(news_bardata).enter().append("rect")
   .attr("class", "news_bar")
   //.attr("fill", "teal")
@@ -223,7 +226,7 @@ function news_createBar(news_bardata){
      .text(function(d) { return d[1]; });
 
 	 
- var naxis = news_gbar.append("g")
+	news_gbar.append("g")
       .attr("class", "axis news_axis--x")
       .attr("transform", "translate(0," + news_barheight + ")")
       .call(d3.axisBottom(news_barx))
@@ -233,7 +236,22 @@ function news_createBar(news_bardata){
           .attr("dy", "0.7em")
           .attr("y", "0em")
           .attr("font-size", "12px")
-          .attr("transform", "rotate(-65)");
+          .attr("transform", "rotate(-65)")
+		  .on('mouseover',function(d,i)
+              {
+            		news_tooltip.select('.label').html(keys_eventTypes[i]);
+            		news_tooltip.style('display', 'block');
+              })
+           .on('mousemove', function()
+              {
+            		news_tooltip.style("top", d3.event.clientY+ "px");
+            		news_tooltip.style("left", d3.event.clientX+ "px");
+              })
+           .on('mouseout', function()
+              {
+          		  news_tooltip.style('display', 'none');
+              });
+
 
   news_gbar.append("g")
       .attr("class", "axis news_axis--y")
@@ -249,32 +267,31 @@ function news_createBar(news_bardata){
       .attr("text-anchor", "end")
       .attr("fill", "black")
       .text("Event Counts");
-	  
-  var div = news_barsvg.append("div")	
-    .attr("class", "custom_tooltip")				
-    //.style("opacity", 0);
-	  
-naxis.selectAll(".tick")[0].forEach(function(d1){
+}	  
+	///////// Mapping x-Axis ticks to Tooltips:
+	
+
+/*	  
+n_xaxis.selectAll(".tick")[0].forEach(function(d1){
 	var data1 = d3.select(d1).data();		
     d3.select(d1).on("mouseover", function(d) {
       //on mouse hover show the tooltip
-            div.transition()		
+            news_tooltip.transition()		
                 .duration(200)		
                 .style("opacity", .9);		
-            div.html(data1)	
+            news_tooltip.html(data1)	
                 .style("left", (d3.event.pageX) + "px")		
                 .style("top", (d3.event.pageY - 28) + "px");	
             })					
         .on("mouseout", function(d) {	
           //on mouse out hide the tooltip
-            div.transition()		
+            news_tooltip.transition()		
                 .duration(500)		
                 .style("opacity", 0);	
         });
 
-  })
-	
-}
+  })*/
+
 
 function news_updateBar(news_bardata){
 
