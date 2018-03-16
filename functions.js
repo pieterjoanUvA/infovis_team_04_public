@@ -1,4 +1,21 @@
 // RunOnce variables are defined in 'skeleton.js' the general variables file.
+function createNewDate(value) {
+  var obj = {};
+  obj.value = value;
+  obj.startyear = 2011;
+  obj.startweek = 11;
+  obj.endyear = 2018
+  obj.endweek = 2;
+  obj.range = 356;
+  obj.getWeek = function() {
+    return ((obj.startweek+(obj.value-2))%52)+1;
+  };
+  obj.getFullYear = function() {
+    return obj.startyear+Math.floor((obj.startweek+(obj.value-2))/52);
+  };
+  return obj;
+}
+
 
 Date.prototype.getWeek = function()
 {
@@ -22,13 +39,11 @@ function updatelabel()
 function timerefresh(timevalue)
 {
   //This is the main event handler for sliding the slider and updating the global time variables.
-  date.setTime(timevalue);
-  lowerdate.setTime(parseInt(timevalue)-timespan);
-  upperdate.setTime(parseInt(timevalue)+timespan);
+  date.value = timevalue;
   //Set the text of the timerange.
   updatelabel();
   //Refresh the vertical line in the line chart which indicated the current position
-  var percent = (timevalue-unix)/(1515499200000-unix);
+  var percent = (date.value)/(356);
   d3.select(".mouse-line")
           .attr("d", "M" + line_width*percent + "," + 0 + " V " + line_height);
   //Set the deaths deaths_label
@@ -93,18 +108,19 @@ function datarefresh()
     bardata = SubSet(data,keys_deathcause);
 
     //// fix for empty data when deathcause is selected.
-    if ( filter  == 'deathCause'){
-          for ( i=0 ; i < bardata.length ; i++){
-            if (bardata[i][0] == filtervalue)
-            {
-              bardata[i][1] = "|F|";
-            }
-            else
-            {
-              bardata[i][1] = 0;
-            }
-          }
-        };
+    if ( filter  == 'deathCause')
+    {
+      for ( i=0 ; i < bardata.length ; i++){
+        if (bardata[i][0] == filtervalue)
+        {
+          bardata[i][1] = "|F|";
+        }
+        else
+        {
+          bardata[i][1] = 0;
+        }
+      }
+    };
 
     // RunOnce function for initial draw of donut with data.
     if (barRanOnce == 0)
@@ -156,7 +172,7 @@ function initialrefresh()
   //Main event handler upon first time loading the page.
 
   //INITIAL DATA REFRESH
-  timerefresh(unix);
+  timerefresh(1);
   datarefresh();
 
   //LOAD STATIC DATA
