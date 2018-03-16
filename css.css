@@ -155,7 +155,7 @@ rect {
 }
   /*END BarChartDeathCause Variables*/
 
-  
+
  /*For Event Bar chart */
 .news_bar {
 	fill: steelblue;
@@ -165,10 +165,10 @@ rect {
 	stroke:white;
 	fill:steelblue;
 	stroke-width:1px;
-	
-	
+
+
 }
- 
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -245,6 +245,7 @@ rect {
 input[type=range] {
   height: 38px;
   -webkit-appearance: none;
+  background: #212529;
   margin: 0px;
   width: 100%;
 }
