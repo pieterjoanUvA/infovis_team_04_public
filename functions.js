@@ -23,7 +23,7 @@ Date.prototype.getWeek = function()
   var onejan = new Date(this.getFullYear(),0,1);
   return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
 }
-// a way to create a subset from a larger set, with array_key use
+
 var SubSet = function(sourceObject, keys)
 {
     var newObject = {};
@@ -84,7 +84,7 @@ function datarefresh()
   //UPDATING ALL PANELS WHICH COULD CONTAIN 3 FILTERS
   d3.csv("key_"+filter+".csv", function(error, csv_data)
   {
-    //FILTER THE DATA
+    //FILTER THE DATA FOR ALL ELEMENTS EXCEPT THE FILTERBASE
     data = csv_data.filter(function (d)
     {
       if ((d.year == date.getFullYear()) && (d.week == date.getWeek()) && (d[filter] == filtervalue))
@@ -92,9 +92,24 @@ function datarefresh()
         return d;
       }
     })[0];
+    //FILTER THE DATA FOR THE ELEMENT THAT IS BEING FILTERED ON
+    data_key = csv_data.filter(function (d)
+    {
+      if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
+      {
+        return d;
+      }
+    });
+    //TRANSFORMING THE DATA IN THE RIGHT FORMAT
+    var data_key_array = [];
+    for ( i=0 ; i < data_key.length ; i++)
+    {
+      data_key_array.push([data_key[i][filter],data_key[i].total])
+    }
 
     //UPDATING DONUT CHART DATA
-    don1svgdata = SubSet(data,keys_gender);
+    if (filter == 'gender') {don1svgdata = data_key_array;} else {
+    don1svgdata = SubSet(data,keys_gender); }
     // RunOnce function for initial draw of donut with data.
     if (don1svgRanOnce == 0)
     {
@@ -104,24 +119,8 @@ function datarefresh()
     updateDonut(don1svgdata);
 
     //UPDATING (Death) BAR CHART DATA
-
-    bardata = SubSet(data,keys_deathcause);
-
-    //// fix for empty data when deathcause is selected.
-    if ( filter  == 'deathCause')
-    {
-      for ( i=0 ; i < bardata.length ; i++){
-        if (bardata[i][0] == filtervalue)
-        {
-          bardata[i][1] = "|F|";
-        }
-        else
-        {
-          bardata[i][1] = 0;
-        }
-      }
-    };
-
+    if (filter == 'deathCause') {bardata = data_key_array;} else {
+    bardata = SubSet(data,keys_deathcause); }
     // RunOnce function for initial draw of donut with data.
     if (barRanOnce == 0)
     {
@@ -131,7 +130,8 @@ function datarefresh()
     updateBar(bardata);
 
     //UPDATING RIGHT CIVIL DONUT CHART
-    don2svgdata = SubSet(data,keys_status);
+    if (filter == 'status') {don2svgdata = data_key_array;} else {
+    don2svgdata = SubSet(data,keys_status); }
     // RunOnce function for initial draw of donut with data.
     if (don2svgRanOnce == 0)
     {
