@@ -36,4 +36,5 @@ var news_label = botpanel.select("#newsSources");
 //Key values for different visualisation elements:
 var keys_gender = ['Adult - Female','Adult - Male','Child - Female','Child - Male'];
 var keys_deathcause = ['Chemical and toxic gases','Detention - Execution','Detention - Torture','Detention - Torture - Execution','Explosion','Field Execution','Kidnapping - Execution','Kidnapping - Torture','Kidnapping - Torture - Execution','Other','Shelling','Shooting','Siege','Un-allowed to seek Medical help','Unknown','Warplane shelling'];
+var keys_death_short = ['Chemical','Det-Exec','Det-Torture','Det-Tort-Ex','Explosion','Field Exec','Kidn-Exec','Kidn-Torture','Kidn-Tor-Ex','Other','Shelling','Shooting','Siege','No Medical','Unknown','Warplane']
 var keys_status = ['Civilian','Non-Civilian'];

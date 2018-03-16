@@ -191,6 +191,8 @@ var bary = d3.scaleLinear().rangeRound([barheight, 0]);
 var gbar = barsvg.append("g")
              .attr("transform", "translate(" + barmargin.left + "," + barmargin.top + ")");
 
+
+var deathtooltip = leftpanel.append('div').attr('class', 'customtooltip');//.attr('id','bar');
 /////////////// new stuff ///////////////
 ///////// in bar.js ?? //////////////////
 /////////////////////////////////////////
@@ -199,15 +201,16 @@ var gbar = barsvg.append("g")
 function createBar(bardata){
   var bar_rect =  gbar.selectAll(".bar")
   var bar_text =  gbar.selectAll(".bar_text")
-
+  var bar_ticks = gbar.select(".axis axis--x")
   ////////// barx and bary domain set functions for auto scaling.
 
-  var keys_death_short = ['Chemical','Det-Exec','Det-Torture','Det-Tort-Ex','Explosion','Field Exec','Kidn-Exec','Kidn-Torture','Kidn-Tor-Ex','Other','Shelling','Shooting','Siege','No Medical','Unknown','Warplane']
   barx.domain(bardata.map(function(d) { return d[0]; }));
   barxNames.domain(keys_death_short.map(function (d){return [d]}));
   bary.domain([d3.min(bardata, function(v) { return +v[1]; }),d3.max(bardata, function(v) { return +v[1]; })]);
 
-//console.log(d3.max(bardata, d => d[1]))
+  // tooltip functions
+  deathtooltip.append('div').attr('class','label');
+
 /// Bar rectangles creation.
   bar_rect.data(bardata).enter().append("rect")
   .attr("class", "bar")
@@ -233,6 +236,7 @@ function createBar(bardata){
      .text(function(d) { return d[1]; });
 /// x-axis creation plus setting the labels in 65-degrees angle.
 /// plus the labels from the data in variable 'barx'
+/// with tooltips.
   gbar.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + barheight + ")")
@@ -243,7 +247,21 @@ function createBar(bardata){
           .attr("dy", "0.7em")
           .attr("y", "0em")
           .attr("font-size", "12px")
-          .attr("transform", "rotate(-65)");
+          .attr("transform", "rotate(-65)")
+          .on('mouseover',function(d,i)
+              {
+            		deathtooltip.select('.label').html(keys_deathcause[i]);
+            		deathtooltip.style('display', 'block');
+              })
+           .on('mousemove', function()
+              {
+            		deathtooltip.style("top", d3.event.clientY+ "px");
+            		deathtooltip.style("left", d3.event.clientX+ "px");
+              })
+           .on('mouseout', function()
+              {
+          		  deathtooltip.style('display', 'none');
+              });
 
 /// y-axis create + 90degrees text.
   gbar.append("g")
@@ -260,6 +278,8 @@ function createBar(bardata){
       .attr("text-anchor", "end")
       .attr("fill", "black")
       .text("# Casualties");
+
+
 
 }
 
