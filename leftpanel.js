@@ -4,7 +4,6 @@
 var statsvg = leftpanel.append("svg")
                 .attr("width","100%")
                 .attr("height","50%")
-                .style("border","1px solid black");
 
 //source: https://bl.ocks.org/tezzutezzu/c2653d42ffb4ecc01ffe2d6c97b2ee5e
 function arcTween(d)
@@ -176,7 +175,6 @@ function updateDonut(dataset)
 var barsvg = leftpanel.append("svg")
                 .attr("width","100%")
                 .attr("height","50%")
-                .style("border","1px solid black");
 
 var barmargin = {top: 10, right: 10, bottom: 80, left: 55};
 var barwidth = barsvg.node().getBoundingClientRect().width - barmargin.left - barmargin.right;
