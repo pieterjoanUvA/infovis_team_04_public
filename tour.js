@@ -9,10 +9,10 @@ var tour = new Tour({
   steps: [
   {
 // this is the date of the largest Chemical and Toxic gasses count, probably.
-onShow: function (tour) {$( "#slider" ).attr("value", 1377000000000 )
-datarefresh(1377000000000) ;
-timerefresh(1377000000000) ;
-},
+    onShow: function (tour) {$( "#slider" ).attr("value", 1377000000000 )
+    datarefresh(1377000000000) ;
+    timerefresh(1377000000000) ;
+    },
 //    onShown: function (tour) {},
     placement: "right",
     element: "svg:first",
@@ -20,11 +20,27 @@ timerefresh(1377000000000) ;
     content: "Here the donut chart shows differentiation between gender and age groups"
   },
   {
-    onShow: function (tour) {},
+    onShow: function (tour) {$( "#slider" ).attr("value", 1377000000000 )
+    datarefresh(1377000000000) ;
+    timerefresh(1377000000000) ;
+    },
     placement: "right",
     element: "svg:eq(1)",
     title: "BarChart Casualties",
     content: "Shows the cause of the casualties."
+
+  },
+  {
+    onShow: function (tour) {$( "#slider" ).attr("value", 1377000000000 )
+    filter = "deathCause";
+    filtervalue = "Chemical and toxic gases"
+    datarefresh(1377000000000) ;
+    timerefresh(1377000000000) ;
+    },
+    placement: "right",
+    element: "rect.bar:first",
+    title: "BarChart Casualties Filter",
+    content: "The filter has been clicked and shows |F| for active filter."
 
   },
   {
