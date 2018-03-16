@@ -20,11 +20,14 @@ var upperdate = new Date((unix+timespan));
 
 var filter = "none";
 var filtervalue = "";
+// for reset function.
+var lastSelectedTime = 0;
 
 var don1svgRanOnce = 0;
 var barRanOnce = 0 ;
 var news_barRanOnce = 0;
 var don2svgRanOnce = 0;
+
 
 parseTime = d3.timeParse("%Y/%W")
 
