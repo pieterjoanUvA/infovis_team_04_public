@@ -201,7 +201,6 @@ var deathtooltip = leftpanel.append('div').attr('class', 'customtooltip');//.att
 function createBar(bardata){
   var bar_rect =  gbar.selectAll(".bar")
   var bar_text =  gbar.selectAll(".bar_text")
-  var bar_ticks = gbar.select(".axis axis--x")
   ////////// barx and bary domain set functions for auto scaling.
 
   barx.domain(bardata.map(function(d) { return d[0]; }));

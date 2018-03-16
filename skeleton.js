@@ -21,7 +21,7 @@ var upperdate = new Date((unix+timespan));
 var filter = "none";
 var filtervalue = "";
 // for reset function.
-var lastSelectedTime = 0;
+var lastSelectedTime = 1299585600000;
 
 var don1svgRanOnce = 0;
 var barRanOnce = 0 ;
