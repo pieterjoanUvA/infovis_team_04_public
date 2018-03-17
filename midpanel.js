@@ -1,8 +1,67 @@
+
+//Add a selecting window to filter different data
+var choice = "total"
 //The Midpanel SVG element code
 //Code that runs on initialization
 var mapsvg = midpanel.append("svg")
               .attr("width","100%")
               .attr("height","100%");
+
+// Define some values for the legend
+var legendFullHeight = 400;
+var legendFullWidth = 100;
+var legendMargin = { top: 80, bottom: 30, left: 0, right: 80 };
+ // use same margins as main plot
+    var legendWidth = legendFullWidth - legendMargin.left - legendMargin.right;
+    var legendHeight = legendFullHeight - legendMargin.top - legendMargin.bottom;
+// define the datarange
+    var dataRange = [0, 1878];
+var colorScale = d3.scaleLinear()
+    .range(["rgb(151, 215, 185)", "rgb(40, 151, 191)","rgb(32, 57, 144)","#20068f","#3a049a","#5302a3","#6a00a8","#8004a8","#9511a1","#a82296","#b83289"]);
+
+var legendSvg = mapsvg.append('g').attr("class", "legend")
+var legendSvg = legendSvg.append('svg')
+    .attr('width', legendFullWidth).attr('height', legendFullHeight);
+var defs = legendSvg.append("defs");
+var gradient = defs.append("linearGradient")
+.attr("id", "mainGradient")
+.attr("x1", "0%")
+.attr("y1", "0%")
+.attr("x2", "0%")
+.attr("y2", "100%")
+.attr("spreadMethod", "pad")
+gradient.selectAll("stop")
+.data( colorScale.range() )
+.enter().append("stop")
+.attr("offset", function(d,i) { return i/(colorScale.range().length-1); })
+.attr("stop-color", function(d) { return d; });
+
+legendSvg.append("rect")
+.style("fill", "url(#mainGradient)")
+.attr('x', legendMargin.left)
+.attr('y', legendMargin.top)
+.attr('width', legendWidth)
+.attr('height', legendHeight);
+
+var lengendy = d3.scaleLinear()
+.range([legendMargin.top, legendHeight+legendMargin.top])
+.domain([dataRange[0],  dataRange[1]]);
+var yAxis = d3.axisRight()
+.scale(lengendy)
+.ticks(10);
+
+legendSvg.append("g")
+.attr("class", "maplegend")
+.attr("transform", "translate("  +18 + ", 0)")
+.call(yAxis)
+.select(".domain").remove();
+legendSvg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 80)
+      .attr("x",0 - (legendHeight / 1.3))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text(choice);
 
 //Define UpdateMap Function
 function updateMap(dataset)
@@ -17,7 +76,7 @@ function updateMap(dataset)
       {
         if ( province_update[i].properties.NAME_1 ==  dataset[j][0])
         {
-          province_update[i].properties.count=dataset[j][1];
+          province_update[i].properties.count= +dataset[j][1];
         }
       }
     }
@@ -37,16 +96,20 @@ function updateMap(dataset)
       }
       return [min, max];
     }
-    var dataRange = getDataRange(); // get the min/max values from the range of count
+    // get the min/max values from the range of count
     /////////////////////
-    function getColor(valueIn, valuesIn)
-    {
+    function getColor(valueIn, valuesIn) {
       // create a linear scale
-      var color =  d3.scaleLinear()
-        .domain([valuesIn[0], valuesIn[1]])  // input uses min and max values
-        .range(d3.schemeBlues[9]);   // output for opacity between .3 and 1
-      return color(valueIn);  // return that number to the caller
-    }
+      if (valueIn< (valuesIn[1]-valuesIn[0])/4){
+      var color =  d3.scaleSequential(d3.interpolateYlGnBu)
+      .domain([-(valuesIn[1]-valuesIn[0])/8, (valuesIn[1]-valuesIn[0])/4])  // input uses min and max values;   // output for opacity between .3 and 1
+      return color(valueIn); } // return that number to the caller
+      else{
+        var color =  d3.scaleSequential(d3.interpolatePlasma)
+        .domain([(valuesIn[1]-valuesIn[0])/4, 2*valuesIn[1]])
+        return color(valueIn);
+      }
+  }
   ///////////////////////////
     var paths = mapsvg.selectAll("path")
       .data(province_update)
@@ -127,15 +190,10 @@ function ready(error, data)
 
     // function loops through all the data values from the current data attribute
     // and returns the min and max values
-  function getDataRange() {
-    var min = Infinity, max = -Infinity;
-    for (i=0; i<province.length;i++) {if (min>province[i].properties.count){min = province[i].properties.count}
-  if (max<province[i].properties.count){max = province[i].properties.count} }
-    return [min, max];
-}
-  var dataRange = getDataRange(); // get the min/max values from the range of count
+var dataRange = [0,1878]; // get the min/max values from the range of count
   /////////////////////
-  function getColor(valueIn, valuesIn) {
+function getColor(valueIn, valuesIn)
+{
     // create a linear scale
     var color =  d3.scaleLinear()
     .domain([valuesIn[0], valuesIn[1]])  // input uses min and max values
@@ -143,28 +201,16 @@ function ready(error, data)
     return color(valueIn);  // return that number to the caller
 }
 
-
-//var g = mapsvg.append("g")
-  //  .attr("class", "key")
-  //  .attr("transform", "translate(0,40)");
-
-//g.selectAll("rect")
- // .data(color.range().map(function(d) {
-   //   d = color.invertExtent(d);
-     // if (d[0] == null) d[0] = x.domain()[0];
-     // if (d[1] == null) d[1] = x.domain()[1];
-     // return d;
-   // }))
 var chartname = 'map'; //For highlighting id creation
 ///////////////////////////
   maptooltip.append('div')
     .attr('class', 'province');
-  maptooltip.append('div')
-    .attr('class', 'gender');
+  //maptooltip.append('div')
+  //  .attr('class', 'gender');
   maptooltip.append('div')
     .attr('class', 'count');
-  maptooltip.append('div')
-    .attr('class', 'percent');
+ // maptooltip.append('div')
+   // .attr('class', 'percent');
   mapsvg.append("g")
     .attr("class", "states")
     .selectAll(".province")
