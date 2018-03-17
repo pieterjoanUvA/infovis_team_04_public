@@ -15,17 +15,17 @@ var tour = new Tour({
     element: "svg:first",
     title: "Gender Distribution",
     content: "Here the donut chart shows differentiation between gender and age groups",
-    onShow: function (tour) {$( "#slider" ).attr("value", 1445947200000 );
-    datarefresh(1445947200000) ;
-    timerefresh(1445947200000) ;
+    onShow: function (tour) {$( "#slider" ).attr("value", 128 );
+    datarefresh(128) ;
+    timerefresh(128) ;
   //  $( "#slider" ).slider('refresh');
     }
 
   },
   {
-    onShow: function (tour) {$( "#slider" ).attr("value", 1377000000000 );
-    datarefresh(1377000000000) ;
-    timerefresh(1377000000000) ;
+    onShow: function (tour) {$( "#slider" ).attr("value", 128 );
+    datarefresh(128) ;
+    timerefresh(128) ;
     },
     placement: "right",
     element: "svg:eq(1)",
@@ -34,11 +34,11 @@ var tour = new Tour({
 
   },
   {
-    onShow: function (tour) {$( "#slider" ).attr("value", 1377000000000 )
+    onShow: function (tour) {$( "#slider" ).attr("value", 128 );
     filter = "deathCause";
     filtervalue = "Chemical and toxic gases"
-    datarefresh(1377000000000) ;
-    timerefresh(1377000000000) ;
+    datarefresh(128) ;
+    timerefresh(128) ;
     },
     placement: "right",
     element: "rect.bar:first",
@@ -47,11 +47,11 @@ var tour = new Tour({
 
   },
   {
-    onShow: function (tour) {$("#slider").attr("value",1345550400000)
+    onShow: function (tour) {$("#slider").attr("value",185);
     filter = "none";
     filtervalue = "";
-    datarefresh(1345550400000);
-    timerefresh(1345550400000);
+    datarefresh(185);
+    timerefresh(185);
     },
     placement: "right",
     element: "svg:eq(2)",

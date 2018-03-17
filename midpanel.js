@@ -66,8 +66,27 @@ function updateMap(dataset)
 }
 // end updateMAp()
 //Mouse over and Mouse out functions.
+
 function handleMouseOver(d){
-    d3.select(this).classed("hover", true);
+/*// fast color transition
+  var b,c;
+  var a =d3.select(this)
+      .style("fill", function(){c=d3.select(this).style("fill");}) ;
+      console.log(c);// make the body green
+    a.transition().duration(400)
+      .style("fill", function(){ b = d3.select(this).classed("hover", true).style("fill")}); // then transition to red
+   console.log(b);
+// end fast color transition*/
+
+// heavy tween function //
+  var origfill = d3.select(this).style("fill");
+    d3.select(this).transition().duration(200)
+    .styleTween("fill", function()
+    {
+      return d3.interpolate(origfill, d3.select(this).classed("hover", true).style("fill") );
+    });
+//
+
     var province_name= d.properties.NAME_1
     var count = d.properties.count
      maptooltip.select('.province').html(province_name);
@@ -75,8 +94,10 @@ function handleMouseOver(d){
      maptooltip.style('display', 'block');
 }
 
-function handleMouseOut(d){
-    d3.select(this).classed("hover", false);
+function handleMouseOut(d)
+{
+  d3.select(this).transition().duration(200).style("fill", null).style("opacity",null);
+  d3.select(this).classed("hover", false);
 }
 
 

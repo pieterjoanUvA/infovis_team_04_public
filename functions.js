@@ -41,8 +41,18 @@ function clearHighlight(lastSelectedChart)
 {
   if(lastSelectedChart != null)
   {
+// color transitions
     lastSelectedChart.select(lastSelectedElement)
-        .classed("selected", false);
+        .style("fill", function()
+        {
+          lastSelectedChart.select(lastSelectedElement).style("fill");
+        })
+        .transition().duration(4000)
+        .style("fill", function()
+        {
+          lastSelectedChart.select(lastSelectedElement).classed("selected", false).style("fill");
+        });
+        //.style("opacity",null);
   }
 }
 // chartname should be defined just before the .on('click') block.
@@ -50,8 +60,7 @@ function clearHighlight(lastSelectedChart)
 function highlightSelected(selectedChart, chartname, i)
 {
     clearHighlight(lastSelectedChart);
-    selectedChart.select("#"+chartname+"id_"+i)
-        .classed("selected", true);
+    selectedChart.select("#"+chartname+"id_"+i).classed("selected", true) ;
     lastSelectedElement = '#'+chartname+'id_'+ i;
     lastSelectedChart = selectedChart; //input for clearHighlight
 }
