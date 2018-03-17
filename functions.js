@@ -149,6 +149,7 @@ function datarefresh()
     //UPDATING (Death) BAR CHART DATA
     if (filter == 'deathCause') {bardata = data_key_array;} else {
     bardata = SubSet(data,keys_deathcause); }
+
     // RunOnce function for initial draw of donut with data.
     if (barRanOnce == 0)
     {

@@ -3,8 +3,7 @@
 //Code that runs on initialization
 var civilsvg = rightpanel.append('svg')
                 .attr("width","100%")
-                .attr("height","50%")
-
+                .attr("height","50%");
 //source: https://bl.ocks.org/tezzutezzu/c2653d42ffb4ecc01ffe2d6c97b2ee5e
 function arcTweenCivil(d)
 {
@@ -178,8 +177,7 @@ function updateCivilDonut(dataset)
 
 var news_barsvg = rightpanel.append('svg')
                 .attr("width","100%")
-                .attr("height","50%")
-
+                .attr("height","50%");
 var news_barmargin = {top: 10, right: 10, bottom: 130, left: 50};
 var news_barwidth = news_barsvg.node().getBoundingClientRect().width - news_barmargin.left - news_barmargin.right;
 var news_barheight = news_barsvg.node().getBoundingClientRect().height - news_barmargin.top - news_barmargin.bottom;
