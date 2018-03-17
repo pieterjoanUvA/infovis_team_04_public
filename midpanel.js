@@ -14,7 +14,8 @@ var legendMargin = { top: 80, bottom: 30, left: 0, right: 80 };
  // use same margins as main plot
     var legendWidth = legendFullWidth - legendMargin.left - legendMargin.right;
     var legendHeight = legendFullHeight - legendMargin.top - legendMargin.bottom;
-
+// define the datarange
+    var dataRange = [0, 1878];
 var colorScale = d3.scaleLinear()
     .range(["rgb(151, 215, 185)", "rgb(40, 151, 191)","rgb(32, 57, 144)","#20068f","#3a049a","#5302a3","#6a00a8","#8004a8","#9511a1","#a82296","#b83289"]);
 
@@ -44,7 +45,7 @@ legendSvg.append("rect")
 
 var lengendy = d3.scaleLinear()
 .range([legendMargin.top, legendHeight+legendMargin.top])
-.domain([0, 1878]);
+.domain([dataRange[0],  dataRange[1]]);
 var yAxis = d3.axisRight()
 .scale(lengendy)
 .ticks(10);
@@ -75,7 +76,7 @@ function updateMap(dataset)
       {
         if ( province_update[i].properties.NAME_1 ==  dataset[j][0])
         {
-          province_update[i].properties.count=dataset[j][1];
+          province_update[i].properties.count= +dataset[j][1];
         }
       }
     }
@@ -95,7 +96,7 @@ function updateMap(dataset)
       }
       return [min, max];
     }
-    var dataRange = getDataRange(); // get the min/max values from the range of count
+    // get the min/max values from the range of count
     /////////////////////
     function getColor(valueIn, valuesIn) {
       // create a linear scale
