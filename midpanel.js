@@ -85,7 +85,6 @@ var maptooltip = midpanel.append('div')
 
 d3.queue()
   .defer(d3.json, "SYR_adm1.json")
-  .defer(d3.csv, "key_province.csv")
   .await(ready)
 
 //projection
@@ -96,21 +95,14 @@ var projection = d3.geoMercator()
 var path = d3.geoPath()
   .projection(projection)
 // initial draw function
-function ready(error, data, dataset)
+function ready(error, data)
 { if (error) throw error;
   var province = topojson.feature(data, data.objects["SYR_adm1-1"]).features
-  var border = topojson.mesh(data, data.objects["SYR_adm1-1"], function(a, b) { return a !== b; })
-  var dataset = dataset.filter(function(d)
-  { //filter by year and week
-    if(d["year"] == date.getFullYear() && d["week"] == date.getWeek())  {
-      return d}})
-  //Get values from csv file
-  for (i=0; i<province.length;i++) { // for each geometry object
-
-  for (j=0; j<13; j++) { if ( province[i].properties.NAME_1 ==  dataset[j][0]
-  ) {
-    province[i].properties.count=dataset[j][1]
-  }}}
+  var border = topojson.mesh(data, data.objects["SYR_adm1-1"], function(a, b) { return a !== b; });
+  for (i=0; i<province.length;i++)
+  { // for each geometry object
+    province[i].properties.count=0;
+  }
 
     // function loops through all the data values from the current data attribute
     // and returns the min and max values
