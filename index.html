@@ -11,15 +11,15 @@
 <!--   <script src="bootstrap-tour/build/js/bootstrap-tour.min.js"></script>-->
   <script src="slider/bootstrap-slider.min.js"></script>
   <script src="d3/d3.js"></script>
-  <script src="https://d3js.org/topojson.v2.min.js"></script>
+  <script src="topojson.v2.min.js"></script>
   <link rel="stylesheet" href="css.css">
   <!-- bootstrap-tour js and css -->
   <script src="bootstrap-tour-standalone.min.js"></script>
   <link rel="stylesheet" href="bootstrap-tour-standalone.css">
     <!--map colors -->
-  <script src="https://d3js.org/d3-color.v1.min.js"></script>
-  <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
-  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="d3-color.v1.min.js"></script>
+  <script src="d3-interpolate.v1.min.js"></script>
+  <script src="d3-scale-chromatic.v1.min.js"></script>
 
   </head>
   <body>
@@ -44,6 +44,9 @@
             <a class="nav-link" href="#" id="autotour">Start Auto-Tour</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#" id="resetfilter">Reset Filter</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" id="showModal">What is the Syrian Civil War?</a>
           </li>
         </ul>
@@ -63,7 +66,7 @@
     </div>
     <!--FOOTER-->
     <footer class="footer" id="botrow">
-            <input type="range" id="slider" min="1299585600000" max="1515499200000" value="1299585600000" step="604800000"/>
+            <input type="range" id="slider" min="1" max="356" value="1" step="1"/>
             <h3 id="deaths"></h3>
 			<!--<p class = "ex1"> <h4 id = "newsSources"> </h4> </p>-->
 
@@ -84,8 +87,8 @@
 	  </div>
 
     <!--JAVASCRIPT FILES-->
-    <script src="skeleton.js"></script>
     <script src="functions.js"></script>
+    <script src="skeleton.js"></script>
 
     <script src="botpanel.js"></script>
     <script src="midpanel.js"></script>

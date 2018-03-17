@@ -9,18 +9,24 @@ var tour = new Tour({
   steps: [
   {
 // this is the date of the largest Chemical and Toxic gasses count, probably.
-onShow: function (tour) {$( "#slider" ).attr("value", 1377000000000 )
-datarefresh(1377000000000) ;
-timerefresh(1377000000000) ;
-},
+
 //    onShown: function (tour) {},
     placement: "right",
     element: "svg:first",
     title: "Gender Distribution",
-    content: "Here the donut chart shows differentiation between gender and age groups"
+    content: "Here the donut chart shows differentiation between gender and age groups",
+    onShow: function (tour) {$( "#slider" ).attr("value", 1445947200000 );
+    datarefresh(1445947200000) ;
+    timerefresh(1445947200000) ;
+  //  $( "#slider" ).slider('refresh');
+    }
+
   },
   {
-    onShow: function (tour) {},
+    onShow: function (tour) {$( "#slider" ).attr("value", 1377000000000 );
+    datarefresh(1377000000000) ;
+    timerefresh(1377000000000) ;
+    },
     placement: "right",
     element: "svg:eq(1)",
     title: "BarChart Casualties",
@@ -28,7 +34,25 @@ timerefresh(1377000000000) ;
 
   },
   {
-    onShow: function (tour) {},
+    onShow: function (tour) {$( "#slider" ).attr("value", 1377000000000 )
+    filter = "deathCause";
+    filtervalue = "Chemical and toxic gases"
+    datarefresh(1377000000000) ;
+    timerefresh(1377000000000) ;
+    },
+    placement: "right",
+    element: "rect.bar:first",
+    title: "BarChart Casualties Filter",
+    content: "The filter has been clicked and shows |F| for active filter."
+
+  },
+  {
+    onShow: function (tour) {$("#slider").attr("value",1345550400000)
+    filter = "none";
+    filtervalue = "";
+    datarefresh(1345550400000);
+    timerefresh(1345550400000);
+    },
     placement: "right",
     element: "svg:eq(2)",
     title: "The Map Panel",
@@ -90,6 +114,7 @@ $('#autotour').click(function(e){
     // to avoid the click triggering whatever is within href:
     e.preventDefault();
 });
+
 // Initialize the tour
 tour.init();
 // Start the tour

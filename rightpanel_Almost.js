@@ -3,9 +3,7 @@
 //Code that runs on initialization
 var civilsvg = rightpanel.append('svg')
                 .attr("width","100%")
-                .attr("height","50%")
-                .style("border","1px solid black");
-
+                .attr("height","50%");
 //source: https://bl.ocks.org/tezzutezzu/c2653d42ffb4ecc01ffe2d6c97b2ee5e
 function arcTweenCivil(d)
 {
@@ -56,15 +54,28 @@ function createCivilDonut(data)
     var legendCivilRectSize = 18;
 	  var legendCivilSpacing = 2;
 
+    var chartname = 'status';
+
     var don2svgpath = don2svg.selectAll('path') //.selectAll('path')//statsvg.selectAll('path')
 		  .data(rpie(data))
 		    .enter()
 		    .append('path')
 		    .attr('d', r_arc)
+        .attr("class", "arc")
+        .attr("id", function(d,i) {return chartname+"id_"+i})
 		    .attr('fill', function(d, i)
         {
 		        return colorCivil(d.data[0]);
-	      });
+	      })
+        .on('click', function(d, i)
+        {
+          var selectedChart = don2svg
+          highlightSelected(selectedChart, chartname, i);
+          filter = "status";
+          filtervalue = d.data[0];
+          updatelabel();
+          datarefresh();
+        });
 
     don2svgpath.on('mouseover', function(d)
     {
@@ -166,9 +177,7 @@ function updateCivilDonut(dataset)
 
 var news_barsvg = rightpanel.append('svg')
                 .attr("width","100%")
-                .attr("height","50%")
-                .style("border","1px solid black");
-
+                .attr("height","50%");
 var news_barmargin = {top: 10, right: 10, bottom: 130, left: 50};
 var news_barwidth = news_barsvg.node().getBoundingClientRect().width - news_barmargin.left - news_barmargin.right;
 var news_barheight = news_barsvg.node().getBoundingClientRect().height - news_barmargin.top - news_barmargin.bottom;
@@ -245,7 +254,7 @@ function news_updateBar(news_bardata){
   news_bary.domain([d3.min(news_bardata, function(v) { return +v[1]; }),
                 d3.max(news_bardata, function(v) { return +v[1]; })]);
 
-//select all bars on the graph, take them out, and exit the previous data set; 
+//select all bars on the graph, take them out, and exit the previous data set;
 //Thereafter, redreaw with new data
 
 var news_bar_rect =  d3.selectAll(".news_bar").data(news_bardata);

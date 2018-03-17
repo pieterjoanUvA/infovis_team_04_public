@@ -1,4 +1,21 @@
 // RunOnce variables are defined in 'skeleton.js' the general variables file.
+function createNewDate(value) {
+  var obj = {};
+  obj.value = value;
+  obj.startyear = 2011;
+  obj.startweek = 11;
+  obj.endyear = 2018
+  obj.endweek = 2;
+  obj.range = 356;
+  obj.getWeek = function() {
+    return ((obj.startweek+(obj.value-2))%52)+1;
+  };
+  obj.getFullYear = function() {
+    return obj.startyear+Math.floor((obj.startweek+(obj.value-2))/52);
+  };
+  return obj;
+}
+
 
 Date.prototype.getWeek = function()
 {
@@ -19,16 +36,42 @@ function updatelabel()
   date_label.text("Y:"+date.getFullYear()+" W:"+date.getWeek()+" Filter: "+filter+"("+filtervalue+")");
 }
 
+// highlighting functions specific for each chart.
+function clearHighlight(lastSelectedChart)
+{
+  if(lastSelectedChart != null)
+  {
+    lastSelectedChart.select(lastSelectedElement)
+        .classed("selected", false);
+  }
+}
+// chartname should be defined just before the .on('click') block.
+// and overwritten in each svg.
+function highlightSelected(selectedChart, chartname, i)
+{
+    clearHighlight(lastSelectedChart);
+    selectedChart.select("#"+chartname+"id_"+i)
+        .classed("selected", true);
+    lastSelectedElement = '#'+chartname+'id_'+ i;
+    lastSelectedChart = selectedChart; //input for clearHighlight
+}
+// end block, generalized.
+function resetfilter()
+{
+  clearHighlight(lastSelectedChart);
+  filter = "none";
+  filtervalue = "";
+  datarefresh(lastSelectedTime);
+  timerefresh(lastSelectedTime);
+}
 function timerefresh(timevalue)
 {
   //This is the main event handler for sliding the slider and updating the global time variables.
-  date.setTime(timevalue);
-  lowerdate.setTime(parseInt(timevalue)-timespan);
-  upperdate.setTime(parseInt(timevalue)+timespan);
+  date.value = timevalue;
   //Set the text of the timerange.
   updatelabel();
   //Refresh the vertical line in the line chart which indicated the current position
-  var percent = (timevalue-unix)/(1515499200000-unix);
+  var percent = (date.value)/(356);
   d3.select(".mouse-line")
           .attr("d", "M" + line_width*percent + "," + 0 + " V " + line_height);
   //Set the deaths deaths_label
@@ -63,13 +106,10 @@ function datarefresh()
 {
   //This is the main event handler for releasing the slider thus changing the time.
 
-  //UPDATING MAP DATA
-  updateMap();
-
   //UPDATING ALL PANELS WHICH COULD CONTAIN 3 FILTERS
   d3.csv("key_"+filter+".csv", function(error, csv_data)
   {
-    //FILTER THE DATA
+    //FILTER THE DATA FOR ALL ELEMENTS EXCEPT THE FILTERBASE
     data = csv_data.filter(function (d)
     {
       if ((d.year == date.getFullYear()) && (d.week == date.getWeek()) && (d[filter] == filtervalue))
@@ -78,8 +118,30 @@ function datarefresh()
       }
     })[0];
 
+    //FILTER THE DATA FOR THE ELEMENT THAT IS BEING FILTERED ON
+    data_key = csv_data.filter(function (d)
+    {
+      if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
+      {
+        return d;
+      }
+    });
+
+    //TRANSFORMING THE DATA IN THE RIGHT FORMAT
+    var data_key_array = [];
+    for ( i=0 ; i < data_key.length ; i++)
+    {
+      data_key_array.push([data_key[i][filter],data_key[i].total])
+    }
+
+    //UPDATING THE MAP DATA
+    if (filter == 'province') {mapdata = data_key_array;} else {
+    mapdata = SubSet(data,keys_province); }
+    updateMap(mapdata);
+
     //UPDATING DONUT CHART DATA
-    don1svgdata = SubSet(data,keys_gender);
+    if (filter == 'gender') {don1svgdata = data_key_array;} else {
+    don1svgdata = SubSet(data,keys_gender); }
     // RunOnce function for initial draw of donut with data.
     if (don1svgRanOnce == 0)
     {
@@ -89,7 +151,8 @@ function datarefresh()
     updateDonut(don1svgdata);
 
     //UPDATING (Death) BAR CHART DATA
-    bardata = SubSet(data,keys_deathcause);
+    if (filter == 'deathCause') {bardata = data_key_array;} else {
+    bardata = SubSet(data,keys_deathcause); }
     // RunOnce function for initial draw of donut with data.
     if (barRanOnce == 0)
     {
@@ -99,7 +162,8 @@ function datarefresh()
     updateBar(bardata);
 
     //UPDATING RIGHT CIVIL DONUT CHART
-    don2svgdata = SubSet(data,keys_status);
+    if (filter == 'status') {don2svgdata = data_key_array;} else {
+    don2svgdata = SubSet(data,keys_status); }
     // RunOnce function for initial draw of donut with data.
     if (don2svgRanOnce == 0)
     {
@@ -140,7 +204,7 @@ function initialrefresh()
   //Main event handler upon first time loading the page.
 
   //INITIAL DATA REFRESH
-  timerefresh(unix);
+  timerefresh(1);
   datarefresh();
 
   //LOAD STATIC DATA

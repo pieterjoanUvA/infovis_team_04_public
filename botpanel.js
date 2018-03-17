@@ -1,9 +1,14 @@
 //The Botpanel SVG element code (and slider)
 var sliderbar = botpanel.select("#slider").style("width","100%");
 
+//The slider selection Reset button in the top.panel.
+$('#resetfilter').click(function(e){
+  resetfilter();
+})
 //Interacting with the slider bar
 sliderbar.on("mouseup", function()
 {
+	lastSelectedTime = this.value; // for filter-reset
 	datarefresh(this.value);
 });
 
