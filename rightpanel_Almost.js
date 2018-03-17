@@ -71,7 +71,6 @@ function createCivilDonut(data)
         {
           var selectedChart = don2svg
           highlightSelected(selectedChart, chartname, i);
-          lastSelectedChart = selectedChart; //input for clearHighlight
           filter = "status";
           filtervalue = d.data[0];
           updatelabel();

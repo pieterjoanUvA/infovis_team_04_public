@@ -75,7 +75,6 @@ function createDonut(data)
         {
           var selectedChart = don1svg
           highlightSelected(selectedChart, chartname, i);
-          lastSelectedChart = selectedChart; //input for clearHighlight
           filter = "gender";
           filtervalue = d.data[0];
           updatelabel();
@@ -225,7 +224,6 @@ function createBar(bardata){
    {
      var selectedChart = barsvg
      highlightSelected(selectedChart, chartname, i);
-     lastSelectedChart = selectedChart; //input for clearHighlight
      filter = "deathCause";
      filtervalue = d[0];
      updatelabel();

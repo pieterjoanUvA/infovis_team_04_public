@@ -37,24 +37,33 @@ function updatelabel()
 }
 
 // highlighting functions specific for each chart.
-function clearHighlight(lastSelectedChart) {
-  if(lastSelectedChart != null){
-    console.log('laatste '+lastSelectedChart);
+function clearHighlight(lastSelectedChart)
+{
+  if(lastSelectedChart != null)
+  {
     lastSelectedChart.select(lastSelectedElement)
         .classed("selected", false);
-      }
+  }
 }
 // chartname should be defined just before the .on('click') block.
 // and overwritten in each svg.
-function highlightSelected(selectedChart, chartname, i) {
+function highlightSelected(selectedChart, chartname, i)
+{
     clearHighlight(lastSelectedChart);
-        console.log('laatste '+lastSelectedChart+'svgnaam '+chartname+' i:'+i);
     selectedChart.select("#"+chartname+"id_"+i)
         .classed("selected", true);
     lastSelectedElement = '#'+chartname+'id_'+ i;
+    lastSelectedChart = selectedChart; //input for clearHighlight
 }
 // end block, generalized.
-
+function resetfilter()
+{
+  clearHighlight(lastSelectedChart);
+  filter = "none";
+  filtervalue = "";
+  datarefresh(lastSelectedTime);
+  timerefresh(lastSelectedTime);
+}
 function timerefresh(timevalue)
 {
   //This is the main event handler for sliding the slider and updating the global time variables.

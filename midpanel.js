@@ -123,7 +123,7 @@ function ready(error, data, dataset)
      // if (d[1] == null) d[1] = x.domain()[1];
      // return d;
    // }))
-
+var chartname = 'map'; //For highlighting id creation
 ///////////////////////////
   maptooltip.append('div')
     .attr('class', 'province');
@@ -139,6 +139,7 @@ function ready(error, data, dataset)
     .data(province)
     .enter().append("path")
     .attr("d", path)
+    .attr("id", function(d,i) {return chartname+"id_"+i})
     .attr("fill", function (d) {
             return getColor(d.properties.count, dataRange);  // give them an opacity value based on their current value
         })
@@ -150,8 +151,10 @@ function ready(error, data, dataset)
       maptooltip.select('.count').html( count);
       maptooltip.style('display', 'block');
     })
-    .on('click', function(d)
+    .on('click', function(d, i)
     {
+      var selectedChart = mapsvg;
+      highlightSelected(selectedChart, chartname, i);
       filter = "province";
       filtervalue = d.properties.NAME_1;
       updatelabel();
