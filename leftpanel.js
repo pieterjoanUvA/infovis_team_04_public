@@ -66,6 +66,7 @@ function createDonut(data)
 		    .enter()
 		    .append('path')
 		    .attr('d', arc)
+        .attr("class", "arc")
         .attr("id", function(d,i) {return chartname+"id_"+i})
 		    .attr('fill', function(d, i)
         {

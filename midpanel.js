@@ -48,17 +48,29 @@ function ready(error, data, dataset)
           .attr('fill', function (d) {
   return getColor(d.properties.count, dataRange);  // give them an opacity value based on their current value
 })
-paths.on('mouseover', function(d)
-{
- var province_name= d.properties.NAME_1
- var count = d.properties.count
-  maptooltip.select('.province').html(province_name);
-  maptooltip.select('.count').html(count);
-  maptooltip.style('display', 'block');
-});
+
+// handles all mouseover and mouseout's....
+mapsvg.selectAll(".states").selectAll("path")
+  .on("mouseover", handleMouseOver)
+  .on("mouseout", handleMouseOut);
+
 paths.exit()
   .remove();
 }
+}
+// end updateMAp()
+//Mouse over and Mouse out functions.
+function handleMouseOver(d){
+    d3.select(this).classed("hover", true);
+    var province_name= d.properties.NAME_1
+    var count = d.properties.count
+     maptooltip.select('.province').html(province_name);
+     maptooltip.select('.count').html( count);
+     maptooltip.style('display', 'block');
+}
+
+function handleMouseOut(d){
+    d3.select(this).classed("hover", false);
 }
 
 
@@ -112,6 +124,7 @@ function ready(error, data, dataset)
     return color(valueIn);  // return that number to the caller
 }
 
+
 //var g = mapsvg.append("g")
   //  .attr("class", "key")
   //  .attr("transform", "translate(0,40)");
@@ -139,12 +152,15 @@ var chartname = 'map'; //For highlighting id creation
     .data(province)
     .enter().append("path")
     .attr("d", path)
+    .attr("class", "provincearea")
     .attr("id", function(d,i) {return chartname+"id_"+i})
     .attr("fill", function (d) {
             return getColor(d.properties.count, dataRange);  // give them an opacity value based on their current value
         })
     .on('mouseover', function(d)
     {
+      //handleMouseOver;
+
      var province_name= d.properties.NAME_1
      var count = d.properties.count
       maptooltip.select('.province').html(province_name);
@@ -167,6 +183,7 @@ var chartname = 'map'; //For highlighting id creation
   });
   mapsvg.on('mouseout', function()
   {
+//handleMouseOut
     d3.select("#customtooltip").remove();
     d3.select(this)
       .attr("class", "states");

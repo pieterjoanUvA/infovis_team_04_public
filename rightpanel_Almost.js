@@ -62,6 +62,7 @@ function createCivilDonut(data)
 		    .enter()
 		    .append('path')
 		    .attr('d', r_arc)
+        .attr("class", "arc")
         .attr("id", function(d,i) {return chartname+"id_"+i})
 		    .attr('fill', function(d, i)
         {

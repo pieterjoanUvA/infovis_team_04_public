@@ -120,13 +120,18 @@ rect {
 p.ex2 {
 	padding-top: 2em;
 }
-
+/*DonutChartArcHovering */
+.arc:hover{
+  fill: brown;
+  opacity: .7;
+}
 /*BarChartDeathCause Variables*/
 .bar {
   fill: steelblue;
 }
 .bar:hover {
   fill: brown;
+  opacity: .7;
 }
 .bar_text {
   fill: black;
@@ -135,6 +140,12 @@ p.ex2 {
 /* selection highlighting, general css class.*/
 .selected {
     fill: brown;
+}
+/* selection highlighting, finegrained province, instead of whole map opacity.*/
+.hover
+{
+  fill:brown;
+  opacity: .7;
 }
 
 .axis--y path {
