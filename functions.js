@@ -106,15 +106,6 @@ function datarefresh()
 {
   //This is the main event handler for releasing the slider thus changing the time.
 
-  //UPDATING MAP DATA
-  if (filter == 'none' || filter == "province")
-  {
-  updateMap();
-  }
-  else
-  {
-  console.log('!none of !province')
-  }
   //UPDATING ALL PANELS WHICH COULD CONTAIN 3 FILTERS
   d3.csv("key_"+filter+".csv", function(error, csv_data)
   {
@@ -126,6 +117,7 @@ function datarefresh()
         return d;
       }
     })[0];
+
     //FILTER THE DATA FOR THE ELEMENT THAT IS BEING FILTERED ON
     data_key = csv_data.filter(function (d)
     {
@@ -134,12 +126,18 @@ function datarefresh()
         return d;
       }
     });
+
     //TRANSFORMING THE DATA IN THE RIGHT FORMAT
     var data_key_array = [];
     for ( i=0 ; i < data_key.length ; i++)
     {
       data_key_array.push([data_key[i][filter],data_key[i].total])
     }
+
+    //UPDATING THE MAP DATA
+    if (filter == 'province') {mapdata = data_key_array;} else {
+    mapdata = SubSet(data,keys_province); }
+    updateMap(mapdata);
 
     //UPDATING DONUT CHART DATA
     if (filter == 'gender') {don1svgdata = data_key_array;} else {
@@ -155,7 +153,6 @@ function datarefresh()
     //UPDATING (Death) BAR CHART DATA
     if (filter == 'deathCause') {bardata = data_key_array;} else {
     bardata = SubSet(data,keys_deathcause); }
-
     // RunOnce function for initial draw of donut with data.
     if (barRanOnce == 0)
     {

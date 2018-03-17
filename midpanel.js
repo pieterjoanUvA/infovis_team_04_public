@@ -1,5 +1,3 @@
-//Add a selecting window to filter different data
-var choice = "total"
 //The Midpanel SVG element code
 //Code that runs on initialization
 var mapsvg = midpanel.append("svg")
@@ -7,56 +5,64 @@ var mapsvg = midpanel.append("svg")
               .attr("height","100%");
 
 //Define UpdateMap Function
-function updateMap()
+function updateMap(dataset)
 {
-d3.queue()
-.defer(d3.json, "SYR_adm1.json")
-.defer(d3.csv, "key_province.csv", )
-.await(ready)
-function ready(error, data, dataset)
-{ if (error) throw error;
-  var province_update = topojson.feature(data, data.objects["SYR_adm1-1"]).features
-  var dataset = dataset.filter(function(d)
-  { //filter by year and week
-    if(d["year"] == date.getFullYear() && d["week"] == date.getWeek())  {
-      return d}})
- for (i=0; i<province_update.length;i++) { // for each geometry object
+  d3.json("SYR_adm1.json",function(data)
+  {
+    var province_update = topojson.feature(data, data.objects["SYR_adm1-1"]).features;
 
-  for (j=0; j<dataset.length; j++) { if ( province_update[i].properties.NAME_1 ==  dataset[j].province
-  ) {
-    province_update[i].properties.count=dataset[j][choice]
-  }}}
-  function getDataRange() {
-    var min = Infinity, max = -Infinity;
-    for (i=0; i<province_update.length;i++) {if (min>province_update[i].properties.count){min = province_update[i].properties.count}
-  if (max<province_update[i].properties.count){max =province_update[i].properties.count} }
-    return [min, max];
-}
-  var dataRange = getDataRange(); // get the min/max values from the range of count
+    for (i=0; i<province_update.length;i++)
+    { // for each geometry object
+      for (j=0; j<dataset.length; j++)
+      {
+        if ( province_update[i].properties.NAME_1 ==  dataset[j][0])
+        {
+          province_update[i].properties.count=dataset[j][1];
+        }
+      }
+    }
+    function getDataRange()
+    {
+      var min = Infinity, max = -Infinity;
+      for (i=0; i<province_update.length;i++)
+      {
+        if (min>province_update[i].properties.count)
+        {
+          min = province_update[i].properties.count;
+        }
+        if (max<province_update[i].properties.count)
+        {
+          max =province_update[i].properties.count;
+        }
+      }
+      return [min, max];
+    }
+    var dataRange = getDataRange(); // get the min/max values from the range of count
+    /////////////////////
+    function getColor(valueIn, valuesIn)
+    {
+      // create a linear scale
+      var color =  d3.scaleLinear()
+        .domain([valuesIn[0], valuesIn[1]])  // input uses min and max values
+        .range(d3.schemeBlues[9]);   // output for opacity between .3 and 1
+      return color(valueIn);  // return that number to the caller
+    }
+  ///////////////////////////
+    var paths = mapsvg.selectAll("path")
+      .data(province_update)
+      .attr('fill', function (d)
+    {
+    return getColor(d.properties.count, dataRange);  // give them an opacity value based on their current value
+    })
 
-  /////////////////////
-  function getColor(valueIn, valuesIn) {
-    // create a linear scale
-    var color =  d3.scaleLinear()
-    .domain([valuesIn[0], valuesIn[1]])  // input uses min and max values
-      .range(d3.schemeBlues[9]);   // output for opacity between .3 and 1
-    return color(valueIn);  // return that number to the caller
-}
-///////////////////////////
-  var paths = mapsvg.selectAll("path")
-          .data(province_update)
-          .attr('fill', function (d) {
-  return getColor(d.properties.count, dataRange);  // give them an opacity value based on their current value
-})
+  // handles all mouseover and mouseout's....
+  mapsvg.selectAll(".states").selectAll("path")
+    .on("mouseover", handleMouseOver)
+    .on("mouseout", handleMouseOut);
 
-// handles all mouseover and mouseout's....
-mapsvg.selectAll(".states").selectAll("path")
-  .on("mouseover", handleMouseOver)
-  .on("mouseout", handleMouseOut);
-
-paths.exit()
-  .remove();
-}
+  paths.exit()
+    .remove();
+  });
 }
 // end updateMAp()
 //Mouse over and Mouse out functions.
@@ -101,9 +107,9 @@ function ready(error, data, dataset)
   //Get values from csv file
   for (i=0; i<province.length;i++) { // for each geometry object
 
-  for (j=0; j<13; j++) { if ( province[i].properties.NAME_1 ==  dataset[j].province
+  for (j=0; j<13; j++) { if ( province[i].properties.NAME_1 ==  dataset[j][0]
   ) {
-    province[i].properties.count=dataset[j][choice]
+    province[i].properties.count=dataset[j][1]
   }}}
 
     // function loops through all the data values from the current data attribute
