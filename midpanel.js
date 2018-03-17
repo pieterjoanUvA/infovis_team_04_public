@@ -21,7 +21,7 @@ var colorScale = d3.scaleLinear()
 var legendSvg = mapsvg.append('g').attr("class", "legend")
 var legendSvg = legendSvg.append('svg')
     .attr('width', legendFullWidth).attr('height', legendFullHeight);
-var defs = legendSvg.append("defs");   
+var defs = legendSvg.append("defs");
 var gradient = defs.append("linearGradient")
 .attr("id", "mainGradient")
 .attr("x1", "0%")
@@ -29,8 +29,8 @@ var gradient = defs.append("linearGradient")
 .attr("x2", "0%")
 .attr("y2", "100%")
 .attr("spreadMethod", "pad")
-gradient.selectAll("stop") 
-.data( colorScale.range() )                  
+gradient.selectAll("stop")
+.data( colorScale.range() )
 .enter().append("stop")
 .attr("offset", function(d,i) { return i/(colorScale.range().length-1); })
 .attr("stop-color", function(d) { return d; });
@@ -60,11 +60,9 @@ legendSvg.append("text")
       .attr("x",0 - (legendHeight / 1.3))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
-      .text(choice);     
+      .text(choice);
 
 //Define UpdateMap Function
-
-console.log(dataset)
 function updateMap(dataset)
 {
   d3.json("SYR_adm1.json",function(data)
@@ -103,11 +101,11 @@ function updateMap(dataset)
       // create a linear scale
       if (valueIn< (valuesIn[1]-valuesIn[0])/4){
       var color =  d3.scaleSequential(d3.interpolateYlGnBu)
-      .domain([-(valuesIn[1]-valuesIn[0])/8, (valuesIn[1]-valuesIn[0])/4])  // input uses min and max values;   // output for opacity between .3 and 1 
+      .domain([-(valuesIn[1]-valuesIn[0])/8, (valuesIn[1]-valuesIn[0])/4])  // input uses min and max values;   // output for opacity between .3 and 1
       return color(valueIn); } // return that number to the caller
       else{
         var color =  d3.scaleSequential(d3.interpolatePlasma)
-        .domain([(valuesIn[1]-valuesIn[0])/4, 2*valuesIn[1]]) 
+        .domain([(valuesIn[1]-valuesIn[0])/4, 2*valuesIn[1]])
         return color(valueIn);
       }
   }
@@ -170,17 +168,10 @@ function ready(error, data)
 
     // function loops through all the data values from the current data attribute
     // and returns the min and max values
-  function getDataRange() {
-    var min = Infinity, max = -Infinity;
-    for (i=0; i<dataset.length;i++) {
-    if (min > +dataset[i][choice]){min = +dataset[i][choice]};
-  if (max < +dataset[i][choice]){max = +dataset[i][choice]}};
-    return [min, max];
-}
-
-  var dataRange = getDataRange(); // get the min/max values from the range of count
+var dataRange = [0,1878]; // get the min/max values from the range of count
   /////////////////////
-  function getColor(valueIn, valuesIn) {
+function getColor(valueIn, valuesIn)
+{
     // create a linear scale
     var color =  d3.scaleLinear()
     .domain([valuesIn[0], valuesIn[1]])  // input uses min and max values
