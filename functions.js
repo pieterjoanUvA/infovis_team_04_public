@@ -107,8 +107,14 @@ function datarefresh()
   //This is the main event handler for releasing the slider thus changing the time.
 
   //UPDATING MAP DATA
+  if (filter == 'none' || filter == "province")
+  {
   updateMap();
-
+  }
+  else
+  {
+  console.log('!none of !province')
+  }
   //UPDATING ALL PANELS WHICH COULD CONTAIN 3 FILTERS
   d3.csv("key_"+filter+".csv", function(error, csv_data)
   {
