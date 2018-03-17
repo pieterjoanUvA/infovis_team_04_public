@@ -59,17 +59,23 @@ function createDonut(data)
     var legendRectSize = 18;
 	  var legendSpacing = 2;
 
+    var chartname = 'gender'; // for id-creation => for highlighting purposes
+
     var don1svgpath = don1svg.selectAll('path') //.selectAll('path')//statsvg.selectAll('path')
 		  .data(pie(data))
 		    .enter()
 		    .append('path')
 		    .attr('d', arc)
+        .attr("id", function(d,i) {return chartname+"id_"+i})
 		    .attr('fill', function(d, i)
         {
 		        return color(d.data[0]);
 	      })
-        .on('click', function(d)
+        .on('click', function(d, i)
         {
+          var selectedChart = don1svg
+          highlightSelected(selectedChart, chartname, i);
+          lastSelectedChart = selectedChart; //input for clearHighlight
           filter = "gender";
           filtervalue = d.data[0];
           updatelabel();
@@ -191,9 +197,7 @@ var gbar = barsvg.append("g")
 
 
 var deathtooltip = leftpanel.append('div').attr('class', 'customtooltip');//.attr('id','bar');
-/////////////// new stuff ///////////////
-///////// in bar.js ?? //////////////////
-/////////////////////////////////////////
+
 
 
 function createBar(bardata){
@@ -209,14 +213,19 @@ function createBar(bardata){
   deathtooltip.append('div').attr('class','label');
 
 /// Bar rectangles creation.
+  var chartname = 'bar'; // for id-creation => for highlighting purposes
   bar_rect.data(bardata).enter().append("rect")
   .attr("class", "bar")
+    .attr("id", function(d,i) {return chartname+"id_"+i})
     .attr("x", function(d) { return barx(d[0]); })
     .attr("height", function(v) { return barheight - bary(+v[1]); })
    .attr("y", function(d) { return bary(+d[1]); })
    .attr("width", barx.bandwidth())
-   .on('click', function(d)
+   .on('click', function(d,i)
    {
+     var selectedChart = barsvg
+     highlightSelected(selectedChart, chartname, i);
+     lastSelectedChart = selectedChart; //input for clearHighlight
      filter = "deathCause";
      filtervalue = d[0];
      updatelabel();

@@ -18,6 +18,9 @@ var filter = "none";
 var filtervalue = "";
 // for reset function.
 var lastSelectedTime = 1;
+// for bar, arc and province highlighting
+var lastSelectedChart = null; // for reset function of added temp css class.
+var lastSelectedElement = null;
 
 var don1svgRanOnce = 0;
 var barRanOnce = 0 ;

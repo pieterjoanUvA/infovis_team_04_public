@@ -55,17 +55,23 @@ function createCivilDonut(data)
     var legendCivilRectSize = 18;
 	  var legendCivilSpacing = 2;
 
+    var chartname = 'status';
+
     var don2svgpath = don2svg.selectAll('path') //.selectAll('path')//statsvg.selectAll('path')
 		  .data(rpie(data))
 		    .enter()
 		    .append('path')
 		    .attr('d', r_arc)
+        .attr("id", function(d,i) {return chartname+"id_"+i})
 		    .attr('fill', function(d, i)
         {
 		        return colorCivil(d.data[0]);
 	      })
-        .on('click', function(d)
+        .on('click', function(d, i)
         {
+          var selectedChart = don2svg
+          highlightSelected(selectedChart, chartname, i);
+          lastSelectedChart = selectedChart; //input for clearHighlight
           filter = "status";
           filtervalue = d.data[0];
           updatelabel();

@@ -132,7 +132,10 @@ p.ex2 {
   fill: black;
   font: 9px sans-serif;
 }
-
+/* selection highlighting, general css class.*/
+.selected {
+    fill: brown;
+}
 
 .axis--y path {
   }
@@ -238,8 +241,6 @@ p.ex2 {
     background-color: rgb(33, 37, 41);
     color: white;
 }
-
-
 
 
 input[type=range] {
