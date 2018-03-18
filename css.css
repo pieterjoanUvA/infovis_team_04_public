@@ -333,15 +333,3 @@ input[type=range]:focus::-ms-fill-upper {
   background: #3071A9;
 }
 
-div.tooltop {
-    position: absolute;
-	text-align: center;
-	width: 60px;
-	height: 28px;
-	padding: 2px;
-	font: 12px sans-serif;
-	background: lightsteelblue;
-	border: 0px;
-	border-radius: 8px;
-	   
-}  
