@@ -101,8 +101,8 @@ rect {
 
 .maplegend text{
   fill:  black;
-}  
-  
+}
+
 
 #toprow {
   height: calc(75% - 56px);
@@ -133,21 +133,20 @@ rect {
 	color: white;
 	position: absolute;
 }
-
-/*p.ex1 {
+/* news stuff */
+*p.ex1 {
 	padding-top: 2em;
 }
-<<<<<<< HEAD
 
-/*BarChartDeathCause Variables*/ 
-=======
+
+/*BarChartDeathCause Variables*/
+
 /*DonutChartArcHovering */
 .arc:hover{
   fill: brown;
   opacity: .7;
 }
 /*BarChartDeathCause Variables*/
->>>>>>> cd8d21f3864f65b30d45dff9f3a4552e7a189ca2
 .bar {
   fill: steelblue;
 }
@@ -366,4 +365,3 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
   background: #3071A9;
 }
-
