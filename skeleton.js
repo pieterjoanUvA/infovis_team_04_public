@@ -40,8 +40,8 @@ var keys_gender = ['Adult - Female','Adult - Male','Child - Female','Child - Mal
 var keys_deathcause = ['Chemical and toxic gases','Detention - Execution','Detention - Torture','Detention - Torture - Execution','Explosion','Field Execution','Kidnapping - Execution','Kidnapping - Torture','Kidnapping - Torture - Execution','Other','Shelling','Shooting','Siege','Un-allowed to seek Medical help','Unknown','Warplane shelling'];
 var keys_death_short = ['Chemical','Det-Exec','Det-Torture','Det-Tort-Ex','Explosion','Field Exec','Kidn-Exec','Kidn-Torture','Kidn-Tor-Ex','Other','Shelling','Shooting','Siege','No Medical','Unknown','Warplane']
 var keys_status = ['Civilian','Non-Civilian'];
-<<<<<<< HEAD
+//<<<<<<< HEAD
 var keys_eventTypes = ['Yet to Summarize Protest types', 'Explain Force Posture', 'Explain Coerce','Explain Assault', 'Explain Fight', 'Explain UnconvMassViolence']
-=======
+//=======
 var keys_province = ['Aleppo','Damascus','Damascus Suburbs','Daraa','Deir Ezzor','Hama','Hasakeh','Homs','Idlib','Lattakia','Quneitra','Raqqa','Sweida','Tartous'];
->>>>>>> cd8d21f3864f65b30d45dff9f3a4552e7a189ca2
+//>>>>>>> cd8d21f3864f65b30d45dff9f3a4552e7a189ca2

@@ -52,6 +52,7 @@ mouseG.append("path") // this is the white vertical line to follow mouse
 var news_graphsvg = botpanel.append("svg")
 								.attr("width","100%")
 								.attr("height","37%");
+var news_label = news_graphsvg.append("text").attr("id", "newsSources").attr("x",0).attr("y", 0);
 
 //Draw the static-static parts of the lineChart
 var	news_line_width = news_graphsvg.node().getBoundingClientRect().width,
