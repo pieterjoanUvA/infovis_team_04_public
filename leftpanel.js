@@ -201,8 +201,8 @@ var deathtooltip = leftpanel.append('div').attr('class', 'customtooltip');//.att
 
 
 function createBar(bardata){
-  var bar_rect =  gbar.selectAll(".bar")
-  var bar_text =  gbar.selectAll(".bar_text")
+  var bar_rect =  gbar.selectAll(".bar");
+  var bar_text =  gbar.selectAll(".bar_text");
   ////////// barx and bary domain set functions for auto scaling.
 
   barx.domain(bardata.map(function(d) { return d[0]; }));
@@ -223,7 +223,7 @@ function createBar(bardata){
    .attr("width", barx.bandwidth())
    .on('click', function(d,i)
    {
-     var selectedChart = barsvg
+     var selectedChart = barsvg;
      highlightSelected(selectedChart, chartname, i);
      filter = "deathCause";
      filtervalue = d[0];

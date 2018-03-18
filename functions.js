@@ -40,7 +40,8 @@ function updatelabel()
 function clearHighlight(lastSelectedChart)
 {
   if(lastSelectedChart != null)
-  {
+  {  // on the line below, the most basic functionality.
+//   lastSelectedChart.select(lastSelectedElement).classed("selected", false);
 // color transitions
     lastSelectedChart.select(lastSelectedElement)
         .style("fill", function()
@@ -52,7 +53,6 @@ function clearHighlight(lastSelectedChart)
         {
           lastSelectedChart.select(lastSelectedElement).classed("selected", false).style("fill");
         });
-        //.style("opacity",null);
   }
 }
 // chartname should be defined just before the .on('click') block.
@@ -86,7 +86,7 @@ function timerefresh(timevalue)
   //Set the deaths deaths_label
   d3.csv("AggregatedInfVis.csv", function(error, csv_data)
   {
-    parseTime = d3.timeParse("%Y/%W")
+    parseTime = d3.timeParse("%Y/%W");
     data = csv_data.filter(function (d) {
       if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
       {
@@ -100,7 +100,7 @@ function timerefresh(timevalue)
           .attr("d", "M" + line_width*percent + "," + 0 + " V " + news_line_height);
     d3.csv("News_magnitude.csv", function(error, csv_data)
   {
-    parseTime = d3.timeParse("%Y/%W")
+    parseTime = d3.timeParse("%Y/%W");
     data = csv_data.filter(function (d) {
       if ((d.year == date.getFullYear()) && (d.week == date.getWeek()))
       {
@@ -140,7 +140,7 @@ function datarefresh()
     var data_key_array = [];
     for ( i=0 ; i < data_key.length ; i++)
     {
-      data_key_array.push([data_key[i][filter],data_key[i].total])
+      data_key_array.push([data_key[i][filter],data_key[i].total]);
     }
 
     //UPDATING THE MAP DATA
@@ -155,7 +155,7 @@ function datarefresh()
     if (don1svgRanOnce == 0)
     {
       don1svgRanOnce = 1;
-      createDonut(don1svgdata)
+      createDonut(don1svgdata);
     };
     updateDonut(don1svgdata);
 
@@ -177,7 +177,7 @@ function datarefresh()
     if (don2svgRanOnce == 0)
     {
       don2svgRanOnce = 1;
-      createCivilDonut(don2svgdata)
+      createCivilDonut(don2svgdata);
     };
     updateCivilDonut(don2svgdata);
 
@@ -229,7 +229,7 @@ function initialrefresh()
       return d;
     });
 
-    line_x.domain(d3.extent(data, function(d) { return d.time; }))
+    line_x.domain(d3.extent(data, function(d) { return d.time; }));
     line_y.domain([0, d3.max(data, function(d) { return d.deaths; })]);
 
     linegraph.append("path")
@@ -259,7 +259,7 @@ function initialrefresh()
       return d;
     });
 
-    news_line_x.domain(d3.extent(data, function(d) { return d.time; }))
+    news_line_x.domain(d3.extent(data, function(d) { return d.time; }));
     news_line_y.domain([0, d3.max(data, function(d) { return d.NumSources; })]);
 
     news_linegraph.append("path")

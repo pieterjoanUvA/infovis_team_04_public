@@ -114,10 +114,22 @@ function updateMap(dataset)
     var paths = mapsvg.selectAll("path")
       .data(province_update)
       .attr('fill', function (d)
-    {
-    return getColor(d.properties.count, dataRange);  // give them an opacity value based on their current value
-    })
-
+      {
+      return getColor(d.properties.count, dataRange);  // give them an opacity value based on their current value
+    });
+/*
+      paths.transition().duration(200)
+      .styleTween("fill", function()
+      {
+      return d3.interpolate(d3.select(this).style("fill"),
+          function (d)
+            {var blaat = getColor(d.properties.count, dataRange);
+              console.log(blaat);
+            return blaat
+              // give them an opacity value based on their current value
+          })
+      });/// end styleTween().
+*/
   // handles all mouseover and mouseout's....
   mapsvg.selectAll(".states").selectAll("path")
     .on("mouseover", handleMouseOver)
@@ -140,6 +152,8 @@ function handleMouseOver(d){
       .style("fill", function(){ b = d3.select(this).classed("hover", true).style("fill")}); // then transition to red
    console.log(b);
 // end fast color transition*/
+
+//d3.select(this).classed("hover", true) //<== most basic version
 
 // heavy tween function //
   var origfill = d3.select(this).style("fill");
@@ -211,6 +225,7 @@ var chartname = 'map'; //For highlighting id creation
     .attr('class', 'count');
  // maptooltip.append('div')
    // .attr('class', 'percent');
+
   mapsvg.append("g")
     .attr("class", "states")
     .selectAll(".province")

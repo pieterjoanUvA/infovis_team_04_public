@@ -3,7 +3,7 @@
 function settySlider(variable){
     var slidervars = document.getElementById('slider');
     slidervars.value = variable;
-}
+};
 
 // API reference http://bootstraptour.com/api/
 // for extra options.
@@ -43,6 +43,7 @@ var tour = new Tour({
   {
     onShow: function (tour) {
       settySlider(128);
+      highlightSelected(barsvg, 'bar', 0);
       filter = "deathCause";
       filtervalue = "Chemical and toxic gases"
       datarefresh(128) ;
@@ -66,6 +67,21 @@ var tour = new Tour({
     element: "svg:eq(2)",
     title: "The Map Panel",
     content: "News and Civilian / non-Civilian differentiation Donut chart."
+
+  },
+  {
+    onShow: function (tour) {
+      settySlider(128);
+      highlightSelected(mapsvg, 'map', 12);
+      filter = "province";
+      filtervalue = "Damascus Suburbs";
+      datarefresh(128);
+      timerefresh(128);
+    },
+    placement: "right",
+    element: "path#mapid_12",
+    title: "The Map Panel - Subset Selection",
+    content: "Damascus Suburbs selection of Chemical Warfare."
 
   },
   {

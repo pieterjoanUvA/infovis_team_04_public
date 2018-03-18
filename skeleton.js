@@ -19,8 +19,8 @@ var filtervalue = "";
 // for reset function.
 var lastSelectedTime = 1;
 // for bar, arc and province highlighting
-var lastSelectedChart = null; // for reset function of added temp css class.
-var lastSelectedElement = null;
+var lastSelectedChart = leftpanel.select("svg").attr("width","100%").attr("height","50%"); // for reset function of added temp css class.
+var lastSelectedElement = '#barid_11';
 
 var don1svgRanOnce = 0;
 var barRanOnce = 0 ;
