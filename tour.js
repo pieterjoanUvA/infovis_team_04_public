@@ -79,7 +79,7 @@ var tour = new Tour({
       timerefresh(128);
     },
     placement: "right",
-    element: "path#mapid_12",
+    element: "#mapid_12",
     title: "The Map Panel - Subset Selection",
     content: "Damascus Suburbs selection of Chemical Warfare."
 
