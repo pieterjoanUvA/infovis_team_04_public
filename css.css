@@ -43,6 +43,9 @@ rect {
 .legendCivil {
   font-size: 10px;
 }
+#legend-svg {
+  vertical-align: top;
+}
 .customtooltip {
   box-shadow: 0 0 5px #999999;
   display: none;
@@ -73,7 +76,7 @@ rect {
 }
 
 .states {
-  fill: #119bc5;
+  fill: none;
   stroke: #fff;
   stroke-width:0.5px;
 }
@@ -86,6 +89,20 @@ rect {
   stroke-linecap: round;
   pointer-events: none;
 }
+
+.maplegend line{
+  stroke: black;
+  fill:black
+}
+
+.maplegend path{
+  stroke:  black;
+}
+
+.maplegend text{
+  fill:  black;
+}  
+  
 
 #toprow {
   height: calc(75% - 56px);
@@ -120,19 +137,38 @@ rect {
 /*p.ex1 {
 	padding-top: 2em;
 }
+<<<<<<< HEAD
 
 /*BarChartDeathCause Variables*/ 
+=======
+/*DonutChartArcHovering */
+.arc:hover{
+  fill: brown;
+  opacity: .7;
+}
+/*BarChartDeathCause Variables*/
+>>>>>>> cd8d21f3864f65b30d45dff9f3a4552e7a189ca2
 .bar {
   fill: steelblue;
 }
 .bar:hover {
   fill: brown;
+  opacity: .7;
 }
 .bar_text {
   fill: black;
   font: 9px sans-serif;
 }
-
+/* selection highlighting, general css class.*/
+.selected {
+    fill: brown;
+}
+/* selection highlighting, finegrained province, instead of whole map opacity.*/
+.hover
+{
+  fill:brown;
+  opacity: .7;
+}
 
 .axis--y path {
   }
@@ -238,8 +274,6 @@ rect {
     background-color: rgb(33, 37, 41);
     color: white;
 }
-
-
 
 
 input[type=range] {

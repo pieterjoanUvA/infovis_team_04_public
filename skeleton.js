@@ -12,16 +12,15 @@ var rightpanel = toprow.select("#rightpanel").select("div");
 var botpanel = botrow;
 
 //User setting variables
-var timespan = 302400000;
-var unix = 1299585600000;
-var date = new Date(unix);
-var lowerdate = new Date((unix-timespan));
-var upperdate = new Date((unix+timespan));
+var date = createNewDate(1);
 
 var filter = "none";
 var filtervalue = "";
 // for reset function.
-var lastSelectedTime = 1299585600000;
+var lastSelectedTime = 1;
+// for bar, arc and province highlighting
+var lastSelectedChart = leftpanel.select("svg").attr("width","100%").attr("height","50%"); // for reset function of added temp css class.
+var lastSelectedElement = '#barid_11';
 
 var don1svgRanOnce = 0;
 var barRanOnce = 0 ;
@@ -41,4 +40,8 @@ var keys_gender = ['Adult - Female','Adult - Male','Child - Female','Child - Mal
 var keys_deathcause = ['Chemical and toxic gases','Detention - Execution','Detention - Torture','Detention - Torture - Execution','Explosion','Field Execution','Kidnapping - Execution','Kidnapping - Torture','Kidnapping - Torture - Execution','Other','Shelling','Shooting','Siege','Un-allowed to seek Medical help','Unknown','Warplane shelling'];
 var keys_death_short = ['Chemical','Det-Exec','Det-Torture','Det-Tort-Ex','Explosion','Field Exec','Kidn-Exec','Kidn-Torture','Kidn-Tor-Ex','Other','Shelling','Shooting','Siege','No Medical','Unknown','Warplane']
 var keys_status = ['Civilian','Non-Civilian'];
+<<<<<<< HEAD
 var keys_eventTypes = ['Yet to Summarize Protest types', 'Explain Force Posture', 'Explain Coerce','Explain Assault', 'Explain Fight', 'Explain UnconvMassViolence']
+=======
+var keys_province = ['Aleppo','Damascus','Damascus Suburbs','Daraa','Deir Ezzor','Hama','Hasakeh','Homs','Idlib','Lattakia','Quneitra','Raqqa','Sweida','Tartous'];
+>>>>>>> cd8d21f3864f65b30d45dff9f3a4552e7a189ca2

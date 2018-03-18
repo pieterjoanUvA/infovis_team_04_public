@@ -3,8 +3,7 @@
 //Code that runs on initialization
 var statsvg = leftpanel.append("svg")
                 .attr("width","100%")
-                .attr("height","50%")
-                .style("border","1px solid black");
+                .attr("height","50%");
 
 //source: https://bl.ocks.org/tezzutezzu/c2653d42ffb4ecc01ffe2d6c97b2ee5e
 function arcTween(d)
@@ -60,17 +59,23 @@ function createDonut(data)
     var legendRectSize = 18;
 	  var legendSpacing = 2;
 
+    var chartname = 'gender'; // for id-creation => for highlighting purposes
+
     var don1svgpath = don1svg.selectAll('path') //.selectAll('path')//statsvg.selectAll('path')
 		  .data(pie(data))
 		    .enter()
 		    .append('path')
 		    .attr('d', arc)
+        .attr("class", "arc")
+        .attr("id", function(d,i) {return chartname+"id_"+i})
 		    .attr('fill', function(d, i)
         {
 		        return color(d.data[0]);
 	      })
-        .on('click', function(d)
+        .on('click', function(d, i)
         {
+          var selectedChart = don1svg
+          highlightSelected(selectedChart, chartname, i);
           filter = "gender";
           filtervalue = d.data[0];
           updatelabel();
@@ -175,12 +180,11 @@ function updateDonut(dataset)
 
 var barsvg = leftpanel.append("svg")
                 .attr("width","100%")
-                .attr("height","50%")
-                .style("border","1px solid black");
+                .attr("height","50%");
 
 var barmargin = {top: 10, right: 10, bottom: 80, left: 55};
-var barwidth = barsvg.node().getBoundingClientRect().width - barmargin.left - barmargin.right;
-var barheight = barsvg.node().getBoundingClientRect().height - barmargin.top - barmargin.bottom;
+var barwidth = barsvg.node().getBoundingClientRect().width - barmargin.left - barmargin.right ;
+var barheight = barsvg.node().getBoundingClientRect().height - barmargin.top - barmargin.bottom  ;
 
 
 var barx = d3.scaleBand().rangeRound([0, barwidth]).padding(0.1);
@@ -193,14 +197,12 @@ var gbar = barsvg.append("g")
 
 
 var deathtooltip = leftpanel.append('div').attr('class', 'customtooltip');//.attr('id','bar');
-/////////////// new stuff ///////////////
-///////// in bar.js ?? //////////////////
-/////////////////////////////////////////
+
 
 
 function createBar(bardata){
-  var bar_rect =  gbar.selectAll(".bar")
-  var bar_text =  gbar.selectAll(".bar_text")
+  var bar_rect =  gbar.selectAll(".bar");
+  var bar_text =  gbar.selectAll(".bar_text");
   ////////// barx and bary domain set functions for auto scaling.
 
   barx.domain(bardata.map(function(d) { return d[0]; }));
@@ -211,14 +213,18 @@ function createBar(bardata){
   deathtooltip.append('div').attr('class','label');
 
 /// Bar rectangles creation.
+  var chartname = 'bar'; // for id-creation => for highlighting purposes
   bar_rect.data(bardata).enter().append("rect")
   .attr("class", "bar")
+    .attr("id", function(d,i) {return chartname+"id_"+i})
     .attr("x", function(d) { return barx(d[0]); })
-    .attr("height", function(v) { return barheight - bary(+v[1]); })
+    .attr("height", function(v) { return barheight - bary(+v[1]) ; })
    .attr("y", function(d) { return bary(+d[1]); })
    .attr("width", barx.bandwidth())
-   .on('click', function(d)
+   .on('click', function(d,i)
    {
+     var selectedChart = barsvg;
+     highlightSelected(selectedChart, chartname, i);
      filter = "deathCause";
      filtervalue = d[0];
      updatelabel();
