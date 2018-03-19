@@ -178,7 +178,7 @@ function updateCivilDonut(dataset)
 var news_barsvg = rightpanel.append('svg')
                 .attr("width","100%")
                 .attr("height","50%");
-var news_barmargin = {top: 10, right: 10, bottom: 130, left: 50};
+var news_barmargin = {top: 10, right: 10, bottom: 100, left: 70};
 var news_barwidth = news_barsvg.node().getBoundingClientRect().width - news_barmargin.left - news_barmargin.right;
 var news_barheight = news_barsvg.node().getBoundingClientRect().height - news_barmargin.top - news_barmargin.bottom;
 
