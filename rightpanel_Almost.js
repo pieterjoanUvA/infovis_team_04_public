@@ -180,7 +180,7 @@ function updateCivilDonut(dataset)
 var news_barsvg = rightpanel.append('svg')
                 .attr("width","100%")
                 .attr("height","50%");
-var news_barmargin = {top: 10, right: 10, bottom: 100, left: 70};
+var news_barmargin = {top: 10, right: 10, bottom: 100, left: 60};
 var news_barwidth = news_barsvg.node().getBoundingClientRect().width - news_barmargin.left - news_barmargin.right;
 var news_barheight = news_barsvg.node().getBoundingClientRect().height - news_barmargin.top - news_barmargin.bottom;
 
@@ -249,7 +249,7 @@ function news_createBar(news_bardata){
            .on('mousemove', function()
               {
             		news_tooltip.style("top", d3.event.clientY+ "px");
-            		news_tooltip.style("left", d3.event.clientX+ "px");
+            		news_tooltip.style("left", d3.event.clientX-60+ "px");
               })
            .on('mouseout', function()
               {
@@ -273,28 +273,7 @@ function news_createBar(news_bardata){
       .text("Event Counts");
 }
 	///////// Mapping x-Axis ticks to Tooltips:
-
-
-/*
-n_xaxis.selectAll(".tick")[0].forEach(function(d1){
-	var data1 = d3.select(d1).data();
-    d3.select(d1).on("mouseover", function(d) {
-      //on mouse hover show the tooltip
-            news_tooltip.transition()
-                .duration(200)
-                .style("opacity", .9);
-            news_tooltip.html(data1)
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-            })
-        .on("mouseout", function(d) {
-          //on mouse out hide the tooltip
-            news_tooltip.transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
-
-  })*/
+ 
 
 
 function news_updateBar(news_bardata){
