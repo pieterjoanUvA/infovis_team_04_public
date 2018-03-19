@@ -162,6 +162,7 @@ rect {
 .selected {
     fill: brown;
 }
+
 /* selection highlighting, finegrained province, instead of whole map opacity.*/
 .hover
 {

@@ -63,6 +63,7 @@ function highlightSelected(selectedChart, chartname, i)
     selectedChart.select("#"+chartname+"id_"+i).classed("selected", true) ;
     lastSelectedElement = '#'+chartname+'id_'+ i;
     lastSelectedChart = selectedChart; //input for clearHighlight
+    $('#reset-item').addClass('active');// highlighting reset button
 }
 // end block, generalized.
 function resetfilter()
@@ -72,6 +73,7 @@ function resetfilter()
   filtervalue = "";
   datarefresh(lastSelectedTime);
   timerefresh(lastSelectedTime);
+  $('#reset-item').removeClass('active');// remove highlighting reset button.
 }
 function timerefresh(timevalue)
 {
