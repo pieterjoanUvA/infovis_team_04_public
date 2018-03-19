@@ -24,12 +24,9 @@ var don1svgmargin = {top: 10, right: 10, bottom: 10, left: 10};
 var	don1svgwidth = Math.min(statsvg.node().getBoundingClientRect().width - don1svgmargin.left - don1svgmargin.right,
           statsvg.node().getBoundingClientRect().height - don1svgmargin.top - don1svgmargin.bottom);
 var don1svgheight = don1svgwidth;
-// center donut in line_width
+// center donut in line_width with margin change.
 don1svgmargin.left = don1svgmargin.left + (statsvg.node().getBoundingClientRect().width - don1svgheight - don1svgmargin.left - don1svgmargin.right)/ 2;
 
-//console.log(blaat);
-console.log(don1svgmargin.left);
-//console.log(don1svgwidth, don1svgheight);
 var don1svgradius = Math.min(don1svgwidth, don1svgheight) / 2 ;
 var don1svgdonutWidth = 42;
 var color = d3.scaleOrdinal(d3.schemeCategory20c);
@@ -286,7 +283,7 @@ function createBar(bardata){
       .attr("font-size", "14px")
       .attr("text-anchor", "end")
       .attr("fill", "black")
-      .text("# Casualties");
+      .text("Casualties");
 
 
 
@@ -305,12 +302,9 @@ function updateBar(bardata){
   barx.domain(bardata.map(function(d) { return d[0]; }));
   bary.domain([d3.min(bardata, function(v) { return +v[1]; }),
                 d3.max(bardata, function(v) { return +v[1]; })]);
-//console.log(bary.domain());
 //select all bars on the graph, take them out, and exit the previous data set.
 //then you can add/enter the new data set
-//console.log(bardata.map(function (d){return d[1]}))
-//console.log(d3.max(bardata, d => d[1]))
-//console.log(bardata)
+
 //Join
 var bar_rect =  d3.selectAll(".bar").data(bardata);
 var bar_text = gbar.selectAll(".bar_text").data(bardata);
@@ -349,7 +343,6 @@ bar_rect.enter().selectAll(".bar")
 .on('click', function(d)
 {
   filter = "deathCause";
-  console.log(d[0]);
   filtervalue = d[0];
   updatelabel();
   datarefresh();
@@ -376,7 +369,7 @@ gbar.enter().append("g")
      .attr("x", 4)
      .attr("text-anchor", "end")
    .attr("fill", "black")
-     .text("# Casualties");
+     .text("Casualties");
 
 
 

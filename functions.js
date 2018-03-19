@@ -63,6 +63,8 @@ function highlightSelected(selectedChart, chartname, i)
     selectedChart.select("#"+chartname+"id_"+i).classed("selected", true) ;
     lastSelectedElement = '#'+chartname+'id_'+ i;
     lastSelectedChart = selectedChart; //input for clearHighlight
+    $('#reset-item').addClass('active');// highlighting reset button
+    $('#resetfilter').addClass('active');
 }
 // end block, generalized.
 function resetfilter()
@@ -72,6 +74,8 @@ function resetfilter()
   filtervalue = "";
   datarefresh(lastSelectedTime);
   timerefresh(lastSelectedTime);
+  $('#reset-item').removeClass('active');// remove highlighting reset button.
+  $('#resetfilter').removeClass('active');
 }
 function timerefresh(timevalue)
 {
@@ -240,8 +244,11 @@ function initialrefresh()
       // Add the X Axis
     linegraph.append("g")
         .attr("transform", "translate(0," + line_height + ")")
-        .attr("class","xaxis")
-        .call(d3.axisBottom(line_x));
+        .attr("class","xaxis_aggr")
+        .call(d3.axisBottom(line_x))
+            .selectAll("text")
+            .attr("id", function(d,i) {return "yeartick_id_"+i})
+            .attr("text-anchor", "start");
 
     // linegraph.append("g")
     //     .call(d3.axisLeft(line_y));

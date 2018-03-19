@@ -1,6 +1,6 @@
 
 //Add a selecting window to filter different data
-var choice = "total"
+var choice = "Total Casualties"
 //The Midpanel SVG element code
 //Code that runs on initialization
 var mapsvg = midpanel.append("svg")
@@ -57,8 +57,8 @@ legendSvg.append("g")
 .select(".domain").remove();
 legendSvg.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 80)
-      .attr("x",0 - (legendHeight / 1.3))
+      .attr("y", 50)
+      .attr("x",0 - (legendHeight / 1.4))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .text(choice);
