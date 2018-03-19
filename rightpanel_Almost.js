@@ -17,9 +17,11 @@ function arcTweenCivil(d)
 //general variables
 var don2svgmargin = {top: 10, right: 10, bottom: 10, left: 10};
 //var don2svgwidth = 241;
-var	don2svgwidth = Math.min(civilsvg.node().getBoundingClientRect().width - don1svgmargin.left - don1svgmargin.right,
-          civilsvg.node().getBoundingClientRect().height - don1svgmargin.top - don1svgmargin.bottom);
+var	don2svgwidth = Math.min(civilsvg.node().getBoundingClientRect().width - don2svgmargin.left - don2svgmargin.right,
+          civilsvg.node().getBoundingClientRect().height - don2svgmargin.top - don2svgmargin.bottom);
 var don2svgheight = don2svgwidth;
+// center donut in line_width
+don2svgmargin.left = don2svgmargin.left + (statsvg.node().getBoundingClientRect().width - don2svgheight - don2svgmargin.left - don2svgmargin.right)/ 2;
 
 var don2svgradius = Math.min(don2svgwidth, don2svgheight) / 2;
 var don2svgdonutWidth = 42;
@@ -192,12 +194,12 @@ var news_tooltip = rightpanel.append('div')
 					.attr('class', 'customtooltip')
 					//.style("opacity", 0);
 
-  
-  
+
+
 function news_createBar(news_bardata){
   var news_bar_rect =  news_gbar.selectAll(".news_bar")
   var news_bar_text =  news_gbar.selectAll(".news_bar_text")
-  
+
   // tooltip functions
   news_tooltip.append('div').attr('class','label');
 
@@ -216,8 +218,8 @@ function news_createBar(news_bardata){
    .attr("y", function(d) { return news_bary(+d[1]); })
    .attr("width", news_barx.bandwidth());
 
-   
-   
+
+
   news_bar_text.data(news_bardata).enter().append("text")
     .attr("class", "news_bar_text")
     .attr("text-anchor", "middle")
@@ -227,7 +229,7 @@ function news_createBar(news_bardata){
       .attr("y", function(d) { return news_bary(+d[1]) - 2; })
      .text(function(d) { return d[1]; });
 
-	 
+
 	news_gbar.append("g")
       .attr("class", "axis news_axis--x")
       .attr("transform", "translate(0," + news_barheight + ")")
@@ -269,27 +271,27 @@ function news_createBar(news_bardata){
       .attr("text-anchor", "end")
       .attr("fill", "black")
       .text("Event Counts");
-}	  
+}
 	///////// Mapping x-Axis ticks to Tooltips:
-	
 
-/*	  
+
+/*
 n_xaxis.selectAll(".tick")[0].forEach(function(d1){
-	var data1 = d3.select(d1).data();		
+	var data1 = d3.select(d1).data();
     d3.select(d1).on("mouseover", function(d) {
       //on mouse hover show the tooltip
-            news_tooltip.transition()		
-                .duration(200)		
-                .style("opacity", .9);		
-            news_tooltip.html(data1)	
-                .style("left", (d3.event.pageX) + "px")		
-                .style("top", (d3.event.pageY - 28) + "px");	
-            })					
-        .on("mouseout", function(d) {	
+            news_tooltip.transition()
+                .duration(200)
+                .style("opacity", .9);
+            news_tooltip.html(data1)
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+            })
+        .on("mouseout", function(d) {
           //on mouse out hide the tooltip
-            news_tooltip.transition()		
-                .duration(500)		
-                .style("opacity", 0);	
+            news_tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
         });
 
   })*/
@@ -369,4 +371,3 @@ news_gbar.enter().append("g")
 
 
 }
-
