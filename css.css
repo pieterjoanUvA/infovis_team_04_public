@@ -162,7 +162,12 @@ rect {
 .selected {
     fill: brown;
 }
-
+/* dirty fix for removing 2018-tick from linegraph*/
+#yeartick_id_6{
+  display:none;
+}
+.nav .active { background:brown }
+.nav-item .active {background: brown}
 /* selection highlighting, finegrained province, instead of whole map opacity.*/
 .hover
 {
