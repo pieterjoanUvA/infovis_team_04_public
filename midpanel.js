@@ -265,8 +265,6 @@ var chartname = 'map'; //For highlighting id creation
   {
 //handleMouseOut
     d3.select("#customtooltip").remove();
-    d3.select(this)
-      .attr("class", "states");
     maptooltip.style('display', 'none');
   });
   mapsvg.append("path")
