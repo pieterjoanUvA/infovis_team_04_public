@@ -64,7 +64,6 @@ rect {
   border-radius: 2px;
 }
 
-<<<<<<< HEAD
 /*Modification for the tooltips on the events-bar chart. */
 .customtooltip_events {
   box-shadow: 0 0 5px #999999;
@@ -84,8 +83,6 @@ rect {
   border-radius: 2px;
 }
 
-=======
->>>>>>> b0f8b931c32f1cfa2b7efadff150a70f0b464aed
 .label {
   font-weight: 600;
 }
