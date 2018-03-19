@@ -191,7 +191,7 @@ var news_gbar = news_barsvg.append("g")
              .attr("transform", "translate(" + news_barmargin.left + "," + news_barmargin.top + ")");
 
 var news_tooltip = rightpanel.append('div')
-					.attr('class', 'customtooltip')
+					.attr('class', 'customtooltip_events')
 					//.style("opacity", 0);
 
 
