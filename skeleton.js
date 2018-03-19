@@ -41,6 +41,6 @@ var keys_deathcause = ['Chemical and toxic gases','Detention - Execution','Deten
 var keys_death_short = ['Chemical','Det-Exec','Det-Torture','Det-Tort-Ex','Explosion','Field Exec','Kidn-Exec','Kidn-Torture','Kidn-Tor-Ex','Other','Shelling','Shooting','Siege','No Medical','Unknown','Warplane']
 var keys_status = ['Civilian','Non-Civilian'];
 
-var keys_eventTypes = ['Protests; such as: Demonstrations, Riots, Boycotting, etc', 'Exhibit Force Posture; such as: Demonstrate military power', 'Coercion; ex:Arrests, Seizing property, Imposing restrictions, etc','Assaults; ex: Torture; To kill, to abduct, suicide bombing, etc', 'Fight; ex:se of military force, occupy territory, , aerial strikes, etc', 'Use of Unconventional Mass Violence; ex: Engaing in mass killings, in ethnic cleansing, or using weapons of mass destruction.'];
+var keys_eventTypes = ['Protests; such as: Demonstrations, Riots, Boycotting, etc', 'Exhibit Force Posture; such as: Demonstrate military power', 'Coercion; such as: Arrests, Seizing property, Imposing restrictions, etc','Assaults; such as: Torture, Killing, Abduction, Suicide bombing, etc', 'Fight; such as: Use of military force, occupy territory, , aerial strikes, etc', 'Use of Mass Violence; such as: Engaing in mass killings, in ethnic cleansing, or using weapons of mass destruction.'];
 
 var keys_province = ['Aleppo','Damascus','Damascus Suburbs','Daraa','Deir Ezzor','Hama','Hasakeh','Homs','Idlib','Lattakia','Quneitra','Raqqa','Sweida','Tartous'];

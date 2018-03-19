@@ -64,6 +64,26 @@ rect {
   border-radius: 2px;
 }
 
+/*Modification for the tooltips on the events-bar chart. */
+.customtooltip_events {
+  box-shadow: 0 0 5px #999999;
+  display: none;
+  font-size: 12px;
+  padding: 10px;
+  position: fixed;
+  left:20%;
+  text-align: center;
+  pointer-events: none;
+  width: 130px;
+  z-index: 10;
+  line-height: 140%; /*Interlineado*/
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
 .label {
   font-weight: 600;
 }
