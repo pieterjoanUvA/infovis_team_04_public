@@ -286,7 +286,7 @@ function createBar(bardata){
       .attr("font-size", "14px")
       .attr("text-anchor", "end")
       .attr("fill", "black")
-      .text("# Casualties");
+      .text("Casualties");
 
 
 
@@ -376,7 +376,7 @@ gbar.enter().append("g")
      .attr("x", 4)
      .attr("text-anchor", "end")
    .attr("fill", "black")
-     .text("# Casualties");
+     .text("Casualties");
 
 
 
