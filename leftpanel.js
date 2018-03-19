@@ -24,7 +24,11 @@ var don1svgmargin = {top: 10, right: 10, bottom: 10, left: 10};
 var	don1svgwidth = Math.min(statsvg.node().getBoundingClientRect().width - don1svgmargin.left - don1svgmargin.right,
           statsvg.node().getBoundingClientRect().height - don1svgmargin.top - don1svgmargin.bottom);
 var don1svgheight = don1svgwidth;
+// center donut in line_width
+don1svgmargin.left = don1svgmargin.left + (statsvg.node().getBoundingClientRect().width - don1svgheight - don1svgmargin.left - don1svgmargin.right)/ 2;
 
+//console.log(blaat);
+console.log(don1svgmargin.left);
 //console.log(don1svgwidth, don1svgheight);
 var don1svgradius = Math.min(don1svgwidth, don1svgheight) / 2 ;
 var don1svgdonutWidth = 42;
