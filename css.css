@@ -122,6 +122,10 @@ rect {
   fill:  black;
 }
 
+#legendy{
+  fill: green;
+  font: 9px sans-serif;
+}
 
 #toprow {
   height: calc(75% - 56px);

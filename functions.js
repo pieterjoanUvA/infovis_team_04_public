@@ -33,7 +33,13 @@ var SubSet = function(sourceObject, keys)
 
 function updatelabel()
 {
-  date_label.text("Y:"+date.getFullYear()+" W:"+date.getWeek()+" Filter: "+filter+"("+filtervalue+")");
+  if (filter == 'none'){
+  date_label.text("Year: "+date.getFullYear()+" Week: "+date.getWeek()+" Filter: none selected");
+  }
+  else
+  {
+  date_label.text("Year: "+date.getFullYear()+" Week: "+date.getWeek()+" Filter: "+filter+" ("+filtervalue+")");
+  }
 }
 
 // highlighting functions specific for each chart.
@@ -97,7 +103,7 @@ function timerefresh(timevalue)
         return d;
       }
     })[0];
-    deaths_label.text("Deaths: "+data.deaths);
+    deaths_label.text("Casualties: "+data.deaths);
   });
   /////////////Weekly news coverage:
     d3.select(".mouse-line2")

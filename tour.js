@@ -22,17 +22,16 @@ var tour = new Tour({
     content: "Here the donut chart shows differentiation between gender and age groups",
     onShow: function (tour) {
       settySlider(128);
-      datarefresh(128) ;
-      timerefresh(128) ;
-  //  $( "#slider" ).slider('refresh');
+      datarefresh(128);
+      timerefresh(128);
     }
 
   },
   {
     onShow: function (tour) {
       settySlider(128);
-      datarefresh(128) ;
-      timerefresh(128) ;
+      datarefresh(128);
+      timerefresh(128);
     },
     placement: "right",
     element: "svg:eq(1)",
@@ -42,12 +41,13 @@ var tour = new Tour({
   },
   {
     onShow: function (tour) {
-      settySlider(128);
+      var variable = 128
+      settySlider(variable);
       highlightSelected(barsvg, 'bar', 0);
       filter = "deathCause";
       filtervalue = "Chemical and toxic gases"
-      datarefresh(128) ;
-      timerefresh(128) ;
+      datarefresh(variable);
+      timerefresh(variable);
     },
     placement: "right",
     element: "rect.bar:first",
@@ -57,11 +57,11 @@ var tour = new Tour({
   },
   {
     onShow: function (tour) {
-      settySlider(110);
-      filter = "none";
-      filtervalue = "";
-      datarefresh(110);
-      timerefresh(110);
+      var variable = 110;
+      settySlider(variable);
+      resetfilter()
+      datarefresh(variable);
+      timerefresh(variable);
     },
     placement: "right",
     element: "svg:eq(2)",
@@ -71,26 +71,37 @@ var tour = new Tour({
   },
   {
     onShow: function (tour) {
-      settySlider(128);
+      var variable = 128;
+      settySlider(variable);
       highlightSelected(mapsvg, 'map', 12);
       filter = "province";
       filtervalue = "Damascus Suburbs";
-      datarefresh(128);
-      timerefresh(128);
+      datarefresh(variable);
+      timerefresh(variable);
     },
-    placement: "right",
-    element: "#mapid_12",
+    placement: "bottom",
+    element: "#toprow",
     title: "The Map Panel - Subset Selection",
     content: "Damascus Suburbs selection of Chemical Warfare."
 
   },
   {
     onShow: function (tour) {
-      settySlider(185);
-      filter = "none";
-      filtervalue = "";
-      datarefresh(185);
-      timerefresh(185);
+      resetfilter()
+    },
+    placement: "bottom",
+    element: "#toprow",
+    title: "The Map Panel - Resetting Filter",
+    content: "Animations."
+
+  },
+  {
+    onShow: function (tour) {
+      var variable =185;
+      settySlider(variable);
+      resetfilter();
+      datarefresh(variable);
+      timerefresh(variable);
     },
     placement: "left",
     element: "svg:eq(4)",

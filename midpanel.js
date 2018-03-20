@@ -1,6 +1,6 @@
 
 //Add a selecting window to filter different data
-var choice = "Total Casualties"
+var choice = "Casualties"
 //The Midpanel SVG element code
 //Code that runs on initialization
 var mapsvg = midpanel.append("svg")
@@ -54,12 +54,16 @@ legendSvg.append("g")
 .attr("class", "maplegend")
 .attr("transform", "translate("  +18 + ", 0)")
 .call(yAxis)
+.attr("id", 'lengendy_ticks')
+.attr("font-size", "12px")
 .select(".domain").remove();
 legendSvg.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 50)
-      .attr("x",0 - (legendHeight / 1.4))
+      .attr("y", 55)
+      .attr("x",0 - (legendHeight / 1.3))
       .attr("dy", "1em")
+      .attr("id", 'lengendy')
+      .attr("font-size", "12px")
       .style("text-anchor", "middle")
       .text(choice);
 
