@@ -117,7 +117,7 @@ function timerefresh(timevalue)
         return d;
       }
     })[0];
-    news_label.text("Number of News sources: "+data.NumSources);
+    news_label.text("News publications mentioning the crisis: "+data.NumSources);
   });
 }
 

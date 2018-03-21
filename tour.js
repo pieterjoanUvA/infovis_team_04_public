@@ -113,8 +113,8 @@ var tour = new Tour({
     onShow: function (tour) {},
     placement: "left",
     element: "svg:eq(5)",
-    title: "News Distribution",
-    content: "News Count per topic per week."
+    title: "Mapping Events taking place in Syria",
+    content: "Gives the Weekly Count of 6 kinds of event types that were recorded to have occurred in Syria."
 
   },
   {
@@ -135,8 +135,8 @@ var tour = new Tour({
     onShow: function (tour) {},
     placement: "top",
     element: "svg:last",
-    title: "Extra news data on projected on timeline",
-    content: "News ...."
+    title: "Weekly total counts of the number of news publications world-wide on the Syrian Crisis",
+    content: "News Totals"
 
 }
 ]});
