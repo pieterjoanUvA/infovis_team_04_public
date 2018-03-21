@@ -273,7 +273,7 @@ function news_createBar(news_bardata){
       .text("Event Counts");
 }
 	///////// Mapping x-Axis ticks to Tooltips:
- 
+
 
 
 function news_updateBar(news_bardata){
