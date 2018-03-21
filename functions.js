@@ -38,7 +38,7 @@ function updatelabel()
   }
   else
   {
-  date_label.text("Year: "+date.getFullYear()+", Week: "+date.getWeek()+" You are filtering on "+filter.toLowerCase()+" and selected: "+filtervalue+".");
+  date_label.text("Year: "+date.getFullYear()+", Week: "+date.getWeek()+", You are filtering on \""+filter.toLowerCase()+"\" and selected: "+filtervalue+".");
   }
 }
 
