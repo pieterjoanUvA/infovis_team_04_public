@@ -211,12 +211,12 @@ function news_createBar(news_bardata){
 
 
   news_bar_rect.data(news_bardata).enter().append("rect")
-  .attr("class", "news_bar")
+    .attr("class", "news_bar")
   //.attr("fill", "teal")
     .attr("x", function(d) { return news_barx(d[0]); })
     .attr("height", function(v) {return news_barheight - news_bary(+v[1]); })
-   .attr("y", function(d) { return news_bary(+d[1]); })
-   .attr("width", news_barx.bandwidth());
+    .attr("y", function(d) { return news_bary(+d[1]); })
+    .attr("width", news_barx.bandwidth());
 
 
 
@@ -263,7 +263,7 @@ function news_createBar(news_bardata){
       .attr("font-size", "12px")
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -25)
+      .attr("y", -30)
       .attr("dy", "-1em")
       .attr("dx", "-0.71em")
       .attr("x", 0)
@@ -325,26 +325,26 @@ news_bar_rect.enter().selectAll(".news_bar")
 .attr("height", function(v) { return news_barheight - news_bary(v[1]); })
 
 news_bar_text.enter().append("text")
-.attr("class", "news_bar_text")
-.attr("text-anchor", "middle")
+  .attr("class", "news_bar_text")
+  .attr("text-anchor", "middle")
 //.attr("font-size", "14px")
   .attr("x", function(d) { return news_barx(d[0]) + news_barx.bandwidth()/2; })
   .attr("y", function(d) { return news_bary(+d[1]) - 2; })
-.attr("fill", "white")
-.text(function(d) { return d[1]; });
+  .attr("fill", "white")
+  .text(function(d) { return d[1]; });
 
 news_gbar.enter().append("g")
      .attr("class", "axis news_axis--y")
-   .call(d3.axisLeft(news_bary).ticks(4, ",.0f"))
-   .attr("font-size", "12px")
-   .append("text")
+     .call(d3.axisLeft(news_bary).ticks(4, ",.0f"))
+     .attr("font-size", "12px")
+     .append("text")
      .attr("transform", "rotate(-90)")
-     .attr("y", -25)
+     .attr("y", -30)
      .attr("dy", "-0.71em")
      .attr("dx", "-0.71em")
      .attr("x", 4)
      .attr("text-anchor", "end")
-   .attr("fill", "black")
+    .attr("fill", "black")
      .text("Event Counts");
 
 

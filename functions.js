@@ -34,11 +34,11 @@ var SubSet = function(sourceObject, keys)
 function updatelabel()
 {
   if (filter == 'none'){
-  date_label.text("Year: "+date.getFullYear()+" Week: "+date.getWeek()+" Filter: none selected");
+  date_label.text("Year: "+date.getFullYear()+", Week: "+date.getWeek()+", You have not selected a filter.");
   }
   else
   {
-  date_label.text("Year: "+date.getFullYear()+" Week: "+date.getWeek()+" Filter: "+filter+" ("+filtervalue+")");
+  date_label.text("Year: "+date.getFullYear()+", Week: "+date.getWeek()+" You are filtering on "+filter.toLowerCase()+" and selected: "+filtervalue+".");
   }
 }
 
