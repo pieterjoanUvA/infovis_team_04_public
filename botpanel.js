@@ -56,17 +56,8 @@ var news_label = news_graphsvg.append("text")
                   .attr("id", "newsSources")
                   .attr("x",0).attr("y", 18)
                   .attr("fill", "white")
-                   	  .attr("font-size", "24px");
-/*
-news_graphsvg.append("text")
- 	 	.attr("class", "jaar")
-     	.attr("x", 25)
-     	.attr("y",  15)
-     	.attr("fill", "white")
- 	  .attr("font-size", "24px")
-     	.attr("text-anchor", "middle")
- 	.text("Jaar: ");
-  */
+                  .attr("font-size", "24px");
+
 //Draw the static-static parts of the lineChart
 var	news_line_width = news_graphsvg.node().getBoundingClientRect().width,
     news_line_height = news_graphsvg.node().getBoundingClientRect().height-25;
