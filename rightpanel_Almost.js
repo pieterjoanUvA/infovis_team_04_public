@@ -263,7 +263,7 @@ function news_createBar(news_bardata){
       .attr("font-size", "12px")
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -25)
+      .attr("y", -30)
       .attr("dy", "-1em")
       .attr("dx", "-0.71em")
       .attr("x", 0)
@@ -273,7 +273,7 @@ function news_createBar(news_bardata){
       .text("Event Counts");
 }
 	///////// Mapping x-Axis ticks to Tooltips:
- 
+
 
 
 function news_updateBar(news_bardata){
