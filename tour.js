@@ -187,7 +187,7 @@ var tour = new Tour({
   },
   {
     onShow: function (tour) {
-      highlightSelected(civilsvg, 'arc', 0);
+      highlightSelected(civilsvg, 'status',1);
       filter = "status";
       filtervalue = "Non-Civilian";
       updatelabel();
