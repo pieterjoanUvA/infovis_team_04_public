@@ -113,7 +113,7 @@ var tour = new Tour({
     placement: "left",
     element: "svg:eq(5)",
     title: "News",
-    content: "Bar Chart: Shows the distribution of news topics published in news articles."
+    content: "Bar Chart: Shows the weekly distribution of reported individual crisis-related events occurring in Syria."
 
   },
   {
@@ -128,7 +128,7 @@ var tour = new Tour({
     placement: "top",
     element: "svg:last",
     title: "Publications over Time",
-    content: "Shows the total amount of news publications about Syria over time."
+    content: "Shows the total amount of news publications, world-wide about Syria over time."
 
   },
   {

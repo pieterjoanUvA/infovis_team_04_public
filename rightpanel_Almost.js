@@ -270,7 +270,7 @@ function news_createBar(news_bardata){
       .attr("font-size", "14px")
       .attr("text-anchor", "end")
       .attr("fill", "black")
-      .text("Event Counts");
+      .text("Events in Syria");
 }
 	///////// Mapping x-Axis ticks to Tooltips:
 
