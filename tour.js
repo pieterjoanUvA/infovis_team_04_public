@@ -19,7 +19,7 @@ var tour = new Tour({
     placement: "right",
     element: "svg:first",
     title: "Gender and Age",
-    content: "Donut Chart: Shows percentages of Males, Females, Adults and Children.",
+    content: "Donut Chart: Shows the percentages of males, females, adults and children that have died.",
     onShow: function (tour) {
       // settySlider(128);
       // timerefresh(128);
@@ -36,7 +36,7 @@ var tour = new Tour({
     placement: "right",
     element: "svg:eq(1)",
     title: "Death Cause",
-    content: "Bar Chart: Shows distribution of Death Causes."
+    content: "Bar Chart: Shows the distribution of death causes."
 
   },
   // {
@@ -66,7 +66,7 @@ var tour = new Tour({
     placement: "right",
     element: "svg:eq(2)",
     title: "Map",
-    content: "Map: Shows death per province."
+    content: "Map: Shows the casualties per province."
   },
   // {
   //   onShow: function (tour) {
@@ -105,7 +105,7 @@ var tour = new Tour({
     placement: "left",
     element: "svg:eq(4)",
     title: "Status",
-    content: "Donut Chart: Shows Percentages of Civilians and Non-Civilians"
+    content: "Donut Chart: Shows the percentages of civilian and non-civilian casualties."
 
   },
   {
@@ -113,7 +113,7 @@ var tour = new Tour({
     placement: "left",
     element: "svg:eq(5)",
     title: "News",
-    content: "Bar Chart: Shows distribution of news topics published in news articles."
+    content: "Bar Chart: Shows the distribution of news topics published in news articles."
 
   },
   {
@@ -136,7 +136,7 @@ var tour = new Tour({
     placement: "top",
     element: "input#slider",
     title: "Interaction: Time",
-    content: "With the slider, A certain week can be selected for filtering."
+    content: "With the slider, a certain week can be selected for filtering."
   },
   {
     onShow: function (tour) {
@@ -149,21 +149,21 @@ var tour = new Tour({
     placement: "top",
     element: "footer#botrow",
     title: "Example: Peak",
-    content: "We see a peak in Deaths and align the slider to it."
+    content: "We see a peak in casualties and align the slider to it."
   },
   {
     onShow: function (tour) {},
     placement: "right",
     element: "svg:eq(2)",
     title: "Map",
-    content: "Most deaths around that week happened in the Damascus Suburbs."
+    content: "Most casualties around that week happened within the Damascus Suburbs."
   },
   {
     onShow: function (tour) {},
     placement: "right",
     element: "svg:eq(1)",
     title: "Death Cause",
-    content: "As we can see, there was an attack with Chemical and Toxic gases."
+    content: "As we can see, there was an attack with chemical and toxic gases."
   },
   {
     onShow: function (tour) {
@@ -183,7 +183,7 @@ var tour = new Tour({
     placement: "left",
     element: "svg:eq(4)",
     title: "Chemical Deathcause: Status",
-    content: "We can see that most people died from chemical and toxic gases were civilians."
+    content: "We can see that most people who died from chemical and toxic gases were civilians."
   },
   {
     onShow: function (tour) {
@@ -193,7 +193,7 @@ var tour = new Tour({
       updatelabel();
       datarefresh();
     },
-    placement: "right",
+    placement: "left",
     element: "svg:eq(4)",
     title: "Renew Filter",
     content: "Let's get more information about the non-civilians (soldiers) that died..."
@@ -211,6 +211,18 @@ var tour = new Tour({
     title: "Soldiers: Gender and Age",
     content: "We can also see that all those soldiers are Adult-Males.",
     onShow: function (tour) {}
+  },
+  {
+    onShow: function (tour) {
+      // settySlider(128);
+      // datarefresh(128);
+      // timerefresh(128);
+    },
+    placement: "middle",
+    element: "body",
+    title: "Final Page",
+    content: "You have finished the tour, feel free to browse around by yourself."
+
   }
 ]});
 // Initialize button for nav-menu.
