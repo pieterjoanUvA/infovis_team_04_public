@@ -18,127 +18,200 @@ var tour = new Tour({
 //    onShown: function (tour) {},
     placement: "right",
     element: "svg:first",
-    title: "Gender Distribution",
-    content: "Here the donut chart shows differentiation between gender and age groups",
+    title: "Gender and Age",
+    content: "Donut Chart: Shows percentages of Males, Females, Adults and Children.",
     onShow: function (tour) {
-      settySlider(128);
-      datarefresh(128);
-      timerefresh(128);
+      // settySlider(128);
+      // timerefresh(128);
+      // datarefresh(128);
     }
 
   },
   {
     onShow: function (tour) {
-      settySlider(128);
-      datarefresh(128);
-      timerefresh(128);
+      // settySlider(128);
+      // datarefresh(128);
+      // timerefresh(128);
     },
     placement: "right",
     element: "svg:eq(1)",
-    title: "BarChart Casualties",
-    content: "Shows the cause of the casualties."
+    title: "Death Cause",
+    content: "Bar Chart: Shows distribution of Death Causes."
 
   },
+  // {
+  //   onShow: function (tour) {
+  //     var variable = 128
+  //     settySlider(variable);
+  //     highlightSelected(barsvg, 'bar', 0);
+  //     filter = "deathCause";
+  //     filtervalue = "Chemical and toxic gases"
+  //     datarefresh(variable);
+  //     timerefresh(variable);
+  //   },
+  //   placement: "right",
+  //   element: "rect.bar:first",
+  //   title: "BarChart Casualties Filter",
+  //   content: "The filter has been clicked and shows |F| for active filter."
+  //
+  // },
   {
     onShow: function (tour) {
-      var variable = 128
-      settySlider(variable);
-      highlightSelected(barsvg, 'bar', 0);
-      filter = "deathCause";
-      filtervalue = "Chemical and toxic gases"
-      datarefresh(variable);
-      timerefresh(variable);
-    },
-    placement: "right",
-    element: "rect.bar:first",
-    title: "BarChart Casualties Filter",
-    content: "The filter has been clicked and shows |F| for active filter."
-
-  },
-  {
-    onShow: function (tour) {
-      var variable = 110;
-      settySlider(variable);
-      resetfilter()
-      datarefresh(variable);
-      timerefresh(variable);
+      // var variable = 110;
+      // settySlider(variable);
+      // resetfilter()
+      // datarefresh(variable);
+      // timerefresh(variable);
     },
     placement: "right",
     element: "svg:eq(2)",
-    title: "The Map Panel",
-    content: "News and Civilian / non-Civilian differentiation Donut chart."
-
+    title: "Map",
+    content: "Map: Shows death per province."
   },
+  // {
+  //   onShow: function (tour) {
+  //     var variable = 128;
+  //     settySlider(variable);
+  //     highlightSelected(mapsvg, 'map', 12);
+  //     filter = "province";
+  //     filtervalue = "Damascus Suburbs";
+  //     datarefresh(variable);
+  //     timerefresh(variable);
+  //   },
+  //   placement: "bottom",
+  //   element: "#toprow",
+  //   title: "The Map Panel - Subset Selection",
+  //   content: "Damascus Suburbs selection of Chemical Warfare."
+  //
+  // },
+  // {
+  //   onShow: function (tour) {
+  //     resetfilter()
+  //   },
+  //   placement: "bottom",
+  //   element: "#toprow",
+  //   title: "The Map Panel - Resetting Filter",
+  //   content: "Animations."
+  //
+  // },
   {
     onShow: function (tour) {
-      var variable = 128;
-      settySlider(variable);
-      highlightSelected(mapsvg, 'map', 12);
-      filter = "province";
-      filtervalue = "Damascus Suburbs";
-      datarefresh(variable);
-      timerefresh(variable);
-    },
-    placement: "bottom",
-    element: "#toprow",
-    title: "The Map Panel - Subset Selection",
-    content: "Damascus Suburbs selection of Chemical Warfare."
-
-  },
-  {
-    onShow: function (tour) {
-      resetfilter()
-    },
-    placement: "bottom",
-    element: "#toprow",
-    title: "The Map Panel - Resetting Filter",
-    content: "Animations."
-
-  },
-  {
-    onShow: function (tour) {
-      var variable =185;
-      settySlider(variable);
-      resetfilter();
-      datarefresh(variable);
-      timerefresh(variable);
+      // var variable =185;
+      // settySlider(variable);
+      // resetfilter();
+      // datarefresh(variable);
+      // timerefresh(variable);
     },
     placement: "left",
     element: "svg:eq(4)",
-    title: "Civilian/Non-Civilian Distribution",
-    content: "Civilian / non-Civilian differentiation Donut chart."
+    title: "Status",
+    content: "Donut Chart: Shows Percentages of Civilians and Non-Civilians"
 
   },
   {
     onShow: function (tour) {},
     placement: "left",
     element: "svg:eq(5)",
-    title: "News Distribution",
-    content: "News Count per topic per week."
+    title: "News",
+    content: "Bar Chart: Shows distribution of news topics published in news articles."
+
+  },
+  {
+    onShow: function (tour) {},
+    placement: "top",
+    element: "svg:eq(6)",
+    title: "Deaths over Time",
+    content: "Shows the total amount of deaths over time."
+  },
+  {
+    onShow: function (tour) {},
+    placement: "top",
+    element: "svg:last",
+    title: "Publications over Time",
+    content: "Shows the total amount of news publications about Syria over time."
 
   },
   {
     onShow: function (tour) {},
     placement: "top",
     element: "input#slider",
-    title: "The Time Slider Selector",
-    content: "Select a week in the timeline."
+    title: "Interaction: Time",
+    content: "With the slider, A certain week can be selected for filtering."
+  },
+  {
+    onShow: function (tour) {
+      var variable =128;
+      settySlider(variable);
+      resetfilter();
+      timerefresh(variable);
+      datarefresh();
+    },
+    placement: "top",
+    element: "footer#botrow",
+    title: "Example: Peak",
+    content: "We see a peak in Deaths and align the slider to it."
   },
   {
     onShow: function (tour) {},
-    placement: "top",
-    element: "svg:eq(6)",
-    title: "Total Casualties Line Graph",
-    content: "."
+    placement: "right",
+    element: "svg:eq(2)",
+    title: "Map",
+    content: "Most deaths around that week happened in the Damascus Suburbs."
   },
   {
     onShow: function (tour) {},
-    placement: "top",
-    element: "svg:last",
-    title: "Extra news data on projected on timeline",
-    content: "News ...."
-
-}
+    placement: "right",
+    element: "svg:eq(1)",
+    title: "Death Cause",
+    content: "As we can see, there was an attack with Chemical and Toxic gases."
+  },
+  {
+    onShow: function (tour) {
+      highlightSelected(barsvg, 'bar', 0);
+      filter = "deathCause";
+      filtervalue = "Chemical and toxic gases";
+      updatelabel();
+      datarefresh();
+    },
+    placement: "right",
+    element: "svg:eq(1)",
+    title: "Extra Filter",
+    content: "Let's get more information about that specific group..."
+  },
+  {
+    onShow: function (tour) {},
+    placement: "left",
+    element: "svg:eq(4)",
+    title: "Chemical Deathcause: Status",
+    content: "We can see that most people died from chemical and toxic gases were civilians."
+  },
+  {
+    onShow: function (tour) {
+      highlightSelected(civilsvg, 'arc', 0);
+      filter = "status";
+      filtervalue = "Non-Civilian";
+      updatelabel();
+      datarefresh();
+    },
+    placement: "right",
+    element: "svg:eq(4)",
+    title: "Renew Filter",
+    content: "Let's get more information about the non-civilians (soldiers) that died..."
+  },
+  {
+    onShow: function (tour) {},
+    placement: "right",
+    element: "svg:eq(1)",
+    title: "Soldiers: Death Cause",
+    content: "We can see that on the other hand, most soldiers died of shooting instead of the attack on chemical gasses."
+  },
+  {
+    placement: "right",
+    element: "svg:first",
+    title: "Soldiers: Gender and Age",
+    content: "We can also see that all those soldiers are Adult-Males.",
+    onShow: function (tour) {}
+  }
 ]});
 // Initialize button for nav-menu.
 $('#tour').click(function(e){
@@ -192,7 +265,8 @@ var autotour = new Tour({
     title: "Bottom panel description",
     content: "Linechart with totals."
   },
-  {  duration: 4000,
+  {
+      duration: 4000,
     placement: "right",
     element: "#midpanel",
     title: "Syria map/province description",
