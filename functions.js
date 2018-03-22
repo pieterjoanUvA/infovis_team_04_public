@@ -223,7 +223,9 @@ function initialrefresh()
   //Main event handler upon first time loading the page.
 
   //INITIAL DATA REFRESH
-  timerefresh(1);
+  timerefresh(82);
+  var slidervars = document.getElementById('slider');
+  slidervars.value = 82;
   datarefresh();
 
   //LOAD STATIC DATA
