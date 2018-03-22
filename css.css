@@ -299,7 +299,10 @@ rect {
     color: white;
 }
 
-.modal-body {padding: 2px 16px;}
+.modal-body {
+  padding: 2px 16px;
+  font-size: 19px;
+}
 
 .modal-footer {
     padding: 2px 16px;

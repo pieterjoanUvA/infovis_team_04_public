@@ -59,7 +59,7 @@ legendSvg.append("g")
 .select(".domain").remove();
 legendSvg.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 55)
+      .attr("y", 60)
       .attr("x",0 - (legendHeight / 1.3))
       .attr("dy", "1em")
       .attr("id", 'lengendy')
