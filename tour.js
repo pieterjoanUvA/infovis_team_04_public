@@ -19,7 +19,7 @@ var tour = new Tour({
     placement: "right",
     element: "svg:first",
     title: "Gender and Age",
-    content: "Donut Chart: Shows the percentages of males, females, adults and children that have died.",
+    content: "Donut Chart: Shows the distribution of males, females, adults and children that have died.",
     onShow: function (tour) {
       // settySlider(128);
       // timerefresh(128);
@@ -105,7 +105,7 @@ var tour = new Tour({
     placement: "left",
     element: "svg:eq(4)",
     title: "Status",
-    content: "Donut Chart: Shows the percentages of civilian and non-civilian casualties."
+    content: "Donut Chart: Shows the distribution of civilian and non-civilian casualties."
 
   },
   {
@@ -214,11 +214,13 @@ var tour = new Tour({
   },
   {
     onShow: function (tour) {
-      // settySlider(128);
-      // datarefresh(128);
-      // timerefresh(128);
+      var variable =82;
+      settySlider(variable);
+      resetfilter();
+      timerefresh(variable);
+      datarefresh();
     },
-    placement: "middle",
+    placement: "left",
     element: "body",
     title: "Final Page",
     content: "You have finished the tour, feel free to browse around by yourself."
